@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-azul-profundo: #0D1B2A;
+  --color-dourado: #C9A84C;
+  --color-branco: #FFFFFF;
+  --color-cinza-claro: #F5F5F7;
+  --color-cinza-medio: #6B7280;
+  --color-cinza-escuro: #1F2937;
+  --color-verde-sucesso: #10B981;
+  --color-vermelho-promo: #DC2626;
+
+  --font-titulo: "Montserrat", sans-serif;
+  --font-corpo: "Inter", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-corpo bg-branco text-cinza-escuro min-h-screen flex flex-col;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Remove outline padrão e adiciona dourado em foco para acessibilidade */
+  *:focus-visible {
+    outline: 2px solid #C9A84C;
+    outline-offset: 2px;
+  }
+}
