@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import CardProduto from '@/components/produto/CardProduto';
 import SidebarFiltros from '@/components/produto/SidebarFiltros';
 import DrawerFiltrosMobile from '@/components/produto/DrawerFiltrosMobile';
+import SEO from '@/components/SEO';
 import { 
   produtos, 
   Categoria, 
@@ -115,6 +116,10 @@ function ApostilasContent() {
 
   return (
     <main className="min-h-screen bg-cinza-claro">
+      <SEO 
+        title="Catálogo de Apostilas" 
+        description="Navegue por nosso catálogo completo de apostilas para concursos públicos federais e estaduais."
+      />
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Breadcrumb */}
         <nav className="text-sm text-cinza-medio mb-6">

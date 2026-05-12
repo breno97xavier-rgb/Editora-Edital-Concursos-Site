@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import CardProduto, { ProdutoCard } from '../components/produto/CardProduto';
 import Book3D from '../components/produto/Book3D';
 
+import SEO from '../components/SEO';
+
 // Dados temporários — serão substituídos por banco de dados real no Prompt 11
 const produtosDestaque: ProdutoCard[] = [
   {
@@ -44,6 +46,7 @@ const produtosDestaque: ProdutoCard[] = [
 export default function HomePage() {
   return (
     <main>
+      <SEO />
       {/* SEÇÃO 1 — HERO PRINCIPAL */}
       <section className="bg-azul-profundo py-20 md:py-28 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">

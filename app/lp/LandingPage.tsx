@@ -5,6 +5,7 @@ import { landings } from '@/data/landings';
 import LPHeader from '@/components/lp/LPHeader';
 import LPFooter from '@/components/lp/LPFooter';
 import LPBotaoCompra from '@/components/lp/LPBotaoCompra';
+import SEO from '@/components/SEO';
 
 export default function LandingPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -12,8 +13,6 @@ export default function LandingPage() {
 
   useEffect(() => {
     if (lp) {
-      document.title = `${lp.concursoSigla} 2026 — Apostila Completa | Editora Edital Concursos`;
-      
       // Meta noindex check
       let meta = document.querySelector('meta[name="robots"]');
       if (!meta) {
@@ -22,10 +21,6 @@ export default function LandingPage() {
         document.head.appendChild(meta);
       }
       meta.setAttribute('content', 'noindex, follow');
-
-      return () => {
-        // Cleanup if needed, though robots noindex usually stays for the route
-      };
     }
   }, [lp]);
 
@@ -42,6 +37,10 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-branco">
+      <SEO 
+        title={`${lp.concursoSigla} 2026 — Apostila Completa`}
+        description={lp.subheadline}
+      />
       <LPHeader />
 
       <main>

@@ -14,6 +14,9 @@ import TesteCardsPage from '../app/teste-cards/page';
 import ApostilasPage from '../app/apostilas/page';
 import DetalheProdutoPage from '../app/apostila/DetalheProdutoPage';
 import LandingPage from '../app/lp/LandingPage';
+import TermosPage from '../app/termos/TermosPage';
+import PrivacidadePage from '../app/privacidade/PrivacidadePage';
+import NotFoundPage from '../app/NotFoundPage';
 
 export default function App() {
   return (
@@ -26,8 +29,11 @@ export default function App() {
           <Route path="/apostilas" element={<ApostilasPage />} />
           <Route path="/lp/:slug" element={<LandingPage />} />
           <Route path="/apostila/:slug" element={<DetalheProdutoPage />} />
+          <Route path="/termos" element={<TermosPage />} />
+          <Route path="/privacidade" element={<PrivacidadePage />} />
           <Route path="/teste-book3d" element={<TesteBook3DPage />} />
           <Route path="/teste-cards" element={<TesteCardsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </RootLayout>
     </BrowserRouter>

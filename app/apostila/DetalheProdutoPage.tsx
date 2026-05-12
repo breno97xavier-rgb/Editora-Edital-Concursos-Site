@@ -8,17 +8,11 @@ import { produtos, faqPadrao } from '@/data/produtos';
 import FAQAccordion from '@/components/produto/FAQAccordion';
 import CardCompra from '@/components/produto/CardCompra';
 import NotFoundProduto from './NotFoundProduto';
+import SEO from '@/components/SEO';
 
 export default function DetalheProdutoPage() {
   const { slug } = useParams<{ slug: string }>();
   const produto = produtos.find((p) => p.slug === slug);
-
-  // SEO: Update Title
-  useEffect(() => {
-    if (produto) {
-      document.title = `${produto.titulo} — Editora Edital Concursos`;
-    }
-  }, [produto]);
 
   if (!produto || !produto.ativo) {
     return <NotFoundProduto />;
@@ -39,8 +33,37 @@ export default function DetalheProdutoPage() {
   const labelTipo = produto.tipo === 'teorico' ? 'Apostila Teórica' : 'Caderno de Questões';
   const todasFAQs = [...(produto.faqExtra || []), ...faqPadrao];
 
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: produto.titulo,
+    description: produto.descricaoCurta,
+    image: produto.capaUrl,
+    brand: {
+      '@type': 'Brand',
+      name: 'Editora Edital Concursos',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://editoraeditalconcursos.com.br/apostila/${produto.slug}`,
+      priceCurrency: 'BRL',
+      price: produto.preco.toFixed(2),
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Editora Edital Concursos',
+      },
+    },
+  };
+
   return (
-    <main className="bg-branco">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <SEO title={produto.titulo} description={produto.descricaoCurta} />
+      <main className="bg-branco">
       {/* BREADCRUMB */}
       <div className="bg-cinza-claro border-b border-cinza-claro">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -240,5 +263,6 @@ export default function DetalheProdutoPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
