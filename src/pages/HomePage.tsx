@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CardProduto, { ProdutoCard } from '../components/produto/CardProduto';
-import Book3D from '../components/produto/Book3D';
+import CardProduto, { ProdutoCard } from '../../components/produto/CardProduto';
+import Book3D from '../../components/produto/Book3D';
 
-import SEO from '../components/SEO';
+import SEO from '../../components/SEO';
 
 // Dados temporários — serão substituídos por banco de dados real no Prompt 11
 const produtosDestaque: ProdutoCard[] = [

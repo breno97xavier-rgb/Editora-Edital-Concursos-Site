@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useMemo, Suspense } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import CardProduto from '@/components/produto/CardProduto';

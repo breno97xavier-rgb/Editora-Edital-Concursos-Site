@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import Book3D from '@/components/produto/Book3D';

@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Categoria, Materia, Concurso, labelsMaterias, labelsConcursos } from '@/data/produtos';
 

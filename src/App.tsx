@@ -3,39 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../app/globals.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import RootLayout from '../app/layout';
-import HomePage from '../app/page';
-import SobrePage from '../app/sobre/SobrePage';
-import ContatoPage from '../app/contato/ContatoPage';
-import TesteBook3DPage from '../app/teste-book3d/page';
-import TesteCardsPage from '../app/teste-cards/page';
-import ApostilasPage from '../app/apostilas/page';
-import DetalheProdutoPage from '../app/apostila/DetalheProdutoPage';
-import LandingPage from '../app/lp/LandingPage';
-import TermosPage from '../app/termos/TermosPage';
-import PrivacidadePage from '../app/privacidade/PrivacidadePage';
-import NotFoundPage from '../app/NotFoundPage';
+import './index.css';
+import { Routes, Route } from 'react-router-dom';
+import RootLayout from './layout';
+import HomePage from './pages/HomePage';
+import SobrePage from './pages/SobrePage';
+import ContatoPage from './pages/ContatoPage';
+import TesteBook3DPage from './pages/TesteBook3DPage';
+import TesteCardsPage from './pages/TesteCardsPage';
+import ApostilasPage from './pages/ApostilasPage';
+import DetalheProdutoPage from './pages/ApostilaIndividualPage';
+import LandingPage from './pages/LandingPage';
+import TermosPage from './pages/TermosPage';
+import PrivacidadePage from './pages/PrivacidadePage';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <RootLayout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/sobre" element={<SobrePage />} />
-          <Route path="/contato" element={<ContatoPage />} />
-          <Route path="/apostilas" element={<ApostilasPage />} />
-          <Route path="/lp/:slug" element={<LandingPage />} />
-          <Route path="/apostila/:slug" element={<DetalheProdutoPage />} />
-          <Route path="/termos" element={<TermosPage />} />
-          <Route path="/privacidade" element={<PrivacidadePage />} />
-          <Route path="/teste-book3d" element={<TesteBook3DPage />} />
-          <Route path="/teste-cards" element={<TesteCardsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </RootLayout>
-    </BrowserRouter>
+    <RootLayout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/sobre" element={<SobrePage />} />
+        <Route path="/contato" element={<ContatoPage />} />
+        <Route path="/apostilas" element={<ApostilasPage />} />
+        <Route path="/lp/:slug" element={<LandingPage />} />
+        <Route path="/apostila/:slug" element={<DetalheProdutoPage />} />
+        <Route path="/termos" element={<TermosPage />} />
+        <Route path="/privacidade" element={<PrivacidadePage />} />
+        <Route path="/teste-book3d" element={<TesteBook3DPage />} />
+        <Route path="/teste-cards" element={<TesteCardsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </RootLayout>
   );
 }

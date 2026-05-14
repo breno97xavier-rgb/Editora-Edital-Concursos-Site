@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect } from 'react';
 import SidebarFiltros from './SidebarFiltros';
 import { Categoria, Materia, Concurso } from '@/data/produtos';

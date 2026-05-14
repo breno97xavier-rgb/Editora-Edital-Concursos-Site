@@ -1,5 +1,3 @@
-'use client';
-
 import { Produto } from '@/data/produtos';
 
 interface CardCompraProps {

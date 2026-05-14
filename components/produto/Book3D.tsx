@@ -1,5 +1,3 @@
-'use client';
-
 type TamanhoBookCover = 'pequeno' | 'medio' | 'grande';
 
 interface BookCoverProps {

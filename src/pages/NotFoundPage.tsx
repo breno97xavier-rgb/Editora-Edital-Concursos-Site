@@ -16,13 +16,13 @@ export default function NotFoundPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 
-            href="/"
+            to="/"
             className="bg-azul-profundo text-branco font-titulo font-bold px-8 py-3 rounded-full hover:bg-opacity-90 transition"
           >
             Voltar à página inicial
           </Link>
           <Link 
-            href="/apostilas"
+            to="/apostilas"
             className="bg-transparent border-2 border-azul-profundo text-azul-profundo font-titulo font-bold px-8 py-3 rounded-full hover:bg-azul-profundo hover:text-branco transition"
           >
             Ver apostilas

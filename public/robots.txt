@@ -3,7 +3,6 @@ Allow: /
 Disallow: /lp/
 Disallow: /teste-cards
 Disallow: /teste-book3d
-Disallow: /api/
 
 Sitemap: https://editoraeditalconcursos.com.br/sitemap.xml
 Host: https://editoraeditalconcursos.com.br
