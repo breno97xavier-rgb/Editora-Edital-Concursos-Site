@@ -23,7 +23,7 @@ export default function TermosPage() {
           <section>
             <h2 className="font-titulo text-2xl font-bold text-azul-profundo mb-4">2. Identificação da Empresa</h2>
             <p>
-              O Site é operado por <strong>WB2 EMPREENDIMENTOS LTDA</strong>, pessoa jurídica de direito privado, inscrita no CNPJ sob o nº 65.395.470/0001-47, sob o nome fantasia "Editora Edital Concursos".
+              O Site é operado por <strong>Editora Edital Concursos</strong>, pessoa jurídica de direito privado, inscrita no CNPJ sob o nº 65.395.470/0001-47.
             </p>
           </section>
 
@@ -43,14 +43,14 @@ export default function TermosPage() {
               Para realizar uma compra, o usuário deve fornecer informações verdadeiras, exatas e completas. A Editora não se responsabiliza por dados incorretos fornecidos pelo usuário.
             </p>
             <p>
-              O processamento dos pagamentos é realizado pela plataforma Kiwify, parceira da Editora. Os dados de pagamento não são armazenados em nossos servidores.
+              O processamento dos pagamentos é realizado pela plataforma Cakto, parceira da Editora. Os dados de pagamento não são armazenados em nossos servidores.
             </p>
           </section>
 
           <section>
             <h2 className="font-titulo text-2xl font-bold text-azul-profundo mb-4">5. Preços e Pagamentos</h2>
             <p>
-              Os preços exibidos no Site estão em reais (R$) e podem ser pagos via Pix, cartão de crédito ou boleto bancário, conforme opções da plataforma Kiwify.
+              Os preços exibidos no Site estão em reais (R$) e podem ser pagos via Pix, cartão de crédito ou boleto bancário, conforme opções da plataforma Cakto.
             </p>
             <p>
               A Editora reserva-se o direito de alterar preços a qualquer momento, sem aviso prévio. Os preços vigentes no momento da compra são os que prevalecem.

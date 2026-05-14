@@ -99,7 +99,7 @@ export default function Footer() {
       <div className="bg-azul-profundo py-8 px-4 md:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-cinza-medio">
           <p className="text-center md:text-left">
-            © 2026 Editora Edital Concursos. WB2 Empreendimentos LTDA. CNPJ: 65.395.470/0001-47
+            © 2026 Editora Edital Concursos. CNPJ: 65.395.470/0001-47
           </p>
           <div className="flex gap-4 md:gap-6 items-center">
             <Link to="/termos" className="hover:text-white transition">Termos de Uso</Link>

@@ -157,7 +157,7 @@ export default function ContatoPage() {
               },
               {
                 p: 'Não recebi minha apostila por email. O que faço?',
-                r: 'Verifique a caixa de spam/lixo eletrônico. Se ainda não encontrar, entre em contato pelo WhatsApp informando o email da compra que reenviamos imediatamente.',
+                r: 'Verifique a caixa de spam/lixo eletrônico do email cadastrado na compra. Se ainda não encontrar o link de acesso à área de membros da Cakto, entre em contato pelo WhatsApp informando o email da compra que reenviamos imediatamente.',
               },
               {
                 p: 'Quero solicitar uma apostila específica que não está no catálogo. É possível?',

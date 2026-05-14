@@ -249,7 +249,7 @@ export default function DetalheProdutoPage() {
             Liberação imediata após o pagamento. Comece sua preparação ainda hoje.
           </p>
           <a
-            href={produto.linkKiwify}
+            href={produto.linkCheckout}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-dourado text-azul-profundo font-titulo font-bold text-xl px-12 py-5 rounded-full hover:bg-opacity-90 transition"

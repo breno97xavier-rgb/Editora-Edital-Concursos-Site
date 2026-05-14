@@ -5,7 +5,20 @@ import { landings } from '@/data/landings';
 import LPHeader from '@/components/lp/LPHeader';
 import LPFooter from '@/components/lp/LPFooter';
 import LPBotaoCompra from '@/components/lp/LPBotaoCompra';
+import LPDepoimentos from '@/components/lp/LPDepoimentos';
+import LPMaterialPorDentro from '@/components/lp/LPMaterialPorDentro';
 import SEO from '@/components/SEO';
+
+function renderHeadlineComDestaque(headline: string) {
+  const partes = headline.split(/(\{\{destaque\}\}.*?\{\{\/destaque\}\})/g);
+  return partes.map((parte, i) => {
+    const match = parte.match(/\{\{destaque\}\}(.*?)\{\{\/destaque\}\}/);
+    if (match) {
+      return <span key={i} className="text-dourado">{match[1]}</span>;
+    }
+    return <span key={i}>{parte}</span>;
+  });
+}
 
 export default function LandingPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -21,6 +34,50 @@ export default function LandingPage() {
         document.head.appendChild(meta);
       }
       meta.setAttribute('content', 'noindex, follow');
+
+      // Scripts específicos para ATA-MF
+      if (lp.slug === 'ata-mf-2026') {
+        // --- Meta Pixel (Facebook) ---
+        const fbScriptId = 'fb-pixel-script';
+        if (!document.getElementById(fbScriptId)) {
+          const script = document.createElement('script');
+          script.id = fbScriptId;
+          script.innerHTML = `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1986481251987169');
+            fbq('track', 'PageView');
+          `;
+          document.head.appendChild(script);
+
+          const noscript = document.createElement('noscript');
+          noscript.id = 'fb-pixel-noscript';
+          noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1986481251987169&ev=PageView&noscript=1" />`;
+          document.body.appendChild(noscript);
+        } else {
+          // Se já existe o script, apenas rastreia o PageView
+          if ((window as any).fbq) (window as any).fbq('track', 'PageView');
+        }
+
+        // --- Utmify Script ---
+        const utmifyScriptId = 'utmify-script';
+        if (!document.getElementById(utmifyScriptId)) {
+          const utmifyScript = document.createElement('script');
+          utmifyScript.id = utmifyScriptId;
+          utmifyScript.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
+          utmifyScript.async = true;
+          utmifyScript.defer = true;
+          utmifyScript.setAttribute('data-utmify-prevent-xcod-sck', '');
+          utmifyScript.setAttribute('data-utmify-prevent-subids', '');
+          document.head.appendChild(utmifyScript);
+        }
+      }
     }
   }, [lp]);
 
@@ -62,7 +119,7 @@ export default function LandingPage() {
                   Concurso {lp.concursoSigla} 2026
                 </span>
                 <h1 className="font-titulo text-3xl md:text-5xl font-bold text-branco mb-6 leading-tight">
-                  {lp.headlinePrincipal}
+                  {renderHeadlineComDestaque(lp.headlinePrincipal)}
                 </h1>
                 <p className="text-lg md:text-xl text-cinza-claro mb-8 leading-relaxed">
                   {lp.subheadline}
@@ -92,7 +149,7 @@ export default function LandingPage() {
                 </div>
 
                 <LPBotaoCompra 
-                  link={lp.linkKiwify} 
+                  link={lp.linkCheckout} 
                   texto="Garantir Minha Apostila Agora"
                   variante="grande"
                 />
@@ -106,11 +163,13 @@ export default function LandingPage() {
 
               {/* Coluna direita — Livro */}
               <div className="flex justify-center">
-                <Book3D 
-                  capaUrl={lp.capaUrl}
-                  titulo={`Apostila ${lp.concursoSigla}`}
-                  tamanho="grande"
-                />
+                <div className="lg:scale-110 transition-transform duration-300">
+                  <Book3D 
+                    capaUrl={lp.capaUrl}
+                    titulo={`Apostila ${lp.concursoSigla}`}
+                    tamanho="grande"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -143,13 +202,29 @@ export default function LandingPage() {
             </div>
 
             <div className="text-center mt-12">
-              <LPBotaoCompra link={lp.linkKiwify} texto="Quero Minha Apostila" variante="medio" />
+              <LPBotaoCompra link={lp.linkCheckout} texto="Quero Minha Apostila" variante="medio" />
             </div>
           </div>
         </section>
 
+        {/* COMO É O MATERIAL POR DENTRO */}
+        {lp.paginasPreview && lp.paginasPreview.length > 0 && (
+          <LPMaterialPorDentro 
+            paginas={lp.paginasPreview} 
+            concursoSigla={lp.concursoSigla} 
+          />
+        )}
+
+        {/* PROVA SOCIAL — DEPOIMENTOS */}
+        {lp.depoimentos && lp.depoimentos.length > 0 && (
+          <LPDepoimentos 
+            depoimentos={lp.depoimentos} 
+            concursoSigla={lp.concursoSigla} 
+          />
+        )}
+
         {/* SOBRE O CONCURSO */}
-        <section className="py-16 bg-cinza-claro">
+        <section className="py-16 bg-branco">
           <div className="max-w-5xl mx-auto px-6">
             <h2 className="font-titulo text-3xl md:text-4xl font-bold text-azul-profundo text-center mb-4">
               Sobre o concurso {lp.concursoSigla}
@@ -169,8 +244,8 @@ export default function LandingPage() {
                 <div 
                   key={info.label}
                   className={`
-                    bg-branco rounded-lg p-5 text-center
-                    ${info.destaque ? 'border-2 border-dourado' : ''}
+                    bg-cinza-claro rounded-lg p-5 text-center
+                    ${info.destaque ? 'border-2 border-dourado shadow-sm' : ''}
                   `}
                 >
                   <div className="text-xs text-cinza-medio uppercase tracking-wider mb-2">
@@ -211,7 +286,7 @@ export default function LandingPage() {
             </div>
 
             <div className="text-center mt-12">
-              <LPBotaoCompra link={lp.linkKiwify} texto="Comprar Apostila Agora" variante="medio" />
+              <LPBotaoCompra link={lp.linkCheckout} texto="Comprar Apostila Agora" variante="medio" />
             </div>
           </div>
         </section>
@@ -238,7 +313,7 @@ export default function LandingPage() {
                 { 
                   icone: '🔒', 
                   titulo: 'Compra 100% segura', 
-                  desc: 'Pagamento via Kiwify com criptografia. Pix, cartão ou boleto.' 
+                  desc: 'Pagamento via Cakto com criptografia. Pix, cartão ou boleto.' 
                 },
               ].map((garantia) => (
                 <div key={garantia.titulo} className="text-center">
@@ -266,7 +341,7 @@ export default function LandingPage() {
               {[
                 {
                   p: 'Como recebo a apostila após a compra?',
-                  r: 'Imediatamente após a confirmação do pagamento (especialmente via Pix), você recebe o PDF no email cadastrado. Cartão de crédito leva poucos minutos.'
+                  r: 'Imediatamente após a confirmação do pagamento, você recebe no email cadastrado um link de acesso à área de membros da Cakto. Lá dentro, você terá acesso a uma pasta no Google Drive com todos os PDFs do material — pode baixar quantas vezes quiser e estudar em qualquer dispositivo.'
                 },
                 {
                   p: 'O material é mesmo atualizado conforme o último edital?',
@@ -331,7 +406,7 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <LPBotaoCompra link={lp.linkKiwify} texto="Garantir Minha Apostila Agora" variante="grande" />
+              <LPBotaoCompra link={lp.linkCheckout} texto="Garantir Minha Apostila Agora" variante="grande" />
             </div>
 
             <div className="flex flex-wrap gap-4 mt-8 justify-center text-sm text-cinza-claro">

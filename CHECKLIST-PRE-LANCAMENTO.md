@@ -23,10 +23,10 @@
 - [ ] Apontar domínio para Vercel (DNS)
 - [ ] Verificar SSL automático ativado
 
-### 2. Produtos no Kiwify
-- [ ] Criar conta no Kiwify (se ainda não tem)
+### 2. Produtos no Cakto
+- [ ] Criar conta no Cakto (se ainda não tem)
 - [ ] Cadastrar os 4 produtos do lançamento:
-  - [ ] ATA-MF 2026 — Apostila Teórica (R$ 99,90)
+  - [ ] ATA-MF 2026 — Apostila Teórica (R$ 57,80)
   - [ ] INSS 2026 — Apostila Teórica (R$ 89,90 - de R$ 129,90)
   - [ ] PRF 2026 — Apostila Teórica (R$ 109,90)
   - [ ] SEDES-DF 2026 — Apostila Teórica (R$ 79,90 - de R$ 99,90)
@@ -59,7 +59,7 @@
 - [ ] Adicionar ao layout via Next.js Script
 
 ### 7. CNPJ no rodapé
-- [x] Confirmar que aparece: WB2 Empreendimentos LTDA · CNPJ: 65.395.470/0001-47
+- [x] Confirmar que aparece: Editora Edital Concursos · CNPJ: 65.395.470/0001-47
 
 ### 8. Capas dos produtos restantes
 - [ ] Criar capas das 14 matérias básicas (Português, Matemática, etc.)
@@ -67,7 +67,7 @@
 - [ ] Substituir URLs em `data/produtos.ts`
 
 ### 9. Testes finais
-- [ ] Teste de compra completa em modo sandbox do Kiwify
+- [ ] Teste de compra completa em modo sandbox do Cakto
 - [ ] Teste em mobile (Chrome iPhone/Android)
 - [ ] Teste em desktop (Chrome, Firefox, Safari)
 - [ ] Teste de velocidade: https://pagespeed.web.dev

@@ -16,7 +16,7 @@ export default function PrivacidadePage() {
           <section>
             <h2 className="font-titulo text-2xl font-bold text-azul-profundo mb-4">1. Quem somos</h2>
             <p>
-              Esta Política de Privacidade descreve como a <strong>WB2 EMPREENDIMENTOS LTDA</strong>, CNPJ 65.395.470/0001-47, nome fantasia "Editora Edital Concursos", coleta, utiliza e protege seus dados pessoais.
+              Esta Política de Privacidade descreve como a <strong>Editora Edital Concursos</strong>, CNPJ 65.395.470/0001-47, coleta, utiliza e protege seus dados pessoais.
             </p>
           </section>
 
@@ -25,7 +25,7 @@ export default function PrivacidadePage() {
             <p>Coletamos os seguintes dados pessoais durante seu uso do nosso site:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Dados de cadastro/compra:</strong> nome completo, email e telefone — fornecidos voluntariamente no checkout ou formulário de contato.</li>
-              <li><strong>Dados de pagamento:</strong> processados diretamente pela plataforma Kiwify. <strong>Não armazenamos</strong> dados de cartão de crédito ou informações bancárias em nossos servidores.</li>
+              <li><strong>Dados de pagamento:</strong> processados diretamente pela plataforma Cakto. <strong>Não armazenamos</strong> dados de cartão de crédito ou informações bancárias em nossos servidores.</li>
               <li><strong>Dados de navegação:</strong> endereço IP, tipo de navegador, páginas visitadas, tempo de permanência — coletados por cookies e ferramentas de analytics.</li>
               <li><strong>Newsletter:</strong> apenas email, se você se cadastrar voluntariamente.</li>
             </ul>
@@ -59,7 +59,7 @@ export default function PrivacidadePage() {
             <h2 className="font-titulo text-2xl font-bold text-azul-profundo mb-4">5. Compartilhamento de dados</h2>
             <p>Compartilhamos seus dados apenas com:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Kiwify</strong> — processamento de pagamentos e entrega de produtos digitais;</li>
+              <li><strong>Cakto</strong> — processamento de pagamentos e entrega de produtos digitais;</li>
               <li><strong>Provedores de email</strong> — para envio de comunicações operacionais;</li>
               <li><strong>Autoridades públicas</strong> — apenas quando legalmente exigido (por exemplo, ordem judicial).</li>
             </ul>

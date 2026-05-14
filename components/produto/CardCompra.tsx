@@ -48,7 +48,7 @@ export default function CardCompra({ produto }: CardCompraProps) {
 
       {/* Botão CTA principal */}
       <a
-        href={produto.linkKiwify}
+        href={produto.linkCheckout}
         target="_blank"
         rel="noopener noreferrer"
         className="

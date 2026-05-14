@@ -38,14 +38,14 @@ export interface Produto extends ProdutoCard {
   oQueRecebe: string[];
   fichaTecnica: FichaTecnica;
   topicosCobertos: string[];
-  linkKiwify: string;
+  linkCheckout: string;
   faqExtra?: FAQ[]; // Perguntas específicas do produto, além das padrão
 }
 
 export const faqPadrao: FAQ[] = [
   {
     pergunta: 'Como recebo o material após a compra?',
-    resposta: 'O material é enviado automaticamente para o seu email logo após a confirmação do pagamento. Pix tem liberação imediata; cartão de crédito é liberado em poucos minutos.'
+    resposta: 'Imediatamente após a confirmação do pagamento, você recebe no email cadastrado um link de acesso à área de membros da Cakto. Lá dentro, você terá acesso a uma pasta no Google Drive com todos os PDFs do material — pode baixar quantas vezes quiser e estudar em qualquer dispositivo.'
   },
   {
     pergunta: 'O material é atualizado conforme o último edital?',
@@ -73,8 +73,8 @@ export const produtos: Produto[] = [
     tipo: 'teorico',
     categoria: 'concurso',
     concurso: 'ata-mf',
-    preco: 99.90,
-    parcelamento: '8x de R$ 12,49',
+    preco: 57.80,
+    parcelamento: '6x de R$ 9,63',
     capaUrl: 'https://i.ibb.co/HpN0mmMf/ata-mf-png.png',
     destaque: true,
     ativo: true,
@@ -105,11 +105,10 @@ Material em PDF de alta qualidade, ideal para estudar em qualquer dispositivo ou
       'Raciocínio Lógico-Matemático',
       'Noções de Informática',
       'Ética no Serviço Público',
-      'Gestão de Pessoas e do Atendimento ao Público',
-      'Administração Pública',
+      'Gestão Pública',
       'Regime Jurídico dos Agentes Públicos',
     ],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER-ATA-MF',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-ATA-MF',
   },
   {
     slug: 'ata-mf-2026-questoes',
@@ -137,7 +136,7 @@ Material em PDF de alta qualidade, ideal para estudar em qualquer dispositivo ou
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'inss-2026-teorico',
@@ -153,10 +152,10 @@ Material em PDF de alta qualidade, ideal para estudar em qualquer dispositivo ou
     ativo: true,
     descricaoCurta: 'Apostila completa para o concurso de Técnico do Seguro Social do INSS. Conteúdo teórico atualizado conforme o edital, com questões comentadas das principais bancas.',
     descricaoCompleta: `Prepare-se para o concurso do INSS com o material mais focado e completo do mercado. Nossa apostila para Técnico do Seguro Social cobre integralmente o conteúdo programático cobrado no último edital.
-
-Material desenvolvido por uma equipe que entende a banca e sabe exatamente o que cai na prova. Cada tópico foi organizado para você estudar de forma eficiente, sem perder tempo com matéria que não cai.
-
-Conteúdo intercalado com questões comentadas, box de dicas práticas e mnemônicos que aceleram a memorização. Tudo em PDF de alta qualidade, com liberação imediata após o pagamento.`,
+ 
+ Material desenvolvido por uma equipe que entende a banca e sabe exatamente o que cai na prova. Cada tópico foi organizado para você estudar de forma eficiente, sem perder tempo com matéria que não cai.
+ 
+ Conteúdo intercalado com questões comentadas, box de dicas práticas e mnemônicos que aceleram a memorização. Tudo em PDF de alta qualidade, com liberação imediata após o pagamento.`,
     oQueRecebe: [
       'Conteúdo teórico completo conforme o último edital',
       'Questões comentadas das principais bancas',
@@ -180,7 +179,7 @@ Conteúdo intercalado com questões comentadas, box de dicas práticas e mnemôn
       'Noções de Direito Administrativo',
       'Conhecimentos Específicos (Seguridade Social)',
     ],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER-INSS',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-INSS',
   },
   {
     slug: 'inss-2026-questoes',
@@ -208,7 +207,7 @@ Conteúdo intercalado com questões comentadas, box de dicas práticas e mnemôn
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'prf-2026-teorico',
@@ -223,10 +222,10 @@ Conteúdo intercalado com questões comentadas, box de dicas práticas e mnemôn
     ativo: true,
     descricaoCurta: 'Apostila completa para o concurso de Agente Administrativo da Polícia Rodoviária Federal. Conteúdo teórico atualizado conforme o edital.',
     descricaoCompleta: `A apostila definitiva para quem busca uma vaga como Agente Administrativo da Polícia Rodoviária Federal. Material completo, atualizado e focado exatamente no que a banca cobra.
-
-Conteúdo organizado seguindo a estrutura do último edital, com profundidade técnica nas matérias específicas e abordagem objetiva nas matérias básicas. Cada disciplina vem acompanhada de questões comentadas para você fixar o aprendizado.
-
-Inclui legislação aplicada à PRF, noções de arquivologia e administração — conteúdos que costumam derrubar candidatos despreparados. PDF de alta qualidade, liberação imediata após o pagamento.`,
+ 
+ Conteúdo organizado seguindo a estrutura do último edital, com profundidade técnica nas matérias específicas e abordagem objetiva nas matérias básicas. Cada disciplina vem acompanhada de questões comentadas para você fixar o aprendizado.
+ 
+ Inclui legislação aplicada à PRF, noções de arquivologia e administração — conteúdos que costumam derrubar candidatos despreparados. PDF de alta qualidade, liberação imediata após o pagamento.`,
     oQueRecebe: [
       'Conteúdo teórico completo conforme o último edital',
       'Questões comentadas das principais bancas',
@@ -252,7 +251,7 @@ Inclui legislação aplicada à PRF, noções de arquivologia e administração 
       'Noções de Arquivologia',
       'Legislação Aplicada à PRF',
     ],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER-PRF',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-PRF',
   },
   {
     slug: 'prf-2026-questoes',
@@ -280,7 +279,7 @@ Inclui legislação aplicada à PRF, noções de arquivologia e administração 
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'sedes-df-2026-teorico',
@@ -296,10 +295,10 @@ Inclui legislação aplicada à PRF, noções de arquivologia e administração 
     ativo: true,
     descricaoCurta: 'Apostila completa para o concurso da Secretaria de Desenvolvimento Social do Distrito Federal — Técnico Administrativo e Técnico em Assistência Social.',
     descricaoCompleta: `Material completo para o concurso da SEDES-DF, contemplando os cargos de Técnico Administrativo e Técnico em Assistência Social. Apostila atualizada conforme o último edital publicado.
-
-Nossa abordagem prioriza o conteúdo de maior incidência na prova, com profundidade nas matérias específicas e objetividade nas matérias básicas. Você estuda o que realmente importa, sem desperdiçar tempo.
-
-Inclui questões comentadas das bancas mais comuns em concursos do Distrito Federal, com explicação detalhada do raciocínio para resolução. PDF de alta qualidade, liberação imediata após o pagamento.`,
+ 
+ Nossa abordagem prioriza o conteúdo de maior incidência na prova, com profundidade nas matérias específicas e objetividade nas matérias básicas. Você estuda o que realmente importa, sem desperdiçar tempo.
+ 
+ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Federal, com explicação detalhada do raciocínio para resolução. PDF de alta qualidade, liberação imediata após o pagamento.`,
     oQueRecebe: [
       'Conteúdo teórico completo conforme o último edital',
       'Questões comentadas das principais bancas',
@@ -321,7 +320,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       'Noções de Direito Administrativo',
       'Conhecimentos Específicos (Assistência Social)',
     ],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER-SEDES-DF',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-SEDES-DF',
   },
   {
     slug: 'sedes-df-2026-questoes',
@@ -349,9 +348,9 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
-
+  
   // ===== MATÉRIAS BÁSICAS (14 produtos) =====
   {
     slug: 'portugues-teorico',
@@ -379,7 +378,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'portugues-questoes',
@@ -407,7 +406,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'matematica-teorico',
@@ -435,7 +434,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'matematica-questoes',
@@ -463,7 +462,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'raciocinio-logico-teorico',
@@ -491,7 +490,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'raciocinio-logico-questoes',
@@ -519,7 +518,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'informatica-teorico',
@@ -547,7 +546,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'informatica-questoes',
@@ -575,7 +574,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'constitucional-teorico',
@@ -603,7 +602,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'constitucional-questoes',
@@ -631,7 +630,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'administrativo-teorico',
@@ -659,7 +658,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'administrativo-questoes',
@@ -687,7 +686,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'adm-publica-teorico',
@@ -715,7 +714,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
   {
     slug: 'adm-publica-questoes',
@@ -743,7 +742,7 @@ Inclui questões comentadas das bancas mais comuns em concursos do Distrito Fede
       ultimaAtualizacao: 'Maio/2026',
     },
     topicosCobertos: ['Conteúdo conforme edital'],
-    linkKiwify: 'https://pay.kiwify.com.br/PLACEHOLDER',
+    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
   },
 ];
 

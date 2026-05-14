@@ -11,7 +11,7 @@ export default function LPFooter() {
               Editora Edital Concursos
             </div>
             <div className="text-xs">
-              WB2 Empreendimentos LTDA · CNPJ: 65.395.470/0001-47
+              Editora Edital Concursos · CNPJ: 65.395.470/0001-47
             </div>
           </div>
 
