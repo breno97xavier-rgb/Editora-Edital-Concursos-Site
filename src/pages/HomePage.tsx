@@ -13,7 +13,7 @@ const produtosDestaque: ProdutoCard[] = [
     tipo: 'teorico',
     preco: 99.90,
     parcelamento: '8x de R$ 12,49',
-    capaUrl: 'https://i.ibb.co/9xxfrTG/ata-mf-png-removebg-preview.png',
+    capaUrl: 'https://i.ibb.co/B24z6Cw2/1.png',
   },
   {
     slug: 'inss-2026-teorico',
@@ -22,7 +22,7 @@ const produtosDestaque: ProdutoCard[] = [
     preco: 89.90,
     precoOriginal: 129.90,
     parcelamento: '8x de R$ 11,24',
-    capaUrl: 'https://i.ibb.co/qZ04RSs/inss-png-removebg-preview.png',
+    capaUrl: 'https://i.ibb.co/0RW9Qz3P/2.png',
   },
   {
     slug: 'sedes-df-2026-teorico',
@@ -31,7 +31,7 @@ const produtosDestaque: ProdutoCard[] = [
     preco: 79.90,
     precoOriginal: 99.90,
     parcelamento: '7x de R$ 11,41',
-    capaUrl: 'https://i.ibb.co/bgfWSfFN/sedes-df-png-removebg-preview.png',
+    capaUrl: 'https://i.ibb.co/5hgHXyBj/4.png',
   },
   {
     slug: 'prf-2026-teorico',
@@ -39,7 +39,7 @@ const produtosDestaque: ProdutoCard[] = [
     tipo: 'teorico',
     preco: 109.90,
     parcelamento: '9x de R$ 12,21',
-    capaUrl: 'https://i.ibb.co/mCWQm6YC/prf-png-removebg-preview.png',
+    capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png',
   },
 ];
 
@@ -94,21 +94,21 @@ export default function HomePage() {
             <div className="lg:col-span-5 relative h-[500px] hidden lg:flex items-center justify-center">
               <div className="absolute z-20 transform translate-y-2">
                 <Book3D 
-                  capaUrl="https://i.ibb.co/9xxfrTG/ata-mf-png-removebg-preview.png"
+                  capaUrl="https://i.ibb.co/B24z6Cw2/1.png"
                   titulo="Apostila ATA-MF 2026"
                   tamanho="grande"
                 />
               </div>
               <div className="absolute left-0 top-12 z-10 transform -rotate-6">
                 <Book3D 
-                  capaUrl="https://i.ibb.co/qZ04RSs/inss-png-removebg-preview.png"
+                  capaUrl="https://i.ibb.co/0RW9Qz3P/2.png"
                   titulo="Apostila INSS 2026"
                   tamanho="medio"
                 />
               </div>
               <div className="absolute right-0 bottom-12 z-10 transform rotate-6">
                 <Book3D 
-                  capaUrl="https://i.ibb.co/mCWQm6YC/prf-png-removebg-preview.png"
+                  capaUrl="https://i.ibb.co/WWCr1JrL/3.png"
                   titulo="Apostila PRF 2026"
                   tamanho="medio"
                 />
@@ -118,7 +118,7 @@ export default function HomePage() {
             {/* Livro Central — Mobile */}
             <div className="lg:hidden flex justify-center mt-8">
               <Book3D 
-                capaUrl="https://i.ibb.co/9xxfrTG/ata-mf-png-removebg-preview.png"
+                capaUrl="https://i.ibb.co/B24z6Cw2/1.png"
                 titulo="Apostila ATA-MF 2026"
                 tamanho="medio"
               />

@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Search, User, ChevronDown, Menu, X } from 'lucide-react';
+import { Search, User, ChevronDown, Menu, X, ArrowLeft } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <header className="w-full fixed top-0 z-50 shadow-md">
@@ -20,9 +23,18 @@ export default function Header() {
 
       {/* Linha 2 — Header principal */}
       <div className="bg-azul-profundo h-20 flex items-center px-4 md:px-8 gap-4 md:gap-8">
-        {/* Esquerda: Logo */}
-        <div className="flex-shrink-0">
-          <a href="/" className="flex items-center">
+        {/* Esquerda: Logo (com botão Voltar no Mobile se não for Home) */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          {location.pathname !== '/' && (
+            <button 
+              onClick={() => navigate(-1)} 
+              className="md:hidden text-branco hover:text-dourado transition p-1"
+              aria-label="Voltar"
+            >
+              <ArrowLeft size={24} />
+            </button>
+          )}
+          <Link to="/" className="flex items-center">
             <img 
               src="/logo.png" 
               alt="Editora Edital Concursos" 
@@ -39,7 +51,7 @@ export default function Header() {
                 }
               }}
             />
-          </a>
+          </Link>
         </div>
 
         {/* Centro: Barra de busca */}
@@ -73,18 +85,32 @@ export default function Header() {
       </div>
 
       {/* Linha 3 — Menu de navegação */}
-      <nav className="hidden md:block bg-azul-profundo border-t border-azul-profundo/30 border-b-2 border-dourado h-12">
-        <ul className="flex items-center justify-center gap-8 h-full text-branco font-titulo font-semibold text-sm uppercase tracking-wide">
-          <li className="h-full">
-            <a href="#" className="flex items-center gap-1.5 h-full hover:text-dourado transition border-b-2 border-transparent hover:border-dourado px-2 group">
-              Apostilas <ChevronDown size={14} className="group-hover:rotate-180 transition-transform" />
-            </a>
-          </li>
-          <li><a href="#" className="hover:text-dourado transition">Combos</a></li>
-          <li><a href="#" className="hover:text-dourado transition">Materiais Grátis</a></li>
-          <li><a href="#" className="hover:text-dourado transition">Sobre</a></li>
-          <li><a href="#" className="hover:text-dourado transition">Contato</a></li>
-        </ul>
+      <nav className="hidden md:block bg-azul-profundo border-t border-azul-profundo/30 border-b-2 border-dourado h-12 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto h-full relative flex items-center justify-center">
+          {/* Botão Voltar alinhado ao extremo esquerdo */}
+          {location.pathname !== '/' && (
+            <button 
+              onClick={() => navigate(-1)} 
+              className="absolute left-0 h-full flex items-center gap-1.5 text-branco hover:text-dourado transition font-titulo font-semibold text-xs uppercase tracking-wider group cursor-pointer"
+              aria-label="Voltar para a página anterior"
+            >
+              <ArrowLeft size={16} className="transform group-hover:-translate-x-0.5 transition-transform" />
+              <span>Voltar</span>
+            </button>
+          )}
+
+          <ul className="flex items-center justify-center gap-8 h-full text-branco font-titulo font-semibold text-sm uppercase tracking-wide">
+            <li className="h-full">
+              <Link to="/apostilas" className="flex items-center gap-1.5 h-full hover:text-dourado transition border-b-2 border-transparent hover:border-dourado px-2 group">
+                Apostilas <ChevronDown size={14} className="group-hover:rotate-180 transition-transform" />
+              </Link>
+            </li>
+            <li><Link to="/apostilas?categoria=combo" className="hover:text-dourado transition">Combos</Link></li>
+            <li><Link to="/apostilas" className="hover:text-dourado transition">Materiais Grátis</Link></li>
+            <li><Link to="/sobre" className="hover:text-dourado transition">Sobre</Link></li>
+            <li><Link to="/contato" className="hover:text-dourado transition">Contato</Link></li>
+          </ul>
+        </div>
       </nav>
 
       {/* Mobile Drawer */}
@@ -99,11 +125,28 @@ export default function Header() {
               />
               <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dourado" size={20} />
             </div>
-            <a href="#" className="flex items-center justify-between border-b border-white/10 pb-2">Apostilas <ChevronDown size={20} /></a>
-            <a href="#" className="border-b border-white/10 pb-2">Combos</a>
-            <a href="#" className="border-b border-white/10 pb-2">Materiais Grátis</a>
-            <a href="#" className="border-b border-white/10 pb-2">Sobre</a>
-            <a href="#" className="border-b border-white/10 pb-2">Contato</a>
+            
+            {/* Link de Voltar no topo do menu mobile se não estiver na home */}
+            {location.pathname !== '/' && (
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate(-1);
+                }}
+                className="flex items-center gap-2 text-dourado font-titulo font-bold text-base uppercase self-start border-b border-white/10 pb-2 w-full text-left"
+              >
+                <ArrowLeft size={20} />
+                <span>Voltar</span>
+              </button>
+            )}
+
+            <Link to="/apostilas" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between border-b border-white/10 pb-2">
+              Apostilas <ChevronDown size={20} />
+            </Link>
+            <Link to="/apostilas?categoria=combo" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Combos</Link>
+            <Link to="/apostilas" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Materiais Grátis</Link>
+            <Link to="/sobre" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Sobre</Link>
+            <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Contato</Link>
             
             <div className="flex items-center gap-4 mt-auto pt-10 text-xs font-corpo normal-case text-cinza-claro">
                <a href="#">Área do Aluno</a> | <a href="#">Ajuda</a>

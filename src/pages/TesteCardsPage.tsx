@@ -9,7 +9,7 @@ const produtosTeste: ProdutoCard[] = [
     preco: 89.90,
     precoOriginal: 129.90,
     parcelamento: '8x de R$ 11,24',
-    capaUrl: 'https://i.ibb.co/zWHG8b0z/inss-png.png',
+    capaUrl: 'https://i.ibb.co/0RW9Qz3P/2.png',
   },
   {
     slug: 'inss-2026-questoes',
@@ -25,7 +25,7 @@ const produtosTeste: ProdutoCard[] = [
     tipo: 'teorico',
     preco: 99.90,
     parcelamento: '8x de R$ 12,49',
-    capaUrl: 'https://i.ibb.co/HpN0mmMf/ata-mf-png.png',
+    capaUrl: 'https://i.ibb.co/B24z6Cw2/1.png',
   },
   {
     slug: 'ata-mf-2026-questoes',
@@ -42,7 +42,7 @@ const produtosTeste: ProdutoCard[] = [
     preco: 79.90,
     precoOriginal: 99.90,
     parcelamento: '7x de R$ 11,41',
-    capaUrl: 'https://i.ibb.co/Mx80BhQ9/sedes-df-png.png',
+    capaUrl: 'https://i.ibb.co/5hgHXyBj/4.png',
   },
   {
     slug: 'sedes-df-2026-questoes',
@@ -58,7 +58,7 @@ const produtosTeste: ProdutoCard[] = [
     tipo: 'teorico',
     preco: 109.90,
     parcelamento: '9x de R$ 12,21',
-    capaUrl: 'https://i.ibb.co/9HRb39yf/prf-png.png',
+    capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png',
   },
   {
     slug: 'prf-2026-questoes',

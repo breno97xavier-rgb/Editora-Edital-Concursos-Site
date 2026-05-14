@@ -4,19 +4,19 @@ import Book3D from '../../components/produto/Book3D';
 export default function TesteBook3DPage() {
   const apostilas = [
     { 
-      capa: 'https://i.ibb.co/qZ04RSs/inss-png-removebg-preview.png', 
+      capa: 'https://i.ibb.co/0RW9Qz3P/2.png', 
       titulo: 'Apostila INSS 2026 — Técnico do Seguro Social' 
     },
     { 
-      capa: 'https://i.ibb.co/9xxfrTG/ata-mf-png-removebg-preview.png', 
+      capa: 'https://i.ibb.co/B24z6Cw2/1.png', 
       titulo: 'Apostila ATA-MF 2026 — Assistente Técnico Administrativo' 
     },
     { 
-      capa: 'https://i.ibb.co/bgfWSfFN/sedes-df-png-removebg-preview.png', 
+      capa: 'https://i.ibb.co/5hgHXyBj/4.png', 
       titulo: 'Apostila SEDES-DF 2026 — Técnico Administrativo' 
     },
     { 
-      capa: 'https://i.ibb.co/mCWQm6YC/prf-png-removebg-preview.png', 
+      capa: 'https://i.ibb.co/WWCr1JrL/3.png', 
       titulo: 'Apostila PRF 2026 — Agente Administrativo' 
     },
   ];
@@ -104,7 +104,7 @@ export default function TesteBook3DPage() {
           </p>
           <div className="flex justify-center">
             <Book3D 
-              capaUrl="https://i.ibb.co/9xxfrTG/ata-mf-png-removebg-preview.png" 
+              capaUrl="https://i.ibb.co/B24z6Cw2/1.png" 
               titulo="Apostila ATA-MF 2026" 
               tamanho="grande" 
             />
