@@ -6,32 +6,58 @@ import fs from 'fs';
 import https from 'https';
 
 // Safeguard download of custom favicon
-try {
-  const destDir = path.resolve(__dirname, 'public');
-  if (!fs.existsSync(destDir)) {
-    fs.mkdirSync(destDir, { recursive: true });
-  }
-  const destPath = path.join(destDir, 'favicon.png');
-  const imageUrl = 'https://i.ibb.co/n8RTvYqD/Blue-and-White-Circle-Surfing-Club-Logo-2.png';
-  
-  https.get(imageUrl, (response) => {
-    if (response.statusCode === 301 || response.statusCode === 302) {
-      https.get(response.headers.location || '', (redirectResponse) => {
-        const file = fs.createWriteStream(destPath);
-        redirectResponse.pipe(file);
-      });
-    } else {
-      const file = fs.createWriteStream(destPath);
-      response.pipe(file);
+async function ensureFavicon() {
+  try {
+    const destDir = path.resolve(__dirname, 'public');
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
     }
-  }).on('error', (err) => {
-    console.error('Error downloading favicon:', err);
-  });
-} catch (e) {
-  console.error('Failed executing favicon download:', e);
+    const pngPath = path.join(destDir, 'favicon.png');
+    const icoPath = path.join(destDir, 'favicon.ico');
+    const imageUrl = 'https://i.ibb.co/n8RTvYqD/Blue-and-White-Circle-Surfing-Club-Logo-2.png';
+
+    const downloadAndSave = async (url: string): Promise<Buffer> => {
+      if (typeof fetch === 'function') {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const arr = await res.arrayBuffer();
+        return Buffer.from(arr);
+      } else {
+        return new Promise((resolve, reject) => {
+          const fetchUrl = (currentUrl: string) => {
+            https.get(currentUrl, (res) => {
+              if (res.statusCode === 301 || res.statusCode === 302) {
+                fetchUrl(res.headers.location || '');
+              } else if (res.statusCode === 200) {
+                const chunks: any[] = [];
+                res.on('data', (chunk) => chunks.push(chunk));
+                res.on('end', () => resolve(Buffer.concat(chunks)));
+                res.on('error', reject);
+              } else {
+                reject(new Error(`HTTP ${res.statusCode}`));
+              }
+            }).on('error', reject);
+          };
+          fetchUrl(url);
+        });
+      }
+    };
+
+    const buffer = await downloadAndSave(imageUrl);
+    if (buffer && buffer.length > 0) {
+      fs.writeFileSync(pngPath, buffer);
+      fs.writeFileSync(icoPath, buffer);
+      console.log(`[Favicon] Successfully downloaded and saved favicon.png and favicon.ico. Size: ${buffer.length} bytes`);
+    } else {
+      console.error('[Favicon] Downloaded buffer is empty.');
+    }
+  } catch (e) {
+    console.error('[Favicon] Failed downloading favicon:', e);
+  }
 }
 
-export default defineConfig(({mode}) => {
+export default defineConfig(async ({mode}) => {
+  await ensureFavicon();
   const env = loadEnv(mode, '.', '');
   return {
     plugins: [react(), tailwindcss()],
