@@ -59,11 +59,11 @@ export default function Footer() {
         <div>
           <h4 className="font-titulo font-bold text-dourado tracking-widest text-sm mb-6 text-uppercase">MATERIAIS</h4>
           <ul className="space-y-4 text-sm text-cinza-claro opacity-80">
-            <li><a href="#" className="hover:text-dourado transition">Apostilas</a></li>
-            <li><a href="#" className="hover:text-dourado transition">Por Matéria</a></li>
-            <li><a href="#" className="hover:text-dourado transition">Por Concurso</a></li>
-            <li><a href="#" className="hover:text-dourado transition">Combos</a></li>
-            <li><a href="#" className="hover:text-dourado transition">Materiais Grátis</a></li>
+            <li><Link to="/apostilas" className="hover:text-dourado transition block">Apostilas</Link></li>
+            <li><Link to="/apostilas" className="hover:text-dourado transition block">Por Matéria</Link></li>
+            <li><Link to="/apostilas" className="hover:text-dourado transition block">Por Concurso</Link></li>
+            <li><Link to="/apostilas?categoria=combo" className="hover:text-dourado transition block">Combos</Link></li>
+            <li><Link to="/apostilas?categoria=gratis" className="hover:text-dourado transition block">Materiais Grátis</Link></li>
           </ul>
         </div>
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, User, ChevronDown, Menu, X, ArrowLeft } from 'lucide-react';
+import { Search, ChevronDown, Menu, X, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Header() {
@@ -15,8 +15,6 @@ export default function Header() {
           <span>✓ Material 100% digital. Liberação imediata após o pagamento.</span>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <a href="#" className="hover:text-dourado transition">Área do aluno</a>
-          <span className="opacity-30">|</span>
           <a href="#" className="hover:text-dourado transition">Ajuda</a>
         </div>
       </div>
@@ -68,11 +66,6 @@ export default function Header() {
 
         {/* Direita: Ações */}
         <div className="flex items-center gap-3 md:gap-6 ml-auto">
-          <a href="#" className="flex items-center gap-2 text-branco hover:text-dourado transition font-corpo group">
-            <User size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="hidden xl:block text-sm font-medium">Entrar</span>
-          </a>
-
           {/* Mobile Hamburger */}
           <button 
             className="md:hidden text-white ml-2" 
@@ -106,7 +99,7 @@ export default function Header() {
               </Link>
             </li>
             <li><Link to="/apostilas?categoria=combo" className="hover:text-dourado transition">Combos</Link></li>
-            <li><Link to="/apostilas" className="hover:text-dourado transition">Materiais Grátis</Link></li>
+            <li><Link to="/apostilas?categoria=gratis" className="hover:text-dourado transition">Materiais Grátis</Link></li>
             <li><Link to="/sobre" className="hover:text-dourado transition">Sobre</Link></li>
             <li><Link to="/contato" className="hover:text-dourado transition">Contato</Link></li>
           </ul>
@@ -144,12 +137,12 @@ export default function Header() {
               Apostilas <ChevronDown size={20} />
             </Link>
             <Link to="/apostilas?categoria=combo" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Combos</Link>
-            <Link to="/apostilas" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Materiais Grátis</Link>
+            <Link to="/apostilas?categoria=gratis" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Materiais Grátis</Link>
             <Link to="/sobre" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Sobre</Link>
             <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Contato</Link>
             
             <div className="flex items-center gap-4 mt-auto pt-10 text-xs font-corpo normal-case text-cinza-claro">
-               <a href="#">Área do Aluno</a> | <a href="#">Ajuda</a>
+               <a href="#">Ajuda</a>
             </div>
           </div>
         </div>
