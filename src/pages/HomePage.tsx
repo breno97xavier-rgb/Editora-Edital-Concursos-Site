@@ -11,34 +11,34 @@ const produtosDestaque: ProdutoCard[] = [
     slug: 'ata-mf-2026-teorico',
     titulo: 'Apostila ATA-MF 2026 — Assistente Técnico Administrativo',
     tipo: 'teorico',
-    preco: 99.90,
-    parcelamento: '8x de R$ 12,49',
+    preco: 57.80,
+    parcelamento: '6x de R$ 9,63',
     capaUrl: 'https://i.ibb.co/B24z6Cw2/1.png',
   },
   {
     slug: 'inss-2026-teorico',
     titulo: 'Apostila INSS 2026 — Técnico do Seguro Social',
     tipo: 'teorico',
-    preco: 89.90,
-    precoOriginal: 129.90,
-    parcelamento: '8x de R$ 11,24',
+    preco: 62.70,
+    precoOriginal: 89.90,
+    parcelamento: '6x de R$ 10,45',
     capaUrl: 'https://i.ibb.co/0RW9Qz3P/2.png',
   },
   {
     slug: 'sedes-df-2026-teorico',
     titulo: 'Apostila SEDES-DF 2026 — Técnico Administrativo',
     tipo: 'teorico',
-    preco: 79.90,
-    precoOriginal: 99.90,
-    parcelamento: '7x de R$ 11,41',
+    preco: 54.80,
+    precoOriginal: 79.90,
+    parcelamento: '5x de R$ 10,96',
     capaUrl: 'https://i.ibb.co/5hgHXyBj/4.png',
   },
   {
     slug: 'prf-2026-teorico',
     titulo: 'Apostila PRF 2026 — Agente Administrativo',
     tipo: 'teorico',
-    preco: 109.90,
-    parcelamento: '9x de R$ 12,21',
+    preco: 64.90,
+    parcelamento: '5x de R$ 12,98',
     capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png',
   },
 ];
@@ -90,38 +90,34 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Coluna Direita — Livros (Desktop) */}
-            <div className="lg:col-span-5 relative h-[500px] hidden lg:flex items-center justify-center">
-              <div className="absolute z-20 transform translate-y-2">
+            {/* Coluna Direita — Livros (Responsive) */}
+            <div className="md:col-span-12 lg:col-span-5 relative h-[300px] sm:h-[425px] md:h-[480px] lg:h-[500px] w-full max-w-[420px] lg:max-w-none mx-auto flex items-center justify-center overflow-visible mt-12 lg:mt-0">
+              {/* Livro Central (ATA-MF) */}
+              <div className="absolute z-20 transform translate-y-2 w-[160px] sm:w-[260px] md:w-[280px] lg:w-[320px] transition-all duration-300">
                 <Book3D 
                   capaUrl="https://i.ibb.co/B24z6Cw2/1.png"
                   titulo="Apostila ATA-MF 2026"
-                  tamanho="grande"
+                  width="100%"
                 />
               </div>
-              <div className="absolute left-0 top-12 z-10 transform -rotate-6">
+
+              {/* Livro Esquerda (INSS) */}
+              <div className="absolute left-0 sm:left-0 top-[8%] sm:top-12 z-10 transform -rotate-6 w-[110px] sm:w-[180px] md:w-[200px] lg:w-[220px] transition-all duration-300">
                 <Book3D 
                   capaUrl="https://i.ibb.co/0RW9Qz3P/2.png"
                   titulo="Apostila INSS 2026"
-                  tamanho="medio"
+                  width="100%"
                 />
               </div>
-              <div className="absolute right-0 bottom-12 z-10 transform rotate-6">
+
+              {/* Livro Direita (PRF) */}
+              <div className="absolute right-0 sm:right-0 bottom-[8%] sm:bottom-12 z-10 transform rotate-6 w-[110px] sm:w-[180px] md:w-[200px] lg:w-[220px] transition-all duration-300">
                 <Book3D 
                   capaUrl="https://i.ibb.co/WWCr1JrL/3.png"
                   titulo="Apostila PRF 2026"
-                  tamanho="medio"
+                  width="100%"
                 />
               </div>
-            </div>
-
-            {/* Livro Central — Mobile */}
-            <div className="lg:hidden flex justify-center mt-8">
-              <Book3D 
-                capaUrl="https://i.ibb.co/B24z6Cw2/1.png"
-                titulo="Apostila ATA-MF 2026"
-                tamanho="medio"
-              />
             </div>
           </div>
         </div>

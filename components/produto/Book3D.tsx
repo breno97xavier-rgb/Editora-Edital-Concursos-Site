@@ -5,6 +5,7 @@ interface BookCoverProps {
   titulo: string;
   tamanho?: TamanhoBookCover;
   className?: string;
+  width?: string;
 }
 
 const tamanhos: Record<TamanhoBookCover, { largura: number }> = {
@@ -17,7 +18,8 @@ export default function Book3D({
   capaUrl, 
   titulo, 
   tamanho = 'medio',
-  className = '' 
+  className = '',
+  width
 }: BookCoverProps) {
   const { largura } = tamanhos[tamanho];
 
@@ -25,7 +27,7 @@ export default function Book3D({
     <div 
       className={`book-cover-wrapper ${className}`}
       style={{ 
-        width: `${largura}px`,
+        width: width || `${largura}px`,
         display: 'inline-block',
       }}
     >
