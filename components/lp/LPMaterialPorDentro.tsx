@@ -25,10 +25,11 @@ const LPMaterialPorDentro: React.FC<LPMaterialPorDentroProps> = ({ paginas, conc
   };
 
   const pageNames = [
-    'Página de Introdução & Dicas',
-    'Conteúdo Teórico Avançado',
-    'Esquemas e Mnemônicos Fáceis',
-    'Questões Comentadas Passo a Passo'
+    'Apresentação & Organização',
+    'Teoria Didática e Direcionada',
+    'Quadros Resumo & Esquemas',
+    'Questões Comentadas de Concursos',
+    'Gabaritos e Explicações Detalhadas'
   ];
 
   return (

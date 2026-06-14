@@ -196,6 +196,45 @@ export const landings: Landing[] = [
     ],
     linkCheckout: 'https://pay.cakto.com.br/7mxiwud',
     seloPromocional: '⚡ Promoção Semanal Limitada',
+    paginasPreview: [
+      'https://i.ibb.co/YBQ6cky1/1.png',
+      'https://i.ibb.co/XxFq1Vb6/2.png',
+      'https://i.ibb.co/wZJMm7Y9/3.png',
+      'https://i.ibb.co/0jm5jMFC/4.png',
+      'https://i.ibb.co/d4XFWJ2m/5.png'
+    ],
+    depoimentos: [
+      {
+        nome: 'Leonardo',
+        texto: 'Excelente conteúdo! Muito organizado e direto na teoria que realmente cai na prova da PRF. Recomendo demais!',
+        foto: 'https://i.ibb.co/wNzJMxT4/Whats-App-Image-2026-02-02-at-2.jpg'
+      },
+      {
+        nome: 'Michele',
+        texto: 'O combo com o caderno de questões é maravilhoso! Já estava cansada de estudar com materiais desatualizados na internet. Esse material salvou a minha preparação.',
+        foto: 'https://i.ibb.co/9mdY0nqK/Whats-App-Image-2026-02-02-at-22-12-01.jpg'
+      },
+      {
+        nome: 'Roberta',
+        texto: 'Amei a didática da parte de Legislação Aplicada à PRF! Super mastigada, com quadros resumos maravilhosos que facilitam demais a memorização rápida.',
+        foto: 'https://i.ibb.co/k6xTvXYK/Whats-App-Image-2026-02-02-at-22-12-01bzfdeb.jpg'
+      },
+      {
+        nome: 'André',
+        texto: 'Apostila muito detalhada e bem formatada. O fato de ter acesso vitalício pelo Google Drive ajuda muito a estudar em qualquer lugar e a qualquer hora.',
+        foto: 'https://i.ibb.co/0pCTV3pJ/Whats-App-Image-2026-02-02-at-22-12-02g-dfb.jpg'
+      },
+      {
+        nome: 'Guilherme',
+        texto: 'Focado 100% no edital de Agente Administrativo da PRF. Sem rodeios e sem perda de tempo teórica. O melhor investimento que eu fiz este ano.',
+        foto: 'https://i.ibb.co/Jj69RTXG/Whats-App-Image-2026-02-04-at-23-43-59.jpg'
+      },
+      {
+        nome: 'Andressa',
+        texto: 'Suporte excelente e envio super rápido! O material de questões comentadas é crucial para fixar a teoria de forma eficiente. Nota 10 pro atendimento!',
+        foto: 'https://i.ibb.co/JFpQ3h0D/Whats-App-Image-2026-02-02-at-22-12-02vv.jpg'
+      }
+    ],
   },
   
   // ===== SEDES-DF =====
