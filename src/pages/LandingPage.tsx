@@ -58,7 +58,7 @@ export default function LandingPage() {
 
           const noscript = document.createElement('noscript');
           noscript.id = 'fb-pixel-noscript';
-          noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1986481251987169&ev=PageView&noscript=1" />`;
+          noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1986481251987169&ev=PageView&noscript=1" />;`;
           document.body.appendChild(noscript);
         } else {
           // Se já existe o script, apenas rastreia o PageView
@@ -76,6 +76,37 @@ export default function LandingPage() {
           utmifyScript.setAttribute('data-utmify-prevent-xcod-sck', '');
           utmifyScript.setAttribute('data-utmify-prevent-subids', '');
           document.head.appendChild(utmifyScript);
+        }
+      }
+
+      // Scripts específicos para PRF
+      if (lp.slug === 'prf-2026') {
+        // --- Meta Pixel (Facebook) ---
+        const fbScriptIdPrf = 'fb-pixel-script-prf';
+        if (!document.getElementById(fbScriptIdPrf)) {
+          const script = document.createElement('script');
+          script.id = fbScriptIdPrf;
+          script.innerHTML = `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '4496161147335451');
+            fbq('track', 'PageView');
+          `;
+          document.head.appendChild(script);
+
+          const noscript = document.createElement('noscript');
+          noscript.id = 'fb-pixel-noscript-prf';
+          noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4496161147335451&ev=PageView&noscript=1" />;`;
+          document.body.appendChild(noscript);
+        } else {
+          // Se já existe o script, apenas rastreia o PageView
+          if ((window as any).fbq) (window as any).fbq('track', 'PageView');
         }
       }
     }
