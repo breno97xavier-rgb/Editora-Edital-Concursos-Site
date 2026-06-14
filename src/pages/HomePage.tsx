@@ -37,8 +37,9 @@ const produtosDestaque: ProdutoCard[] = [
     slug: 'prf-2026-teorico',
     titulo: 'Apostila PRF 2026 — Agente Administrativo',
     tipo: 'teorico',
-    preco: 64.90,
-    parcelamento: '5x de R$ 12,98',
+    preco: 24.00,
+    precoOriginal: 46.00,
+    parcelamento: '2x de R$ 12,00',
     capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png',
   },
 ];

@@ -92,6 +92,8 @@ export default function LandingPage() {
     ? Math.round(((lp.precoOriginal! - lp.preco) / lp.precoOriginal!) * 100)
     : 0;
 
+  const finalLinkCheckout = lp.slug === 'prf-2026' ? '#secao-ofertas' : lp.linkCheckout;
+
   return (
     <div className="min-h-screen bg-branco">
       <SEO 
@@ -149,7 +151,7 @@ export default function LandingPage() {
                 </div>
 
                 <LPBotaoCompra 
-                  link={lp.linkCheckout} 
+                  link={finalLinkCheckout} 
                   texto="Garantir Minha Apostila Agora"
                   variante="grande"
                 />
@@ -202,7 +204,7 @@ export default function LandingPage() {
             </div>
 
             <div className="text-center mt-12">
-              <LPBotaoCompra link={lp.linkCheckout} texto="Quero Minha Apostila" variante="medio" />
+              <LPBotaoCompra link={finalLinkCheckout} texto="Quero Minha Apostila" variante="medio" />
             </div>
           </div>
         </section>
@@ -286,10 +288,191 @@ export default function LandingPage() {
             </div>
 
             <div className="text-center mt-12">
-              <LPBotaoCompra link={lp.linkCheckout} texto="Comprar Apostila Agora" variante="medio" />
+              <LPBotaoCompra link={finalLinkCheckout} texto="Comprar Apostila Agora" variante="medio" />
             </div>
           </div>
         </section>
+
+        {/* SEÇÃO DE OFERTAS (EXCLUSIVA PARA PRF) */}
+        {lp.slug === 'prf-2026' && (
+          <section id="secao-ofertas" className="py-20 bg-cinza-claro relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-dourado"></div>
+            <div className="max-w-6xl mx-auto px-6">
+              <div className="text-center mb-12">
+                <span className="inline-block bg-dourado/15 text-dourado border border-dourado/40 font-titulo font-bold text-sm px-4 py-1.5 rounded-full mb-4">
+                  ⚡ PROMOÇÃO SEMANAL • POR TEMPO LIMITADO
+                </span>
+                <h2 className="font-titulo text-3xl md:text-5xl font-bold text-azul-profundo mb-4">
+                  Escolha o seu Plano de Estudos
+                </h2>
+                <p className="text-cinza-medio text-lg max-w-2xl mx-auto">
+                  Adquira as melhores ferramentas de preparação acelerada para o concurso da Polícia Rodoviária Federal com descontos exclusivos.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+                {/* Oferta 1: Material Teórico */}
+                <div id="oferta-teorica" className="bg-branco rounded-2xl p-8 shadow-md border-2 border-transparent hover:border-dourado/40 transition-all duration-300 flex flex-col justify-between relative group">
+                  <div className="absolute top-4 right-4 z-10 bg-cinza-claro text-cinza-escuro font-titulo font-bold text-xs px-3 py-1 rounded-full">
+                    Material Teórico
+                  </div>
+                  <div>
+                    {/* Imagem do material */}
+                    <div className="flex justify-center mb-6 h-56 items-center">
+                      <div className="group-hover:scale-105 transition-transform duration-300">
+                        <Book3D 
+                          capaUrl="https://i.ibb.co/WWCr1JrL/3.png"
+                          titulo="Apostila Teórica PRF"
+                          tamanho="pequeno"
+                        />
+                      </div>
+                    </div>
+                    {/* Títulos */}
+                    <h3 className="font-titulo font-bold text-2xl text-azul-profundo mb-1">
+                      Apostila Teórica Completa
+                    </h3>
+                    <p className="text-sm text-cinza-medio mb-4">
+                      Estude toda a teoria exigida no edital focado em Agente Administrativo com didática objetiva.
+                    </p>
+
+                    {/* Divisor */}
+                    <hr className="border-cinza-claro my-4" />
+
+                    {/* Vantagens */}
+                    <ul className="space-y-3 mb-6 text-sm text-cinza-escuro">
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">✓</span>
+                        Teoria esquematizada das 9 disciplinas básicas & específicas
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">✓</span>
+                        Dicas rápidas, mnemônicos e guias pós-edital
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">✓</span>
+                        Disponível em PDFs prontos para imprimir ou ler digitalmente
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">✓</span>
+                        Acesso vitalício ao Google Drive com atualizações gratuitas
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    {/* Preços */}
+                    <div className="mb-4 bg-cinza-claro/50 rounded-xl p-4 text-center">
+                      <div className="text-cinza-medio text-sm line-through decoration-vermelho-promo/80">
+                        De R$ 46,00
+                      </div>
+                      <div className="text-azul-profundo font-titulo font-bold text-3xl">
+                        R$ 24,00 <span className="text-xs text-cinza-medio font-sans font-normal">à vista</span>
+                      </div>
+                      <div className="text-sm text-cinza-escuro mt-1">
+                        ou <span className="font-bold text-azul-profundo">2x de R$ 12,00</span> sem juros
+                      </div>
+                    </div>
+
+                    {/* Botão */}
+                    <button
+                      onClick={() => window.open(lp.linkCheckout, '_blank', 'noopener,noreferrer')}
+                      className="w-full bg-azul-profundo text-branco font-titulo font-bold py-3.5 px-6 rounded-xl hover:bg-azul-profundo/90 hover:scale-[1.01] transition-all duration-200 shadow inline-flex items-center justify-center gap-2"
+                    >
+                      <span>Garantir Material Teórico</span>
+                      <span>→</span>
+                    </button>
+                    <p className="text-center text-xs text-cinza-medio mt-3">
+                      ⚡ Envio automático instantâneo no seu e-mail
+                    </p>
+                  </div>
+                </div>
+
+                {/* Oferta 2: Combo Teoria + Questões */}
+                <div id="oferta-combo" className="bg-branco rounded-2xl p-8 shadow-xl border-2 border-dourado relative flex flex-col justify-between group overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-dourado text-azul-profundo font-titulo font-bold text-xs px-5 py-2.5 rounded-bl-xl tracking-wider uppercase shadow-sm">
+                    Recomendado • Combo de Aprovação
+                  </div>
+                  <div>
+                    {/* Imagens dos materiais (lado a lado / stacked) */}
+                    <div className="flex justify-center gap-4 mb-6 h-56 items-center pt-4">
+                      <div className="-rotate-6 group-hover:-rotate-12 transition-transform duration-300">
+                        <Book3D 
+                          capaUrl="https://i.ibb.co/WWCr1JrL/3.png"
+                          titulo="Apostila Teórica PRF"
+                          tamanho="pequeno"
+                        />
+                      </div>
+                      <div className="rotate-6 group-hover:rotate-12 transition-transform duration-300 -ml-8">
+                        <Book3D 
+                          capaUrl="https://i.ibb.co/p62t8539/6.png"
+                          titulo="Caderno de Questões PRF"
+                          tamanho="pequeno"
+                        />
+                      </div>
+                    </div>
+                    {/* Títulos */}
+                    <h3 className="font-titulo font-bold text-2xl text-azul-profundo mb-1 flex items-center gap-2">
+                      Combo Completo: Teoria + Questões
+                    </h3>
+                    <p className="text-sm text-cinza-medio mb-4">
+                      O passaporte ideal: Teoria Completa mais um Caderno com centenas de Questões comentadas.
+                    </p>
+
+                    {/* Divisor */}
+                    <hr className="border-cinza-claro my-4" />
+
+                    {/* Vantagens */}
+                    <ul className="space-y-3 mb-6 text-sm text-cinza-escuro">
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">★</span>
+                        <strong>Apostila Teórica Completa PRF</strong> inclusa
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">★</span>
+                        <strong>Caderno de Questões Completo PRF</strong> (Capa Nova 2026)
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">★</span>
+                        Centenas de questões gabaritadas e totalmente comentadas
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-dourado font-bold">★</span>
+                        Suporte prioritário personalizado via WhatsApp da editora
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    {/* Preços */}
+                    <div className="mb-4 bg-dourado/10 border border-dourado/30 rounded-xl p-4 text-center">
+                      <div className="text-cinza-escuro text-sm line-through decoration-vermelho-promo/80">
+                        De R$ 68,00
+                      </div>
+                      <div className="text-dourado font-titulo font-bold text-4xl">
+                        R$ 47,00 <span className="text-xs text-cinza-escuro font-sans font-normal">à vista</span>
+                      </div>
+                      <div className="text-sm text-cinza-escuro mt-1 font-semibold">
+                        ou <span className="font-bold text-azul-profundo">4x de R$ 11,75</span> sem juros
+                      </div>
+                    </div>
+
+                    {/* Botão */}
+                    <button
+                      onClick={() => window.open('https://pay.cakto.com.br/g6mv766', '_blank', 'noopener,noreferrer')}
+                      className="w-full bg-dourado text-azul-profundo hover:bg-dourado/90 hover:scale-[1.01] transition-all duration-200 shadow-lg font-titulo font-bold py-4 px-6 rounded-xl inline-flex items-center justify-center gap-2"
+                    >
+                      <span>Garantir o Combo com Questões</span>
+                      <span>→</span>
+                    </button>
+                    <p className="text-center text-xs text-cinza-medio mt-3">
+                      🔒 Site blindado com liberação e download imediato
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* GARANTIAS DESTACADAS */}
         <section className="py-16 bg-azul-profundo text-branco">
@@ -406,7 +589,7 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <LPBotaoCompra link={lp.linkCheckout} texto="Garantir Minha Apostila Agora" variante="grande" />
+              <LPBotaoCompra link={finalLinkCheckout} texto="Garantir Minha Apostila Agora" variante="grande" />
             </div>
 
             <div className="flex flex-wrap gap-4 mt-8 justify-center text-sm text-cinza-claro">

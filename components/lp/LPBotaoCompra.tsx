@@ -12,7 +12,14 @@ export default function LPBotaoCompra({ link, texto, variante = 'grande' }: LPBo
     // if (typeof window !== 'undefined' && (window as any).fbq) {
     //   (window as any).fbq('track', 'InitiateCheckout');
     // }
-    window.open(link, '_blank', 'noopener,noreferrer');
+    if (link.startsWith('#')) {
+      const element = document.getElementById(link.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const tamanhos = {

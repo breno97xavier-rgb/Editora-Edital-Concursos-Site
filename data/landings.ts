@@ -166,8 +166,9 @@ export const landings: Landing[] = [
     headlinePrincipal: 'Conquiste sua vaga na PRF.',
     subheadline: 'Apostila completa para Agente Administrativo da Polícia Rodoviária Federal.',
     capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png',
-    preco: 64.90,
-    parcelamento: '5x de R$ 12,98',
+    preco: 24.00,
+    precoOriginal: 46.00,
+    parcelamento: '2x de R$ 12,00',
     sobreConcurso: {
       vagas: 'Em definição',
       salarioInicial: 'R$ 9.473,57',
@@ -193,8 +194,8 @@ export const landings: Landing[] = [
       'Noções de Arquivologia',
       'Legislação Aplicada à PRF',
     ],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-PRF',
-    seloPromocional: '🔥 Oferta de lançamento',
+    linkCheckout: 'https://pay.cakto.com.br/7mxiwud',
+    seloPromocional: '⚡ Promoção Semanal Limitada',
   },
   
   // ===== SEDES-DF =====
