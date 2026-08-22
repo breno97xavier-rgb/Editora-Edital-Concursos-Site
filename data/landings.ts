@@ -236,41 +236,4 @@ export const landings: Landing[] = [
       }
     ],
   },
-  
-  // ===== SEDES-DF =====
-  {
-    slug: 'sedes-df-2026',
-    concursoSigla: 'SEDES-DF',
-    concursoNomeCompleto: 'Secretaria de Desenvolvimento Social do Distrito Federal',
-    cargo: 'Técnico Administrativo / Técnico em Assistência Social',
-    headlinePrincipal: 'SEDES-DF: a vaga é sua.',
-    subheadline: 'Material completo para os cargos de Técnico Administrativo e Técnico em Assistência Social.',
-    capaUrl: 'https://i.ibb.co/5hgHXyBj/4.png',
-    preco: 54.80,
-    precoOriginal: 79.90,
-    parcelamento: '5x de R$ 10,96',
-    sobreConcurso: {
-      vagas: 'Em definição',
-      salarioInicial: 'R$ 4.840,00',
-      nivelEscolaridade: 'Ensino Médio',
-      statusEdital: 'Previsto',
-      proximaProva: 'A confirmar',
-    },
-    oQueRecebe: [
-      'Conteúdo teórico completo conforme o último edital',
-      'Questões comentadas das principais bancas',
-      'Box de dicas, mnemônicos e fluxogramas',
-      'Acesso vitalício ao material em PDF',
-      'Suporte direto com a editora pelo WhatsApp',
-    ],
-    conteudoProgramatico: [
-      'Língua Portuguesa',
-      'Atualidades',
-      'Noções de Direito Constitucional',
-      'Noções de Direito Administrativo',
-      'Conhecimentos Específicos (Assistência Social)',
-    ],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-SEDES-DF',
-    seloPromocional: '💰 Promoção especial',
-  },
 ];

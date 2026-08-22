@@ -1,6 +1,5 @@
-import { ProdutoCard } from '@/components/produto/CardProduto';
-
-export type Categoria = 'materia' | 'concurso' | 'combo' | 'gratis';
+export type Categoria = 'materia' | 'concurso' | 'combo';
+export type TipoProduto = 'teorico' | 'questoes' | 'combo';
 export type Materia = 
   | 'portugues' 
   | 'matematica' 
@@ -9,15 +8,15 @@ export type Materia =
   | 'constitucional' 
   | 'administrativo' 
   | 'adm-publica';
-export type Concurso = 'inss' | 'prf' | 'ata-mf' | 'sedes-df';
+export type Concurso = 'prf' | 'inss' | 'bacen' | 'bb' | 'ata-mf';
+export type CheckoutStatus = 'validated' | 'pending';
 
 export interface FichaTecnica {
   instituicao: string;
   cargo: string;
-  estado: string;
-  nivel: 'Médio' | 'Superior';
-  paginas: number;
-  ultimaAtualizacao: string;
+  formato: string;
+  entrega: string;
+  ano: string;
 }
 
 export interface FAQ {
@@ -25,118 +24,111 @@ export interface FAQ {
   resposta: string;
 }
 
-export interface Produto extends ProdutoCard {
+export interface DetalhesCombo {
+  teoricoSlug: string;
+  questoesSlug: string;
+  capaTeorico: string;
+  capaQuestoes: string;
+  precoTeorico: number;
+  precoQuestoes: number;
+  valorSeparado: number;
+  economia: number;
+  economiaPercentual: number;
+}
+
+export interface Produto {
+  slug: string;
+  titulo: string;
+  tipo: TipoProduto;
   categoria: Categoria;
   materia?: Materia;
   concurso?: Concurso;
   destaque?: boolean;
   ativo: boolean;
+  capaUrl: string;
   
-  // NOVOS CAMPOS
+  // Preço oficial vigente
+  preco: number;
+  
+  // Arquitetura preparada para futuras promoções
+  precoBase?: number;
+  descontoPercentual?: number;
+  precoPromocional?: number;
+  
+  // Estrutura comercial de Checkout
+  checkoutStatus: CheckoutStatus;
+  linkCheckout?: string;
+
+  // Informações para Combos
+  comboInfo?: {
+    teoricoSlug: string;
+    questoesSlug: string;
+    capaTeorico: string;
+    capaQuestoes: string;
+  };
+
   descricaoCurta: string;
   descricaoCompleta: string;
   oQueRecebe: string[];
   fichaTecnica: FichaTecnica;
   topicosCobertos: string[];
-  linkCheckout: string;
-  faqExtra?: FAQ[]; // Perguntas específicas do produto, além das padrão
+  faqExtra?: FAQ[];
 }
 
 export const faqPadrao: FAQ[] = [
   {
     pergunta: 'Como recebo o material após a compra?',
-    resposta: 'Imediatamente após a confirmação do pagamento, você recebe no email cadastrado um link de acesso à área de membros da Cakto. Lá dentro, você terá acesso a uma pasta no Google Drive com todos os PDFs do material — pode baixar quantas vezes quiser e estudar em qualquer dispositivo.'
+    resposta: 'Após a confirmação do pagamento, é liberado o acesso para download do material em formato PDF.'
   },
   {
-    pergunta: 'O material é atualizado conforme o último edital?',
-    resposta: 'Sim. Todas as nossas apostilas são revisadas e atualizadas conforme o edital mais recente do concurso, garantindo que você estude exatamente o que será cobrado.'
+    pergunta: 'O material é digital?',
+    resposta: 'Sim, todos os nossos materiais são 100% digitais em formato PDF, compatíveis com computador, notebook, tablet, celular e leitores digitais.'
   },
   {
     pergunta: 'Posso imprimir a apostila?',
-    resposta: 'Sim, você pode imprimir o material sem nenhuma restrição, quantas vezes quiser, para uso pessoal.'
+    resposta: 'Sim, você pode imprimir o material para seu uso pessoal de estudos.'
   },
   {
-    pergunta: 'Funciona em qualquer dispositivo?',
-    resposta: 'Sim. O PDF é compatível com computador, tablet, celular e e-readers. Você pode estudar de onde estiver.'
-  },
-  {
-    pergunta: 'E se eu não gostar do material? Posso pedir reembolso?',
-    resposta: 'Sim. Oferecemos garantia de 7 dias após a compra. Se por qualquer motivo você não estiver satisfeito, basta solicitar o reembolso integral pelo nosso suporte.'
+    pergunta: 'Como tiro dúvidas sobre o material?',
+    resposta: 'Você conta com suporte direto da Editora Edital Concursos através do nosso canal oficial no WhatsApp (41) 98842-0201.'
   },
 ];
 
 export const produtos: Produto[] = [
-  // ===== CONCURSOS ESPECÍFICOS (8 produtos) =====
+  // =========================================================================
+  // ===== 1. MATERIAIS TEÓRICOS POR CONCURSO (5 PRODUTOS) =====
+  // =========================================================================
   {
-    slug: 'ata-mf-2026-teorico',
-    titulo: 'Apostila ATA-MF 2026 — Assistente Técnico Administrativo',
+    slug: 'prf-2026-teorico',
+    titulo: 'Apostila PRF 2026 — Agente Administrativo',
     tipo: 'teorico',
     categoria: 'concurso',
-    concurso: 'ata-mf',
-    preco: 57.80,
-    parcelamento: '6x de R$ 9,63',
-    capaUrl: 'https://i.ibb.co/B24z6Cw2/1.png',
+    concurso: 'prf',
+    preco: 47.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/1.png',
     destaque: true,
     ativo: true,
-    descricaoCurta: 'Apostila completa para o concurso de Assistente Técnico Administrativo do Ministério da Fazenda. Conteúdo teórico atualizado, com questões comentadas das principais bancas.',
-    descricaoCompleta: `Conquiste sua vaga no Ministério da Fazenda com a apostila mais completa do mercado para o cargo de Assistente Técnico Administrativo (ATA-MF). 
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/7mxiwud',
+    descricaoCurta: 'Material teórico digital direcionado para a preparação do concurso de Agente Administrativo da Polícia Rodoviária Federal.',
+    descricaoCompleta: `Material preparatório teórico desenvolvido para o cargo de Agente Administrativo da Polícia Rodoviária Federal (PRF).
 
-Nossa equipe editorial preparou um material que combina profundidade teórica com aplicação prática, focando exatamente no que cai na prova — sem desperdiçar seu tempo com conteúdo irrelevante.
+O conteúdo é estruturado em formato digital (PDF), voltado para o estudo individual e preparação para o concurso.
 
-Cada matéria foi organizada conforme a ordem do edital, com box de dicas, mnemônicos e questões intercaladas para fixação imediata. Você estuda, pratica e revisa no mesmo material.
-
-Material em PDF de alta qualidade, ideal para estudar em qualquer dispositivo ou imprimir para anotações. Liberação imediata após o pagamento.`,
+Compatível com leitura em computadores, tablets e smartphones ou impressão para estudo pessoal.`,
     oQueRecebe: [
-      'Conteúdo teórico completo conforme o último edital',
-      'Questões comentadas das principais bancas',
-      'Box de dicas, mnemônicos e fluxogramas',
-      'Acesso vitalício ao material em PDF',
+      'Apostila teórica digital em formato PDF',
+      'Material estruturado para o cargo de Agente Administrativo',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Ministério da Fazenda',
-      cargo: 'Assistente Técnico Administrativo',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 320,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Polícia Rodoviária Federal (PRF)',
+      cargo: 'Agente Administrativo',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: [
-      'Língua Portuguesa',
-      'Raciocínio Lógico-Matemático',
-      'Noções de Informática',
-      'Ética no Serviço Público',
-      'Gestão Pública',
-      'Regime Jurídico dos Agentes Públicos',
-    ],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-ATA-MF',
-  },
-  {
-    slug: 'ata-mf-2026-questoes',
-    titulo: 'Caderno de Questões ATA-MF 2026 — Assistente Técnico Administrativo',
-    tipo: 'questoes',
-    categoria: 'concurso',
-    concurso: 'ata-mf',
-    preco: 36.90,
-    parcelamento: '3x de R$ 12,30',
-    capaUrl: 'https://i.ibb.co/4n7V3vNx/2.png',
-    ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
-    oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
-    ],
-    fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
+    topicosCobertos: [],
   },
   {
     slug: 'inss-2026-teorico',
@@ -144,42 +136,158 @@ Material em PDF de alta qualidade, ideal para estudar em qualquer dispositivo ou
     tipo: 'teorico',
     categoria: 'concurso',
     concurso: 'inss',
-    preco: 62.70,
-    precoOriginal: 89.90,
-    parcelamento: '6x de R$ 10,45',
-    capaUrl: 'https://i.ibb.co/0RW9Qz3P/2.png',
+    preco: 44.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/2.png',
     destaque: true,
     ativo: true,
-    descricaoCurta: 'Apostila completa para o concurso de Técnico do Seguro Social do INSS. Conteúdo teórico atualizado conforme o edital, com questões comentadas das principais bancas.',
-    descricaoCompleta: `Prepare-se para o concurso do INSS com o material mais focado e completo do mercado. Nossa apostila para Técnico do Seguro Social cobre integralmente o conteúdo programático cobrado no último edital.
- 
- Material desenvolvido por uma equipe que entende a banca e sabe exatamente o que cai na prova. Cada tópico foi organizado para você estudar de forma eficiente, sem perder tempo com matéria que não cai.
- 
- Conteúdo intercalado com questões comentadas, box de dicas práticas e mnemônicos que aceleram a memorização. Tudo em PDF de alta qualidade, com liberação imediata após o pagamento.`,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material teórico digital voltado para o cargo de Técnico do Seguro Social do INSS.',
+    descricaoCompleta: `Material preparatório teórico voltado para o cargo de Técnico do Seguro Social do Instituto Nacional do Seguro Social (INSS).
+
+Elaborado em formato digital para leitura prática, revisão e acompanhamento dos estudos.
+
+Disponível em arquivo PDF para estudo em dispositivos digitais ou impressão pessoal.`,
     oQueRecebe: [
-      'Conteúdo teórico completo conforme o último edital',
-      'Questões comentadas das principais bancas',
-      'Box de dicas, mnemônicos e fluxogramas',
-      'Acesso vitalício ao material em PDF',
+      'Apostila teórica digital em formato PDF',
+      'Material estruturado para o cargo de Técnico do Seguro Social',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Instituto Nacional do Seguro Social — INSS',
+      instituicao: 'Instituto Nacional do Seguro Social (INSS)',
       cargo: 'Técnico do Seguro Social',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 340,
-      ultimaAtualizacao: 'Maio/2026',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: [
-      'Língua Portuguesa',
-      'Raciocínio Lógico-Matemático',
-      'Noções de Informática',
-      'Ética no Serviço Público',
-      'Noções de Direito Constitucional',
-      'Noções de Direito Administrativo',
-      'Conhecimentos Específicos (Seguridade Social)',
+    topicosCobertos: [],
+  },
+  {
+    slug: 'bb-2026-teorico',
+    titulo: 'Apostila Banco do Brasil 2026 — Escriturário',
+    tipo: 'teorico',
+    categoria: 'concurso',
+    concurso: 'bb',
+    preco: 42.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/4.png',
+    destaque: true,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material teórico digital direcionado para a carreira de Escriturário do Banco do Brasil.',
+    descricaoCompleta: `Material preparatório para a carreira de Escriturário do Banco do Brasil.
+
+Desenvolvido para auxiliar no aprendizado e revisão dos conteúdos da carreira bancária em formato digital prático.
+
+Disponível em arquivo PDF para leitura e estudo.`,
+    oQueRecebe: [
+      'Apostila teórica digital em formato PDF',
+      'Material estruturado para o cargo de Escriturário',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-INSS',
+    fichaTecnica: {
+      instituicao: 'Banco do Brasil (BB)',
+      cargo: 'Escriturário (Agente Comercial / TI)',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'bacen-2026-teorico',
+    titulo: 'Apostila BACEN 2026 — Analista e Técnico',
+    tipo: 'teorico',
+    categoria: 'concurso',
+    concurso: 'bacen',
+    preco: 40.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/3.png',
+    destaque: true,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material teórico digital direcionado para as carreiras do Banco Central do Brasil.',
+    descricaoCompleta: `Material preparatório teórico voltado para os cargos de Analista e Técnico do Banco Central do Brasil (BACEN).
+
+Estruturado para apoiar o estudo digital individual com leitura fluida e objetiva.
+
+Arquivo 100% digital em formato PDF.`,
+    oQueRecebe: [
+      'Apostila teórica digital em formato PDF',
+      'Material estruturado para os cargos do BACEN',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Banco Central do Brasil (BACEN)',
+      cargo: 'Analista / Técnico',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'ata-mf-2026-teorico',
+    titulo: 'Apostila ATA-MF 2026 — Assistente Técnico Administrativo',
+    tipo: 'teorico',
+    categoria: 'concurso',
+    concurso: 'ata-mf',
+    preco: 39.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/5.png',
+    destaque: true,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material teórico digital para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda.',
+    descricaoCompleta: `Material teórico para a preparação ao concurso de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF).
+
+Organizado em formato digital para estudo contínuo e consulta prática.
+
+Formato digital em PDF para leitura e estudo pessoal.`,
+    oQueRecebe: [
+      'Apostila teórica digital em formato PDF',
+      'Material estruturado para o cargo de ATA-MF',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Ministério da Fazenda (ATA-MF)',
+      cargo: 'Assistente Técnico Administrativo',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+
+  // =========================================================================
+  // ===== 2. CADERNOS DE QUESTÕES POR CONCURSO (5 PRODUTOS) =====
+  // =========================================================================
+  {
+    slug: 'prf-2026-questoes',
+    titulo: 'Caderno de Questões PRF 2026 — Agente Administrativo',
+    tipo: 'questoes',
+    categoria: 'concurso',
+    concurso: 'prf',
+    preco: 37.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/6.png',
+    destaque: true,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Caderno de questões para o cargo de Agente Administrativo da PRF com gabarito.',
+    descricaoCompleta: `Material digital de treino e fixação contendo caderno de questões com gabarito para a preparação ao concurso de Agente Administrativo da PRF.
+
+Ideal para resolução prática e verificação de respostas durante a rotina de estudos.
+
+Formato digital em PDF.`,
+    oQueRecebe: [
+      'Caderno de questões digital em formato PDF',
+      'Exercícios selecionados com gabarito',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Polícia Rodoviária Federal (PRF)',
+      cargo: 'Agente Administrativo',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
   },
   {
     slug: 'inss-2026-questoes',
@@ -187,427 +295,623 @@ Material em PDF de alta qualidade, ideal para estudar em qualquer dispositivo ou
     tipo: 'questoes',
     categoria: 'concurso',
     concurso: 'inss',
-    preco: 40.80,
-    parcelamento: '4x de R$ 10,20',
-    capaUrl: 'https://i.ibb.co/nqWxjH0B/4.png',
-    ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
-    oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
-    ],
-    fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
-  },
-  {
-    slug: 'prf-2026-teorico',
-    titulo: 'Apostila PRF 2026 — Agente Administrativo',
-    tipo: 'teorico',
-    categoria: 'concurso',
-    concurso: 'prf',
-    preco: 24.00,
-    precoOriginal: 46.00,
-    parcelamento: '2x de R$ 12,00',
-    capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png',
+    preco: 35.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/7.png',
     destaque: true,
     ativo: true,
-    descricaoCurta: 'Apostila completa para o concurso de Agente Administrativo da Polícia Rodoviária Federal. Conteúdo teórico atualizado conforme o edital.',
-    descricaoCompleta: `A apostila definitiva para quem busca uma vaga como Agente Administrativo da Polícia Rodoviária Federal. Material completo, atualizado e focado exatamente no que a banca cobra.
- 
- Conteúdo organizado seguindo a estrutura do último edital, com profundidade técnica nas matérias específicas e abordagem objetiva nas matérias básicas. Cada disciplina vem acompanhada de questões comentadas para você fixar o aprendizado.
- 
- Inclui legislação aplicada à PRF, noções de arquivologia e administração — conteúdos que costumam derrubar candidatos despreparados. PDF de alta qualidade, liberação imediata após o pagamento.`,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Caderno de questões com gabarito para o cargo de Técnico do Seguro Social do INSS.',
+    descricaoCompleta: `Material focado na resolução prática de questões com gabarito para o concurso de Técnico do Seguro Social do INSS.
+
+Formato digital em PDF voltado para o treinamento e autoavaliação do candidato.`,
     oQueRecebe: [
-      'Conteúdo teórico completo conforme o último edital',
-      'Questões comentadas das principais bancas',
-      'Box de dicas, mnemônicos e fluxogramas',
-      'Acesso vitalício ao material em PDF',
+      'Caderno de questões digital em formato PDF',
+      'Exercícios com gabarito para conferência',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Polícia Rodoviária Federal — PRF',
-      cargo: 'Agente Administrativo',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 380,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Instituto Nacional do Seguro Social (INSS)',
+      cargo: 'Técnico do Seguro Social',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: [
-      'Língua Portuguesa',
-      'Raciocínio Lógico-Matemático',
-      'Noções de Informática',
-      'Ética no Serviço Público',
-      'Noções de Direito Constitucional',
-      'Noções de Direito Administrativo',
-      'Noções de Administração',
-      'Noções de Arquivologia',
-      'Legislação Aplicada à PRF',
-    ],
-    linkCheckout: 'https://pay.cakto.com.br/7mxiwud',
+    topicosCobertos: [],
   },
   {
-    slug: 'prf-2026-questoes',
-    titulo: 'Caderno de Questões PRF 2026 — Agente Administrativo',
+    slug: 'bb-2026-questoes',
+    titulo: 'Caderno de Questões Banco do Brasil 2026 — Escriturário',
     tipo: 'questoes',
     categoria: 'concurso',
-    concurso: 'prf',
-    preco: 23.00,
-    precoOriginal: 35.00,
-    parcelamento: '2x de R$ 11,50',
-    capaUrl: 'https://i.ibb.co/p62t8539/6.png',
-    ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, more informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
-    oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
-    ],
-    fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
-  },
-  {
-    slug: 'prf-2026-combo',
-    titulo: 'Combo PRF 2026 — Apostila + Caderno de Questões',
-    tipo: 'combo' as any,
-    categoria: 'concurso',
-    concurso: 'prf',
-    preco: 47.00,
-    precoOriginal: 68.00,
-    parcelamento: '4x de R$ 11,75',
-    capaUrl: 'https://i.ibb.co/WWCr1JrL/3.png', // Or we can use a custom representation or both
+    concurso: 'bb',
+    preco: 33.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/9.png',
     destaque: true,
     ativo: true,
-    descricaoCurta: 'O combo definitivo para sua aprovação na PRF. Leve a Apostila Teórica Completa + o Caderno de Questões atualizado, economizando muito.',
-    descricaoCompleta: 'Combo com o material teórico completo de Agente Administrativo da Polícia Rodoviária Federal + o caderno de questões completo com a nova capa 2026.',
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Caderno de questões com gabarito para a carreira de Escriturário do Banco do Brasil.',
+    descricaoCompleta: `Material de prática de questões com gabarito para o concurso de Escriturário do Banco do Brasil.
+
+Projetado para fixação de conteúdo e simulação prática de provas em formato PDF.`,
     oQueRecebe: [
-      'Apostila Teórica Completa para Agente Administrativo PRF',
-      'Caderno de Questões completo PRF (capa nova)',
-      'Todos os bônus inclusos (mnemônicos, dicas, fluxogramas)',
-      'Suporte prioritário pelo WhatsApp',
+      'Caderno de questões digital em formato PDF',
+      'Exercícios com gabarito incluso',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Polícia Rodoviária Federal — PRF',
-      cargo: 'Agente Administrativo',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 580,
-      ultimaAtualizacao: 'Junho/2026',
+      instituicao: 'Banco do Brasil (BB)',
+      cargo: 'Escriturário (Agente Comercial / TI)',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: [
-      'Língua Portuguesa',
-      'Raciocínio Lógico-Matemático',
-      'Noções de Informática',
-      'Ética no Serviço Público',
-      'Noções de Direito Constitucional',
-      'Noções de Direito Administrativo',
-      'Noções de Administração',
-      'Noções de Arquivologia',
-      'Legislação Aplicada à PRF',
-    ],
-    linkCheckout: 'https://pay.cakto.com.br/g6mv766',
+    topicosCobertos: [],
   },
   {
-    slug: 'sedes-df-2026-teorico',
-    titulo: 'Apostila SEDES-DF 2026 — Técnico Administrativo',
-    tipo: 'teorico',
-    categoria: 'concurso',
-    concurso: 'sedes-df',
-    preco: 54.80,
-    precoOriginal: 79.90,
-    parcelamento: '5x de R$ 10,96',
-    capaUrl: 'https://i.ibb.co/5hgHXyBj/4.png',
-    destaque: true,
-    ativo: true,
-    descricaoCurta: 'Apostila completa para o concurso da Secretaria de Desenvolvimento Social do Distrito Federal — Técnico Administrativo e Técnico em Assistência Social.',
-    descricaoCompleta: `Material completo para o concurso da SEDES-DF, contemplando os cargos de Técnico Administrativo e Técnico em Assistência Social. Apostila atualizada conforme o último edital publicado.
- 
- Nossa abordagem prioriza o conteúdo de maior incidência na prova, com profundidade nas matérias específicas e objetividade nas matérias básicas. Você estuda o que realmente importa, sem desperdiçar tempo.
- 
- Inclui questões comentadas das bancas mais comuns em concursos do Distrito Federal, com explicação detalhada do raciocínio para resolução. PDF de alta qualidade, liberação imediata após o pagamento.`,
-    oQueRecebe: [
-      'Conteúdo teórico completo conforme o último edital',
-      'Questões comentadas das principais bancas',
-      'Box de dicas, mnemônicos e fluxogramas',
-      'Acesso vitalício ao material em PDF',
-    ],
-    fichaTecnica: {
-      instituicao: 'Secretaria de Desenvolvimento Social do Distrito Federal',
-      cargo: 'Técnico Administrativo / Técnico em Assistência Social',
-      estado: 'Distrito Federal',
-      nivel: 'Médio',
-      paginas: 290,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: [
-      'Língua Portuguesa',
-      'Atualidades',
-      'Noções de Direito Constitucional',
-      'Noções de Direito Administrativo',
-      'Conhecimentos Específicos (Assistência Social)',
-    ],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-SEDES-DF',
-  },
-  {
-    slug: 'sedes-df-2026-questoes',
-    titulo: 'Caderno de Questões SEDES-DF 2026 — Técnico Administrativo',
+    slug: 'bacen-2026-questoes',
+    titulo: 'Caderno de Questões BACEN 2026 — Analista e Técnico',
     tipo: 'questoes',
     categoria: 'concurso',
-    concurso: 'sedes-df',
-    preco: 34.90,
-    parcelamento: '3x de R$ 11,63',
-    capaUrl: 'https://i.ibb.co/MkWPfBrx/8.png',
+    concurso: 'bacen',
+    preco: 31.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/8.png',
+    destaque: false,
     ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Caderno de questões com gabarito para o concurso do Banco Central do Brasil.',
+    descricaoCompleta: `Material prático de questões com gabarito voltado para as carreiras de Analista e Técnico do BACEN.
+
+Arquivo digital em formato PDF para treino e fixação.`,
     oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
+      'Caderno de questões digital em formato PDF',
+      'Exercícios com gabarito para consulta',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Banco Central do Brasil (BACEN)',
+      cargo: 'Analista / Técnico',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
+    topicosCobertos: [],
   },
-  
-  // ===== MATÉRIAS BÁSICAS (7 produtos) =====
+  {
+    slug: 'ata-mf-2026-questoes',
+    titulo: 'Caderno de Questões ATA-MF 2026 — Assistente Técnico Administrativo',
+    tipo: 'questoes',
+    categoria: 'concurso',
+    concurso: 'ata-mf',
+    preco: 30.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/10.png',
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Caderno de questões com gabarito para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda.',
+    descricaoCompleta: `Material de exercícios com gabarito para o concurso de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF).
+
+Disponibilizado em arquivo PDF para resolução e revisão prática.`,
+    oQueRecebe: [
+      'Caderno de questões digital em formato PDF',
+      'Exercícios com gabarito para conferência',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Ministério da Fazenda (ATA-MF)',
+      cargo: 'Assistente Técnico Administrativo',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+
+  // =========================================================================
+  // ===== 3. MATÉRIAS INDIVIDUAIS (7 PRODUTOS) =====
+  // =========================================================================
   {
     slug: 'portugues-teorico',
-    titulo: 'Apostila Língua Portuguesa — Conteúdo Teórico Completo',
+    titulo: 'Apostila Língua Portuguesa — Teoria e Questões',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'portugues',
-    preco: 39.90,
-    parcelamento: '4x de R$ 9,98',
-    capaUrl: 'https://i.ibb.co/LDsXm88w/5.png',
+    preco: 27.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/11.png',
+    destaque: false,
     ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Língua Portuguesa com abordagem teórica e exercícios com gabarito para concursos públicos.',
+    descricaoCompleta: `Apostila digital direcionada ao estudo da Língua Portuguesa para concursos públicos.
+
+Reúne explanação teórica e exercícios com gabarito em formato digital para leitura em computadores, tablets ou celulares.`,
     oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
-  },
-  {
-    slug: 'matematica-teorico',
-    titulo: 'Apostila Matemática Básica — Conteúdo Teórico Completo',
-    tipo: 'teorico',
-    categoria: 'materia',
-    materia: 'matematica',
-    preco: 34.70,
-    parcelamento: '3x de R$ 11,57',
-    capaUrl: 'https://i.ibb.co/0Vtx96qd/6.png',
-    ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
-    oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
-    ],
-    fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
-  },
-  {
-    slug: 'raciocinio-logico-teorico',
-    titulo: 'Apostila Raciocínio Lógico — Conteúdo Teórico Completo',
-    tipo: 'teorico',
-    categoria: 'materia',
-    materia: 'raciocinio-logico',
-    preco: 31.80,
-    parcelamento: '3x de R$ 10,60',
-    capaUrl: 'https://i.ibb.co/MT35XFD/7.png',
-    ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
-    oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
-    ],
-    fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
-  },
-  {
-    slug: 'informatica-teorico',
-    titulo: 'Apostila Informática Básica — Conteúdo Teórico Completo',
-    tipo: 'teorico',
-    categoria: 'materia',
-    materia: 'informatica',
-    preco: 28.70,
-    parcelamento: '2x de R$ 14,35',
-    capaUrl: 'https://i.ibb.co/67VddBgw/8.png',
-    ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
-    oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
-    ],
-    fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
-    },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
+    topicosCobertos: [],
   },
   {
     slug: 'constitucional-teorico',
-    titulo: 'Apostila Direito Constitucional — Conteúdo Teórico Completo',
+    titulo: 'Apostila Direito Constitucional — Teoria e Questões',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'constitucional',
-    preco: 38.70,
-    parcelamento: '3x de R$ 12,90',
-    capaUrl: 'https://i.ibb.co/TDm5xW5k/9.png',
+    preco: 26.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/15.png',
+    destaque: false,
     ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Direito Constitucional com conteúdo teórico e exercícios para concursos públicos.',
+    descricaoCompleta: `Apostila digital estruturada para o estudo de Direito Constitucional em concursos públicos.
+
+Contém tópicos teóricos da matéria e exercícios práticos com gabarito em formato PDF.`,
     oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
+    topicosCobertos: [],
   },
   {
     slug: 'administrativo-teorico',
-    titulo: 'Apostila Direito Administrativo — Conteúdo Teórico Completo',
+    titulo: 'Apostila Direito Administrativo — Teoria e Questões',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'administrativo',
-    preco: 39.80,
-    parcelamento: '4x de R$ 9,95',
-    capaUrl: 'https://i.ibb.co/6htr31p/10.png',
+    preco: 25.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/16.png',
+    destaque: false,
     ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Direito Administrativo com fundamentação teórica e exercícios para concursos públicos.',
+    descricaoCompleta: `Material digital voltado para o estudo de Direito Administrativo em concursos públicos.
+
+Formato digital em PDF para leitura e prática de exercícios.`,
     oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
+    topicosCobertos: [],
   },
   {
     slug: 'adm-publica-teorico',
-    titulo: 'Apostila Administração Pública — Conteúdo Teórico Completo',
+    titulo: 'Apostila Administração Pública — Teoria e Questões',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'adm-publica',
-    preco: 30.80,
-    parcelamento: '3x de R$ 10,27',
-    capaUrl: 'https://i.ibb.co/qYSv5H1X/11.png',
+    preco: 24.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/17.png',
+    destaque: false,
     ativo: true,
-    descricaoCurta: 'Material de estudo desenvolvido para sua aprovação. Conteúdo atualizado conforme o último edital.',
-    descricaoCompleta: 'Em breve, mais informações sobre este material. Para dúvidas específicas, entre em contato pelo WhatsApp.',
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Administração Pública com teoria e exercícios para concursos públicos.',
+    descricaoCompleta: `Apostila digital com foco na matéria de Administração Pública para concursos.
+
+Apresenta conteúdo didático e exercícios com gabarito em arquivo PDF.`,
     oQueRecebe: [
-      'Material em PDF',
-      'Acesso vitalício',
-      'Suporte direto com a editora',
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
     ],
     fichaTecnica: {
-      instituicao: 'Diversos',
-      cargo: 'Diversos',
-      estado: 'Nacional',
-      nivel: 'Médio',
-      paginas: 200,
-      ultimaAtualizacao: 'Maio/2026',
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
     },
-    topicosCobertos: ['Conteúdo conforme edital'],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER',
+    topicosCobertos: [],
+  },
+  {
+    slug: 'matematica-teorico',
+    titulo: 'Apostila Matemática Básica — Teoria e Questões',
+    tipo: 'teorico',
+    categoria: 'materia',
+    materia: 'matematica',
+    preco: 23.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/12.png',
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Matemática com teoria e exercícios com gabarito para concursos públicos.',
+    descricaoCompleta: `Apostila digital voltada para a aprendizagem e treino de Matemática em concursos públicos.
+
+Formato digital em PDF com teoria e exercícios práticos.`,
+    oQueRecebe: [
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'raciocinio-logico-teorico',
+    titulo: 'Apostila Raciocínio Lógico — Teoria e Questões',
+    tipo: 'teorico',
+    categoria: 'materia',
+    materia: 'raciocinio-logico',
+    preco: 21.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/13.png',
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Raciocínio Lógico com conceitos teóricos e exercícios para concursos públicos.',
+    descricaoCompleta: `Material didático digital estruturado para o estudo de Raciocínio Lógico em concursos públicos.
+
+Formato digital em PDF para leitura e exercícios práticos.`,
+    oQueRecebe: [
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'informatica-teorico',
+    titulo: 'Apostila Informática Básica — Teoria e Questões',
+    tipo: 'teorico',
+    categoria: 'materia',
+    materia: 'informatica',
+    preco: 18.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/14.png',
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Material digital de Informática Básica com conteúdo teórico e exercícios para concursos públicos.',
+    descricaoCompleta: `Material digital voltado para o estudo de Informática Básica em concursos públicos.
+
+Formato digital em PDF com teoria e exercícios com gabarito.`,
+    oQueRecebe: [
+      'Apostila digital em formato PDF',
+      'Conteúdo teórico e exercícios da disciplina',
+      'Acesso ao arquivo digital para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Editora Edital Concursos',
+      cargo: 'Material por Disciplina',
+      formato: 'Digital (PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+
+  // =========================================================================
+  // ===== 4. COMBOS OFICIAIS (5 PRODUTOS) =====
+  // =========================================================================
+  {
+    slug: 'prf-2026-combo',
+    titulo: 'Combo PRF 2026 — Apostila Teórica + Caderno de Questões',
+    tipo: 'combo',
+    categoria: 'combo',
+    concurso: 'prf',
+    preco: 69.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/1.png',
+    comboInfo: {
+      teoricoSlug: 'prf-2026-teorico',
+      questoesSlug: 'prf-2026-questoes',
+      capaTeorico: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/1.png',
+      capaQuestoes: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/6.png',
+    },
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Agente Administrativo da PRF.',
+    descricaoCompleta: `Combo preparatório oficial que reúne os dois materiais digitais da Editora Edital Concursos para o cargo de Agente Administrativo da PRF:
+
+1. Apostila Teórica PRF 2026 (Agente Administrativo)
+2. Caderno de Questões PRF 2026 (Agente Administrativo)
+
+Ambos os materiais são disponibilizados em arquivos digitais PDF para download.`,
+    oQueRecebe: [
+      'Apostila Teórica Digital PRF 2026 (PDF)',
+      'Caderno de Questões Digital PRF 2026 (PDF)',
+      'Acesso aos dois arquivos digitais para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Polícia Rodoviária Federal (PRF)',
+      cargo: 'Agente Administrativo',
+      formato: 'Digital (2 arquivos em PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'inss-2026-combo',
+    titulo: 'Combo INSS 2026 — Apostila Teórica + Caderno de Questões',
+    tipo: 'combo',
+    categoria: 'combo',
+    concurso: 'inss',
+    preco: 66.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/2.png',
+    comboInfo: {
+      teoricoSlug: 'inss-2026-teorico',
+      questoesSlug: 'inss-2026-questoes',
+      capaTeorico: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/2.png',
+      capaQuestoes: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/7.png',
+    },
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Técnico do Seguro Social do INSS.',
+    descricaoCompleta: `Combo preparatório oficial que reúne os dois materiais digitais da Editora Edital Concursos para Técnico do Seguro Social do INSS:
+
+1. Apostila Teórica INSS 2026 (Técnico do Seguro Social)
+2. Caderno de Questões INSS 2026 (Técnico do Seguro Social)
+
+Entregue em formato digital PDF para download.`,
+    oQueRecebe: [
+      'Apostila Teórica Digital INSS 2026 (PDF)',
+      'Caderno de Questões Digital INSS 2026 (PDF)',
+      'Acesso aos dois arquivos digitais para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Instituto Nacional do Seguro Social (INSS)',
+      cargo: 'Técnico do Seguro Social',
+      formato: 'Digital (2 arquivos em PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'bb-2026-combo',
+    titulo: 'Combo Banco do Brasil 2026 — Apostila Teórica + Caderno de Questões',
+    tipo: 'combo',
+    categoria: 'combo',
+    concurso: 'bb',
+    preco: 64.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/4.png',
+    comboInfo: {
+      teoricoSlug: 'bb-2026-teorico',
+      questoesSlug: 'bb-2026-questoes',
+      capaTeorico: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/4.png',
+      capaQuestoes: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/9.png',
+    },
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Escriturário do Banco do Brasil.',
+    descricaoCompleta: `Combo preparatório oficial para o concurso de Escriturário do Banco do Brasil:
+
+1. Apostila Teórica Banco do Brasil 2026 (Escriturário)
+2. Caderno de Questões Banco do Brasil 2026 (Escriturário)
+
+Arquivos digitais em PDF para download após a confirmação do pagamento.`,
+    oQueRecebe: [
+      'Apostila Teórica Digital Banco do Brasil 2026 (PDF)',
+      'Caderno de Questões Digital Banco do Brasil 2026 (PDF)',
+      'Acesso aos dois arquivos digitais para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Banco do Brasil (BB)',
+      cargo: 'Escriturário (Agente Comercial / TI)',
+      formato: 'Digital (2 arquivos em PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'bacen-2026-combo',
+    titulo: 'Combo BACEN 2026 — Apostila Teórica + Caderno de Questões',
+    tipo: 'combo',
+    categoria: 'combo',
+    concurso: 'bacen',
+    preco: 62.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/3.png',
+    comboInfo: {
+      teoricoSlug: 'bacen-2026-teorico',
+      questoesSlug: 'bacen-2026-questoes',
+      capaTeorico: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/3.png',
+      capaQuestoes: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/8.png',
+    },
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para o concurso do Banco Central do Brasil.',
+    descricaoCompleta: `Combo preparatório oficial para as carreiras de Analista e Técnico do Banco Central do Brasil (BACEN):
+
+1. Apostila Teórica BACEN 2026 (Analista e Técnico)
+2. Caderno de Questões BACEN 2026 (Analista e Técnico)
+
+Formato digital em PDF para download.`,
+    oQueRecebe: [
+      'Apostila Teórica Digital BACEN 2026 (PDF)',
+      'Caderno de Questões Digital BACEN 2026 (PDF)',
+      'Acesso aos dois arquivos digitais para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Banco Central do Brasil (BACEN)',
+      cargo: 'Analista / Técnico',
+      formato: 'Digital (2 arquivos em PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
+  },
+  {
+    slug: 'ata-mf-2026-combo',
+    titulo: 'Combo ATA-MF 2026 — Apostila Teórica + Caderno de Questões',
+    tipo: 'combo',
+    categoria: 'combo',
+    concurso: 'ata-mf',
+    preco: 61.90,
+    capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/5.png',
+    comboInfo: {
+      teoricoSlug: 'ata-mf-2026-teorico',
+      questoesSlug: 'ata-mf-2026-questoes',
+      capaTeorico: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/5.png',
+      capaQuestoes: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/10.png',
+    },
+    destaque: false,
+    ativo: true,
+    checkoutStatus: 'pending',
+    descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Assistente Técnico Administrativo do Ministério da Fazenda.',
+    descricaoCompleta: `Combo preparatório oficial para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF):
+
+1. Apostila Teórica ATA-MF 2026 (Assistente Técnico Administrativo)
+2. Caderno de Questões ATA-MF 2026 (Assistente Técnico Administrativo)
+
+Arquivos digitais em PDF para download após a confirmação do pagamento.`,
+    oQueRecebe: [
+      'Apostila Teórica Digital ATA-MF 2026 (PDF)',
+      'Caderno de Questões Digital ATA-MF 2026 (PDF)',
+      'Acesso aos dois arquivos digitais para download após a confirmação',
+    ],
+    fichaTecnica: {
+      instituicao: 'Ministério da Fazenda (ATA-MF)',
+      cargo: 'Assistente Técnico Administrativo',
+      formato: 'Digital (2 arquivos em PDF)',
+      entrega: 'Download digital (PDF)',
+      ano: '2026',
+    },
+    topicosCobertos: [],
   },
 ];
 
+// =========================================================================
+// ===== FUNÇÕES REPOSITÓRIO / ACESSO CENTRAL AOS PRODUTOS =====
+// =========================================================================
+
+/**
+ * Retorna todos os produtos ativos do catálogo
+ */
+export function getProdutosAtivos(): Produto[] {
+  return produtos.filter((p) => p.ativo);
+}
+
+/**
+ * Busca um produto por slug
+ */
+export function getProdutoBySlug(slug: string): Produto | undefined {
+  return produtos.find((p) => p.slug === slug && p.ativo);
+}
+
+/**
+ * Retorna produtos filtrados por concurso
+ */
+export function getProdutosPorConcurso(concurso: Concurso): Produto[] {
+  return produtos.filter((p) => p.ativo && p.concurso === concurso);
+}
+
+/**
+ * Retorna produtos filtrados por matéria
+ */
+export function getProdutosPorMateria(materia: Materia): Produto[] {
+  return produtos.filter((p) => p.ativo && p.materia === materia);
+}
+
+/**
+ * Retorna produtos filtrados por tipo
+ */
+export function getProdutosPorTipo(tipo: TipoProduto): Produto[] {
+  return produtos.filter((p) => p.ativo && p.tipo === tipo);
+}
+
+/**
+ * Helper para obter detalhes e cálculos do combo de forma 100% dinâmica
+ * Calcula: valorSeparado = teorico.preco + questoes.preco
+ *          economia = valorSeparado - combo.preco
+ */
+export function getDetalhesCombo(combo: Produto): DetalhesCombo | null {
+  if (combo.tipo !== 'combo' || !combo.concurso) return null;
+
+  const teorico = produtos.find(
+    (p) => p.ativo && p.concurso === combo.concurso && p.tipo === 'teorico'
+  );
+  const questoes = produtos.find(
+    (p) => p.ativo && p.concurso === combo.concurso && p.tipo === 'questoes'
+  );
+
+  if (!teorico || !questoes) return null;
+
+  const precoTeorico = teorico.preco;
+  const precoQuestoes = questoes.preco;
+  const valorSeparado = Number((precoTeorico + precoQuestoes).toFixed(2));
+  const economia = Number((valorSeparado - combo.preco).toFixed(2));
+  const economiaPercentual = Number(((economia / valorSeparado) * 100).toFixed(1));
+
+  return {
+    teoricoSlug: teorico.slug,
+    questoesSlug: questoes.slug,
+    capaTeorico: teorico.capaUrl,
+    capaQuestoes: questoes.capaUrl,
+    precoTeorico,
+    precoQuestoes,
+    valorSeparado,
+    economia,
+    economiaPercentual,
+  };
+}
+
+/**
+ * Retorna produtos relacionados para exibição em páginas individuais
+ */
+export function getProdutosRelacionados(produtoAtual: Produto, limit = 3): Produto[] {
+  return produtos
+    .filter((p) => {
+      if (!p.ativo || p.slug === produtoAtual.slug) return false;
+      // Se for concurso, não inclui o complemento direto que já está na seção de vantagem
+      if (produtoAtual.concurso && p.concurso === produtoAtual.concurso) return false;
+      return true;
+    })
+    .slice(0, limit);
+}
 
 // Mapeamentos para labels legíveis
 export const labelsMaterias: Record<Materia, string> = {
   'portugues': 'Língua Portuguesa',
-  'matematica': 'Matemática Básica',
+  'matematica': 'Matemática',
   'raciocinio-logico': 'Raciocínio Lógico',
-  'informatica': 'Informática Básica',
+  'informatica': 'Informática',
   'constitucional': 'Direito Constitucional',
   'administrativo': 'Direito Administrativo',
   'adm-publica': 'Administração Pública',
 };
 
 export const labelsConcursos: Record<Concurso, string> = {
-  'inss': 'INSS',
   'prf': 'PRF',
+  'inss': 'INSS',
+  'bacen': 'BACEN',
+  'bb': 'Banco do Brasil',
   'ata-mf': 'ATA-MF',
-  'sedes-df': 'SEDES-DF',
 };

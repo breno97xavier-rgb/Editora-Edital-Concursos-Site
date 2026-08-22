@@ -1,152 +1,297 @@
-import { useState } from 'react';
-import { Search, ChevronDown, Menu, X, ArrowLeft } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, ChevronDown, Menu, X } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+
+const LOGO_DARK_HEADER = 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/1.png';
+
+const CONCURSOS_INICIAIS = [
+  { slug: 'prf', nome: 'PRF — Polícia Rodoviária Federal' },
+  { slug: 'inss', nome: 'INSS — Instituto Nacional do Seguro Social' },
+  { slug: 'bacen', nome: 'BACEN — Banco Central do Brasil' },
+  { slug: 'bb', nome: 'Banco do Brasil' },
+  { slug: 'ata-mf', nome: 'ATA-MF — Ministério da Fazenda' },
+];
+
+const MATERIAS_LISTA = [
+  { slug: 'portugues', nome: 'Língua Portuguesa' },
+  { slug: 'raciocinio-logico', nome: 'Raciocínio Lógico' },
+  { slug: 'informatica', nome: 'Informática Básica' },
+  { slug: 'constitucional', nome: 'Direito Constitucional' },
+  { slug: 'administrativo', nome: 'Direito Administrativo' },
+  { slug: 'adm-publica', nome: 'Administração Pública' },
+  { slug: 'matematica', nome: 'Matemática Básica' },
+];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [dropdownAberto, setDropdownAberto] = useState<'concurso' | 'materia' | null>(null);
+  const [termoBusca, setTermoBusca] = useState('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
-  return (
-    <header className="w-full fixed top-0 z-50 shadow-md">
-      {/* Linha 1 — Topbar fina */}
-      <div className="bg-[#0a1420] text-branco text-[10px] md:text-xs h-8 flex items-center justify-between px-4 md:px-8 border-b border-azul-profundo/20 font-corpo">
-        <div className="flex items-center gap-2">
-          <span>✓ Material 100% digital. Liberação imediata após o pagamento.</span>
-        </div>
-        <div className="hidden md:flex items-center gap-4">
-          <a href="#" className="hover:text-dourado transition">Ajuda</a>
-        </div>
-      </div>
+  // Fecha dropdowns ao clicar fora
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownAberto(null);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-      {/* Linha 2 — Header principal */}
-      <div className="bg-azul-profundo h-20 flex items-center px-4 md:px-8 gap-4 md:gap-8">
-        {/* Esquerda: Logo (com botão Voltar no Mobile se não for Home) */}
-        <div className="flex items-center gap-3 flex-shrink-0">
-          {location.pathname !== '/' && (
-            <button 
-              onClick={() => navigate(-1)} 
-              className="md:hidden text-branco hover:text-dourado transition p-1"
-              aria-label="Voltar"
-            >
-              <ArrowLeft size={24} />
-            </button>
-          )}
-          <Link to="/" className="flex items-center">
+  // Fecha menus ao mudar de rota
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setDropdownAberto(null);
+  }, [location.pathname, location.search]);
+
+  const handleBusca = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (termoBusca.trim()) {
+      navigate(`/apostilas?busca=${encodeURIComponent(termoBusca.trim())}`);
+      setIsMenuOpen(false);
+    }
+  };
+
+  return (
+    <header className="w-full fixed top-0 left-0 z-50 bg-azul-profundo border-b border-white/10 shadow-sm font-corpo">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 md:h-[84px] flex items-center justify-between gap-3 md:gap-4 lg:gap-6">
+        {/* Logo à esquerda — presença institucional destacada */}
+        <div className="flex items-center flex-shrink-0">
+          <Link to="/" className="flex items-center py-1 group" aria-label="Edital Concursos - Início">
             <img 
-              src="/logo.png" 
-              alt="Editora Edital Concursos" 
-              className="h-10 md:h-14 object-contain"
-              onError={(e) => {
-                // Fallback de texto se a imagem não carregar
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  const fallback = document.createElement('div');
-                  fallback.className = 'font-titulo font-bold text-xl md:text-2xl leading-tight';
-                  fallback.innerHTML = '<span class="text-white">EDITAL</span> <span class="text-dourado">CONCURSOS</span>';
-                  parent.appendChild(fallback);
-                }
-              }}
+              src={LOGO_DARK_HEADER} 
+              alt="Edital Concursos" 
+              className="w-[155px] sm:w-[180px] md:w-[210px] lg:w-[225px] h-auto object-contain transition-opacity duration-200 group-hover:opacity-95"
+              loading="eager"
             />
           </Link>
         </div>
 
-        {/* Centro: Barra de busca */}
-        <div className="flex-grow max-w-[600px] relative hidden md:block">
-          <input 
-            type="text" 
-            placeholder="O que você está procurando?" 
-            className="w-full bg-white text-cinza-escuro h-11 px-6 rounded-full focus:outline-none placeholder:text-cinza-medio font-corpo"
-          />
-          <button className="absolute right-4 top-1/2 -translate-y-1/2 text-dourado hover:scale-110 transition-transform" aria-label="Buscar">
-            <Search size={22} />
-          </button>
+        {/* Busca central (Desktop) */}
+        <div className="hidden md:flex flex-1 max-w-xs lg:max-w-md mx-2 lg:mx-4">
+          <form onSubmit={handleBusca} className="w-full relative">
+            <input 
+              type="search"
+              value={termoBusca}
+              onChange={(e) => setTermoBusca(e.target.value)}
+              placeholder="Qual material você procura?" 
+              className="w-full bg-white/10 hover:bg-white/15 focus:bg-white text-white focus:text-cinza-escuro h-10 pl-4 pr-10 rounded-lg text-sm border border-white/20 focus:border-amarelo-edital focus:outline-none placeholder:text-slate-300 focus:placeholder:text-cinza-medio transition-all"
+            />
+            <button 
+              type="submit" 
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-amarelo-edital transition-colors p-1" 
+              aria-label="Pesquisar"
+            >
+              <Search size={18} />
+            </button>
+          </form>
         </div>
 
-        {/* Direita: Ações */}
-        <div className="flex items-center gap-3 md:gap-6 ml-auto">
-          {/* Mobile Hamburger */}
-          <button 
-            className="md:hidden text-white ml-2" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Menu"
+        {/* Navegação Desktop à direita */}
+        <nav ref={dropdownRef} className="hidden lg:flex items-center gap-5 xl:gap-6 text-sm font-titulo font-semibold tracking-wide text-white">
+          <Link 
+            to="/apostilas" 
+            className="hover:text-amarelo-edital transition-colors py-2"
           >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            Apostilas
+          </Link>
+
+          {/* Menu Por Concurso */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownAberto(dropdownAberto === 'concurso' ? null : 'concurso')}
+              className={`flex items-center gap-1.5 py-2 hover:text-amarelo-edital transition-colors cursor-pointer ${
+                dropdownAberto === 'concurso' ? 'text-amarelo-edital' : ''
+              }`}
+            >
+              <span>Por Concurso</span>
+              <ChevronDown 
+                size={14} 
+                className={`transition-transform duration-200 ${dropdownAberto === 'concurso' ? 'rotate-180' : ''}`} 
+              />
+            </button>
+
+            {dropdownAberto === 'concurso' && (
+              <div className="absolute top-full left-0 mt-1 w-64 bg-azul-profundo border border-white/15 rounded-lg shadow-xl py-2 z-50 backdrop-blur-md">
+                <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-white/10">
+                  Principais Concursos
+                </div>
+                {CONCURSOS_INICIAIS.map((c) => (
+                  <Link
+                    key={c.slug}
+                    to={`/apostilas?concurso=${c.slug}`}
+                    className="block px-4 py-2 text-xs font-corpo text-slate-200 hover:text-azul-profundo hover:bg-amarelo-edital transition-colors"
+                  >
+                    {c.nome}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Menu Por Matéria */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownAberto(dropdownAberto === 'materia' ? null : 'materia')}
+              className={`flex items-center gap-1.5 py-2 hover:text-amarelo-edital transition-colors cursor-pointer ${
+                dropdownAberto === 'materia' ? 'text-amarelo-edital' : ''
+              }`}
+            >
+              <span>Por Matéria</span>
+              <ChevronDown 
+                size={14} 
+                className={`transition-transform duration-200 ${dropdownAberto === 'materia' ? 'rotate-180' : ''}`} 
+              />
+            </button>
+
+            {dropdownAberto === 'materia' && (
+              <div className="absolute top-full left-0 mt-1 w-60 bg-azul-profundo border border-white/15 rounded-lg shadow-xl py-2 z-50 backdrop-blur-md">
+                <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-white/10">
+                  Disciplinas
+                </div>
+                {MATERIAS_LISTA.map((m) => (
+                  <Link
+                    key={m.slug}
+                    to={`/apostilas?materia=${m.slug}`}
+                    className="block px-4 py-2 text-xs font-corpo text-slate-200 hover:text-azul-profundo hover:bg-amarelo-edital transition-colors"
+                  >
+                    {m.nome}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link 
+            to="/apostilas?tipo=questoes" 
+            className="hover:text-amarelo-edital transition-colors py-2"
+          >
+            Cadernos de Questões
+          </Link>
+
+          <Link 
+            to="/sobre" 
+            className="hover:text-amarelo-edital transition-colors py-2 text-slate-300 hover:text-white"
+          >
+            Sobre
+          </Link>
+
+          <Link 
+            to="/contato" 
+            className="hover:text-amarelo-edital transition-colors py-2 text-slate-300 hover:text-white"
+          >
+            Contato
+          </Link>
+        </nav>
+
+        {/* Botão Mobile Hamburger */}
+        <div className="flex items-center lg:hidden">
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white hover:text-amarelo-edital p-2 rounded-lg focus:outline-none transition-colors"
+            aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          >
+            {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </div>
       </div>
 
-      {/* Linha 3 — Menu de navegação */}
-      <nav className="hidden md:block bg-azul-profundo border-t border-azul-profundo/30 border-b-2 border-dourado h-12 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto h-full relative flex items-center justify-center">
-          {/* Botão Voltar alinhado ao extremo esquerdo */}
-          {location.pathname !== '/' && (
-            <button 
-              onClick={() => navigate(-1)} 
-              className="absolute left-0 h-full flex items-center gap-1.5 text-branco hover:text-dourado transition font-titulo font-semibold text-xs uppercase tracking-wider group cursor-pointer"
-              aria-label="Voltar para a página anterior"
-            >
-              <ArrowLeft size={16} className="transform group-hover:-translate-x-0.5 transition-transform" />
-              <span>Voltar</span>
-            </button>
-          )}
-
-          <ul className="flex items-center justify-center gap-8 h-full text-branco font-titulo font-semibold text-sm uppercase tracking-wide">
-            <li className="h-full">
-              <Link to="/apostilas" className="flex items-center gap-1.5 h-full hover:text-dourado transition border-b-2 border-transparent hover:border-dourado px-2 group">
-                Apostilas <ChevronDown size={14} className="group-hover:rotate-180 transition-transform" />
-              </Link>
-            </li>
-            <li><Link to="/apostilas?categoria=combo" className="hover:text-dourado transition">Combos</Link></li>
-            <li><Link to="/apostilas?categoria=gratis" className="hover:text-dourado transition">Materiais Grátis</Link></li>
-            <li><Link to="/sobre" className="hover:text-dourado transition">Sobre</Link></li>
-            <li><Link to="/contato" className="hover:text-dourado transition">Contato</Link></li>
-          </ul>
-        </div>
-      </nav>
-
-      {/* Mobile Drawer */}
+      {/* Menu Mobile Drawer */}
       {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-[112px] bg-azul-profundo z-40 transition-all duration-300">
-          <div className="p-6 flex flex-col gap-6 text-branco font-titulo font-semibold text-lg uppercase">
-            <div className="relative">
+        <div className="lg:hidden bg-azul-profundo border-t border-white/10 shadow-2xl animate-fadeIn">
+          <div className="max-w-7xl mx-auto px-4 py-6 space-y-5">
+            {/* Busca Mobile */}
+            <form onSubmit={handleBusca} className="relative">
               <input 
-                type="text" 
-                placeholder="O que você está procurando?" 
-                className="w-full bg-white text-cinza-escuro h-11 px-6 rounded-full focus:outline-none placeholder:text-cinza-medio font-corpo text-base normal-case"
+                type="search"
+                value={termoBusca}
+                onChange={(e) => setTermoBusca(e.target.value)}
+                placeholder="Qual material você procura?" 
+                className="w-full bg-white/10 focus:bg-white text-white focus:text-cinza-escuro h-11 pl-4 pr-10 rounded-lg text-sm border border-white/20 focus:border-amarelo-edital focus:outline-none placeholder:text-slate-300 focus:placeholder:text-cinza-medio"
               />
-              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dourado" size={20} />
-            </div>
-            
-            {/* Link de Voltar no topo do menu mobile se não estiver na home */}
-            {location.pathname !== '/' && (
               <button 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  navigate(-1);
-                }}
-                className="flex items-center gap-2 text-dourado font-titulo font-bold text-base uppercase self-start border-b border-white/10 pb-2 w-full text-left"
+                type="submit" 
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-amarelo-edital"
+                aria-label="Pesquisar"
               >
-                <ArrowLeft size={20} />
-                <span>Voltar</span>
+                <Search size={20} />
               </button>
-            )}
+            </form>
 
-            <Link to="/apostilas" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between border-b border-white/10 pb-2">
-              Apostilas <ChevronDown size={20} />
-            </Link>
-            <Link to="/apostilas?categoria=combo" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Combos</Link>
-            <Link to="/apostilas?categoria=gratis" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Materiais Grátis</Link>
-            <Link to="/sobre" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Sobre</Link>
-            <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="border-b border-white/10 pb-2">Contato</Link>
-            
-            <div className="flex items-center gap-4 mt-auto pt-10 text-xs font-corpo normal-case text-cinza-claro">
-               <a href="#">Ajuda</a>
-            </div>
+            {/* Links Mobile */}
+            <nav className="flex flex-col space-y-1 pt-2 font-titulo font-semibold text-sm text-white">
+              <Link 
+                to="/apostilas" 
+                className="py-3 px-3 rounded-lg hover:bg-white/5 hover:text-amarelo-edital transition-colors"
+              >
+                Apostilas
+              </Link>
+
+              {/* Seção Concursos */}
+              <div className="py-2 px-3">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                  Por Concurso
+                </span>
+                <div className="grid grid-cols-1 gap-1 pl-2 font-corpo font-normal text-sm">
+                  {CONCURSOS_INICIAIS.map((c) => (
+                    <Link
+                      key={c.slug}
+                      to={`/apostilas?concurso=${c.slug}`}
+                      className="py-1.5 text-slate-200 hover:text-amarelo-edital transition-colors"
+                    >
+                      {c.nome}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Seção Matérias */}
+              <div className="py-2 px-3">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                  Por Matéria
+                </span>
+                <div className="grid grid-cols-2 gap-1 pl-2 font-corpo font-normal text-sm">
+                  {MATERIAS_LISTA.map((m) => (
+                    <Link
+                      key={m.slug}
+                      to={`/apostilas?materia=${m.slug}`}
+                      className="py-1.5 text-slate-200 hover:text-amarelo-edital transition-colors"
+                    >
+                      {m.nome}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <Link 
+                to="/apostilas?tipo=questoes" 
+                className="py-3 px-3 rounded-lg hover:bg-white/5 hover:text-amarelo-edital transition-colors"
+              >
+                Cadernos de Questões
+              </Link>
+
+              <div className="border-t border-white/10 pt-2 flex flex-col space-y-1">
+                <Link 
+                  to="/sobre" 
+                  className="py-2.5 px-3 rounded-lg hover:bg-white/5 text-slate-300 hover:text-white transition-colors"
+                >
+                  Sobre a Editora
+                </Link>
+                <Link 
+                  to="/contato" 
+                  className="py-2.5 px-3 rounded-lg hover:bg-white/5 text-slate-300 hover:text-white transition-colors"
+                >
+                  Contato & Suporte
+                </Link>
+              </div>
+            </nav>
           </div>
         </div>
       )}
     </header>
   );
 }
+

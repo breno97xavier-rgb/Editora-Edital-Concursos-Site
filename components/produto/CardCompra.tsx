@@ -1,4 +1,6 @@
+import React from 'react';
 import { Produto } from '@/data/produtos';
+import { siteConfig, getWhatsAppLink } from '@/data/siteConfig';
 
 interface CardCompraProps {
   produto: Produto;
@@ -6,55 +8,38 @@ interface CardCompraProps {
 
 export default function CardCompra({ produto }: CardCompraProps) {
   const precoFormatado = produto.preco.toFixed(2).replace('.', ',');
-  const precoOriginalFormatado = produto.precoOriginal?.toFixed(2).replace('.', ',');
-  const temDesconto = produto.precoOriginal && produto.precoOriginal > produto.preco;
-  const percentualDesconto = temDesconto 
-    ? Math.round(((produto.precoOriginal! - produto.preco) / produto.precoOriginal!) * 100)
-    : 0;
-
-  const mensagemWhatsApp = encodeURIComponent(
-    `Olá! Tenho interesse na "${produto.titulo}". Pode me dar mais informações?`
-  );
+  const isCheckoutValidado = produto.checkoutStatus === 'validated' && Boolean(produto.linkCheckout);
+  
+  const linkCompra = isCheckoutValidado ? produto.linkCheckout! : getWhatsAppLink(produto, 'compra');
+  const linkDuvida = getWhatsAppLink(produto, 'duvida');
 
   return (
-    <div className="lg:sticky lg:top-24 bg-branco rounded-xl p-6 shadow-2xl text-cinza-escuro">
+    <div className="lg:sticky lg:top-24 bg-white rounded-xl p-6 shadow-xl border border-slate-200 text-slate-800">
       {/* Selo de liberação */}
-      <div className="flex items-center gap-2 mb-4 text-sm text-verde-sucesso font-medium">
+      <div className="flex items-center gap-2 mb-4 text-sm text-emerald-600 font-medium">
         <span>⚡</span>
-        <span>Versão Digital — Liberação Imediata</span>
+        <span>Versão Digital — Download em PDF</span>
       </div>
 
       {/* Preço */}
       <div className="mb-6">
-        {temDesconto && (
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-cinza-medio text-sm line-through">
-              R$ {precoOriginalFormatado}
-            </span>
-            <span className="bg-vermelho-promo text-branco text-xs font-bold px-2 py-0.5 rounded">
-              -{percentualDesconto}%
-            </span>
-          </div>
-        )}
+        <div className="text-xs text-slate-500 mb-1">Preço oficial:</div>
         <div className="font-titulo font-bold text-4xl text-azul-profundo">
           R$ {precoFormatado}
-        </div>
-        <div className="text-cinza-medio text-sm mt-1">
-          ou {produto.parcelamento}
         </div>
       </div>
 
       {/* Botão CTA principal */}
       <a
-        href={produto.linkCheckout}
+        href={linkCompra}
         target="_blank"
         rel="noopener noreferrer"
         className="
           block w-full text-center
-          bg-dourado text-azul-profundo
-          font-titulo font-bold text-lg
-          py-4 px-6 rounded-full
-          hover:bg-opacity-90 transition
+          bg-azul-profundo text-white
+          font-titulo font-bold text-base
+          py-3.5 px-6 rounded-xl
+          hover:bg-azul-edital transition
           mb-3
         "
       >
@@ -63,38 +48,34 @@ export default function CardCompra({ produto }: CardCompraProps) {
 
       {/* Botão WhatsApp secundário */}
       <a
-        href={`https://wa.me/5541988420201?text=${mensagemWhatsApp}`}
+        href={linkDuvida}
         target="_blank"
         rel="noopener noreferrer"
         className="
           block w-full text-center
-          bg-transparent border-2 border-cinza-claro text-cinza-escuro
-          font-titulo font-bold text-sm
-          py-3 px-6 rounded-full
-          hover:border-verde-sucesso hover:text-verde-sucesso transition
+          bg-transparent border border-slate-300 text-slate-700
+          font-titulo font-semibold text-sm
+          py-3 px-6 rounded-xl
+          hover:border-emerald-500 hover:text-emerald-700 transition
           mb-6
         "
       >
-        💬 Tirar dúvida no WhatsApp
+        Dúvidas no WhatsApp
       </a>
 
       {/* Selos de confiança */}
-      <div className="space-y-3 text-sm text-cinza-medio border-t border-cinza-claro pt-4">
-        <div className="flex items-center gap-3">
-          <span className="text-verde-sucesso text-lg">🔒</span>
-          <span>Site 100% seguro</span>
+      <div className="space-y-2.5 text-xs text-slate-500 border-t border-slate-100 pt-4">
+        <div className="flex items-center gap-2">
+          <span className="text-emerald-600 font-bold">✓</span>
+          <span>Editora especializada em concursos</span>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-verde-sucesso text-lg">✓</span>
-          <span>Garantia de 7 dias</span>
+        <div className="flex items-center gap-2">
+          <span className="text-emerald-600 font-bold">✓</span>
+          <span>Material 100% digital em PDF</span>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-verde-sucesso text-lg">⚡</span>
-          <span>Liberação imediata</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-verde-sucesso text-lg">📱</span>
-          <span>Pix, cartão ou boleto</span>
+        <div className="flex items-center gap-2">
+          <span className="text-emerald-600 font-bold">✓</span>
+          <span>Download seguro</span>
         </div>
       </div>
     </div>

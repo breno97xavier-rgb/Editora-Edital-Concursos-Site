@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
 import SidebarFiltros from './SidebarFiltros';
-import { Categoria, Materia, Concurso } from '@/data/produtos';
-
-type FaixaPreco = 'ate-50' | '50-100' | 'acima-100';
+import { X } from 'lucide-react';
 
 interface DrawerFiltrosMobileProps {
   aberto: boolean;
   onClose: () => void;
-  tiposFiltro: string[];
-  categoriasFiltro: Categoria[];
-  materiasFiltro: Materia[];
-  concursosFiltro: Concurso[];
-  faixasPrecoFiltro: FaixaPreco[];
-  atualizarFiltro: (chave: string, valor: string, ativar: boolean) => void;
-  limparFiltros: () => void;
+  concursoAtivo: string;
+  materiaAtiva: string;
+  tipoAtivo: string;
+  onSelectConcurso: (concurso: string) => void;
+  onSelectMateria: (materia: string) => void;
+  onSelectTipo: (tipo: string) => void;
+  onLimparFiltros: () => void;
   totalFiltrosAtivos: number;
 }
 
@@ -25,44 +23,68 @@ export default function DrawerFiltrosMobile(props: DrawerFiltrosMobileProps) {
     } else {
       document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => { 
+      document.body.style.overflow = ''; 
+    };
   }, [props.aberto]);
 
   if (!props.aberto) return null;
 
   return (
     <div className="lg:hidden fixed inset-0 z-50 flex">
-      {/* Overlay */}
+      {/* Overlay Backdrop */}
       <div 
-        className="absolute inset-0 bg-azul-profundo/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-azul-profundo/60 backdrop-blur-xs transition-opacity animate-fadeIn"
         onClick={props.onClose}
+        aria-hidden="true"
       />
 
-      {/* Drawer */}
-      <div className="relative ml-auto w-full max-w-sm bg-branco h-full overflow-y-auto shadow-2xl">
-        <div className="sticky top-0 bg-branco border-b border-cinza-claro p-4 flex items-center justify-between z-10">
-          <h2 className="font-titulo font-bold text-lg text-azul-profundo">
-            Filtros
-          </h2>
-          <button 
-            onClick={props.onClose}
-            className="text-2xl text-cinza-medio hover:text-azul-profundo p-2"
-            aria-label="Fechar filtros"
-          >
-            ×
-          </button>
-        </div>
-        
-        <div className="p-4">
-          <SidebarFiltros {...props} />
+      {/* Drawer Panel */}
+      <div className="relative ml-auto w-full max-w-xs sm:max-w-sm bg-slate-50 h-full overflow-y-auto shadow-2xl flex flex-col justify-between z-10 animate-slideLeft">
+        <div>
+          {/* Header do Drawer */}
+          <div className="sticky top-0 bg-white border-b border-slate-200 px-5 py-4 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <h2 className="font-titulo font-bold text-base text-azul-profundo">
+                Filtros do Catálogo
+              </h2>
+              {props.totalFiltrosAtivos > 0 && (
+                <span className="bg-azul-profundo text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  {props.totalFiltrosAtivos}
+                </span>
+              )}
+            </div>
+            <button 
+              onClick={props.onClose}
+              className="p-1.5 text-slate-500 hover:text-azul-profundo hover:bg-slate-100 rounded-lg transition-colors"
+              aria-label="Fechar filtros"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          
+          {/* Conteúdo dos Filtros */}
+          <div className="p-4">
+            <SidebarFiltros
+              concursoAtivo={props.concursoAtivo}
+              materiaAtiva={props.materiaAtiva}
+              tipoAtivo={props.tipoAtivo}
+              onSelectConcurso={props.onSelectConcurso}
+              onSelectMateria={props.onSelectMateria}
+              onSelectTipo={props.onSelectTipo}
+              onLimparFiltros={props.onLimparFiltros}
+              totalFiltrosAtivos={props.totalFiltrosAtivos}
+            />
+          </div>
         </div>
 
-        <div className="sticky bottom-0 bg-branco border-t border-cinza-claro p-4">
+        {/* Rodapé fixo para aplicar */}
+        <div className="sticky bottom-0 bg-white border-t border-slate-200 p-4 shadow-lg">
           <button
             onClick={props.onClose}
-            className="w-full bg-azul-profundo text-branco font-titulo font-bold py-3 rounded-lg hover:bg-opacity-90 transition active:scale-[0.98]"
+            className="w-full bg-azul-profundo hover:bg-azul-edital text-white font-titulo font-semibold text-sm py-3 rounded-lg transition-colors"
           >
-            Aplicar filtros
+            Ver Resultados
           </button>
         </div>
       </div>

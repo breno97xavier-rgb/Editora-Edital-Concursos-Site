@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Páginas Institucionais Canônicas -->
   <url>
     <loc>https://editoraeditalconcursos.com.br/</loc>
     <changefreq>weekly</changefreq>
@@ -13,12 +14,12 @@
   <url>
     <loc>https://editoraeditalconcursos.com.br/sobre</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://editoraeditalconcursos.com.br/contato</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://editoraeditalconcursos.com.br/termos</loc>
@@ -30,8 +31,10 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+
+  <!-- Materiais Teóricos por Concurso (5 produtos) -->
   <url>
-    <loc>https://editoraeditalconcursos.com.br/apostila/ata-mf-2026-teorico</loc>
+    <loc>https://editoraeditalconcursos.com.br/apostila/prf-2026-teorico</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -41,12 +44,108 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://editoraeditalconcursos.com.br/apostila/prf-2026-teorico</loc>
+    <loc>https://editoraeditalconcursos.com.br/apostila/bb-2026-teorico</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://editoraeditalconcursos.com.br/apostila/sedes-df-2026-teorico</loc>
+    <loc>https://editoraeditalconcursos.com.br/apostila/bacen-2026-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/ata-mf-2026-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Cadernos de Questões por Concurso (5 produtos) -->
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/prf-2026-questoes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/inss-2026-questoes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/bb-2026-questoes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/bacen-2026-questoes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/ata-mf-2026-questoes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Materiais por Matéria (7 produtos) -->
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/portugues-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/constitucional-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/administrativo-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/adm-publica-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/matematica-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/raciocinio-logico-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/informatica-teorico</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Combos Oficiais Teórico + Questões (5 produtos) -->
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/prf-2026-combo</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/inss-2026-combo</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/bb-2026-combo</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/bacen-2026-combo</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://editoraeditalconcursos.com.br/apostila/ata-mf-2026-combo</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

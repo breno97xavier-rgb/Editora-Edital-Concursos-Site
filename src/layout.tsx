@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <div className="min-h-screen flex flex-col font-corpo bg-branco text-cinza-escuro">
       <SEO />
       {!isLP && <Header />}
-      <main className={`flex-grow ${!isLP ? 'pt-[112px] md:pt-[160px]' : ''}`}>
+      <main className={`flex-grow ${!isLP ? 'pt-20 md:pt-[84px]' : ''}`}>
         {children}
       </main>
       {!isLP && <Footer />}

@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-azul-profundo: #0D1B2A;
-  --color-dourado: #C9A84C;
+  --color-azul-edital: #0C2E5C;
+  --color-azul-profundo: #071B38;
+  --color-amarelo-edital: #F4BF24;
+  --color-dourado: #F4BF24;
   --color-branco: #FFFFFF;
-  --color-cinza-claro: #F5F5F7;
-  --color-cinza-medio: #6B7280;
-  --color-cinza-escuro: #1F2937;
+  --color-cinza-claro: #F8FAFC;
+  --color-cinza-borda: #E2E8F0;
+  --color-cinza-medio: #64748B;
+  --color-cinza-escuro: #1E293B;
   --color-verde-sucesso: #10B981;
   --color-vermelho-promo: #DC2626;
 
   --font-titulo: "Montserrat", sans-serif;
   --font-corpo: "Inter", sans-serif;
+
+  --shadow-suave: 0 1px 3px 0 rgba(12, 46, 92, 0.05), 0 1px 2px 0 rgba(12, 46, 92, 0.03);
+  --shadow-card: 0 4px 6px -1px rgba(7, 27, 56, 0.05), 0 2px 4px -1px rgba(7, 27, 56, 0.03);
 }
 
 @layer base {
@@ -25,9 +31,36 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Remove outline padrão e adiciona dourado em foco para acessibilidade */
+  /* Foco acessível padronizado com Amarelo Edital */
   *:focus-visible {
-    outline: 2px solid #C9A84C;
+    outline: 2px solid #F4BF24;
     outline-offset: 2px;
+  }
+}
+
+/* Utilitários globais do Sistema Visual Edital Concursos */
+@layer components {
+  /* Botão Primário: Amarelo Edital, Texto Azul Profundo, Sem gradiente */
+  .btn-primario {
+    @apply inline-flex items-center justify-center font-titulo font-bold text-sm bg-amarelo-edital text-azul-profundo px-6 py-3 rounded-lg hover:brightness-95 active:scale-[0.99] transition-all duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Botão Secundário: Fundo transparente, borda nítida */
+  .btn-secundario-dark {
+    @apply inline-flex items-center justify-center font-titulo font-bold text-sm bg-transparent text-branco border border-white/30 hover:border-amarelo-edital hover:text-amarelo-edital px-6 py-3 rounded-lg active:scale-[0.99] transition-all duration-150 cursor-pointer;
+  }
+
+  .btn-secundario-light {
+    @apply inline-flex items-center justify-center font-titulo font-bold text-sm bg-transparent text-azul-profundo border border-azul-edital/30 hover:border-azul-edital hover:bg-azul-edital/5 px-6 py-3 rounded-lg active:scale-[0.99] transition-all duration-150 cursor-pointer;
+  }
+
+  /* Botão Terciário / Link Textual */
+  .btn-terciario {
+    @apply inline-flex items-center gap-1.5 font-titulo font-bold text-sm text-azul-edital hover:text-azul-profundo hover:underline transition-colors;
+  }
+
+  /* Padrão Global para Cards e Superfícies */
+  .card-edital {
+    @apply bg-branco rounded-xl border border-cinza-borda shadow-sm hover:shadow-md transition-shadow duration-200;
   }
 }

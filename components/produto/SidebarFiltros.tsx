@@ -1,165 +1,243 @@
 import React from 'react';
-import { Categoria, Materia, Concurso, labelsMaterias, labelsConcursos } from '@/data/produtos';
+import { Concurso, Materia, labelsConcursos, labelsMaterias } from '@/data/produtos';
+import { X, RotateCcw } from 'lucide-react';
 
-type FaixaPreco = 'ate-50' | '50-100' | 'acima-100';
+export type TipoFiltro = 'todos' | 'teorico' | 'questoes' | 'materia' | 'combo';
 
 interface SidebarFiltrosProps {
-  tiposFiltro: string[];
-  categoriasFiltro: Categoria[];
-  materiasFiltro: Materia[];
-  concursosFiltro: Concurso[];
-  faixasPrecoFiltro: FaixaPreco[];
-  atualizarFiltro: (chave: string, valor: string, ativar: boolean) => void;
-  limparFiltros: () => void;
+  concursoAtivo: string;
+  materiaAtiva: string;
+  tipoAtivo: string;
+  onSelectConcurso: (concurso: string) => void;
+  onSelectMateria: (materia: string) => void;
+  onSelectTipo: (tipo: string) => void;
+  onLimparFiltros: () => void;
   totalFiltrosAtivos: number;
 }
 
+export const OPCOES_CONCURSOS: { id: Concurso; label: string }[] = [
+  { id: 'prf', label: 'PRF — Polícia Rodoviária Federal' },
+  { id: 'inss', label: 'INSS — Seguro Social' },
+  { id: 'bacen', label: 'BACEN — Banco Central' },
+  { id: 'bb', label: 'Banco do Brasil' },
+  { id: 'ata-mf', label: 'ATA-MF — Ministério da Fazenda' },
+];
+
+export const OPCOES_MATERIAS: { id: Materia; label: string }[] = [
+  { id: 'portugues', label: 'Língua Portuguesa' },
+  { id: 'matematica', label: 'Matemática' },
+  { id: 'constitucional', label: 'Direito Constitucional' },
+  { id: 'administrativo', label: 'Direito Administrativo' },
+  { id: 'informatica', label: 'Informática' },
+  { id: 'raciocinio-logico', label: 'Raciocínio Lógico' },
+  { id: 'adm-publica', label: 'Administração Pública' },
+];
+
+export const OPCOES_TIPOS: { id: TipoFiltro; label: string }[] = [
+  { id: 'todos', label: 'Todos os materiais' },
+  { id: 'teorico', label: 'Material Teórico' },
+  { id: 'questoes', label: 'Caderno de Questões' },
+  { id: 'combo', label: 'Combo Teórico + Questões' },
+  { id: 'materia', label: 'Material por Matéria' },
+];
+
 export default function SidebarFiltros({
-  tiposFiltro,
-  categoriasFiltro,
-  materiasFiltro,
-  concursosFiltro,
-  faixasPrecoFiltro,
-  atualizarFiltro,
-  limparFiltros,
+  concursoAtivo,
+  materiaAtiva,
+  tipoAtivo,
+  onSelectConcurso,
+  onSelectMateria,
+  onSelectTipo,
+  onLimparFiltros,
   totalFiltrosAtivos,
 }: SidebarFiltrosProps) {
   return (
-    <div className="bg-branco rounded-lg p-6 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-titulo font-bold text-lg text-azul-profundo">
-          Filtros
-        </h2>
+    <div className="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs">
+      {/* Topo da Sidebar */}
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+        <div className="flex items-center gap-2">
+          <span className="font-titulo font-bold text-base text-azul-profundo">
+            Filtros
+          </span>
+          {totalFiltrosAtivos > 0 && (
+            <span className="bg-azul-profundo text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
+              {totalFiltrosAtivos}
+            </span>
+          )}
+        </div>
+
         {totalFiltrosAtivos > 0 && (
           <button
-            onClick={limparFiltros}
-            className="text-xs text-cinza-medio hover:text-azul-profundo underline"
+            onClick={onLimparFiltros}
+            className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-azul-profundo font-medium transition-colors cursor-pointer"
+            title="Limpar todos os filtros"
           >
-            Limpar tudo
+            <RotateCcw size={12} />
+            <span>Limpar</span>
           </button>
         )}
       </div>
 
-      {/* TIPO DE MATERIAL */}
-      <BlocoFiltro titulo="Tipo de material">
-        <CheckboxFiltro 
-          label="Apostila Teórica" 
-          ativo={tiposFiltro.includes('teorico')}
-          onChange={(ativo) => atualizarFiltro('tipo', 'teorico', ativo)}
-        />
-        <CheckboxFiltro 
-          label="Caderno de Questões" 
-          ativo={tiposFiltro.includes('questoes')}
-          onChange={(ativo) => atualizarFiltro('tipo', 'questoes', ativo)}
-        />
-      </BlocoFiltro>
+      <div className="space-y-6">
+        {/* 1. TIPO DE PRODUTO */}
+        <div>
+          <h3 className="font-titulo font-bold text-xs text-slate-400 uppercase tracking-wider mb-2.5">
+            Tipo de Material
+          </h3>
+          <div className="space-y-1">
+            {OPCOES_TIPOS.map((tipo) => {
+              const isSelected = (tipo.id === 'todos' && !tipoAtivo) || tipoAtivo === tipo.id;
+              return (
+                <button
+                  key={tipo.id}
+                  onClick={() => onSelectTipo(tipo.id === 'todos' ? '' : tipo.id)}
+                  className={`
+                    w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium
+                    transition-all duration-150 flex items-center justify-between
+                    ${
+                      isSelected
+                        ? 'bg-azul-profundo text-white font-semibold shadow-xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-azul-profundo'
+                    }
+                  `}
+                >
+                  <span>{tipo.label}</span>
+                  {isSelected && <span className="text-amarelo-edital font-bold text-xs">✓</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-      {/* CATEGORIA */}
-      <BlocoFiltro titulo="Categoria">
-        <CheckboxFiltro 
-          label="Matéria Básica" 
-          ativo={categoriasFiltro.includes('materia')}
-          onChange={(ativo) => atualizarFiltro('categoria', 'materia', ativo)}
-        />
-        <CheckboxFiltro 
-          label="Concurso Específico" 
-          ativo={categoriasFiltro.includes('concurso')}
-          onChange={(ativo) => atualizarFiltro('categoria', 'concurso', ativo)}
-        />
-      </BlocoFiltro>
+        {/* 2. POR CONCURSO */}
+        <div className="pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between mb-2.5">
+            <h3 className="font-titulo font-bold text-xs text-slate-400 uppercase tracking-wider">
+              Concurso
+            </h3>
+            {concursoAtivo && (
+              <button
+                onClick={() => onSelectConcurso('')}
+                className="text-[11px] text-azul-edital hover:underline flex items-center gap-0.5"
+              >
+                <span>Todos</span>
+                <X size={10} />
+              </button>
+            )}
+          </div>
 
-      {/* MATÉRIA — visível apenas se categoria=materia ou nenhuma categoria */}
-      {(categoriasFiltro.length === 0 || categoriasFiltro.includes('materia')) && (
-        <BlocoFiltro titulo="Matéria">
-          {(Object.keys(labelsMaterias) as Materia[]).map((m) => (
-            <CheckboxFiltro 
-              key={m}
-              label={labelsMaterias[m]} 
-              ativo={materiasFiltro.includes(m)}
-              onChange={(ativo) => atualizarFiltro('materia', m, ativo)}
-            />
-          ))}
-        </BlocoFiltro>
-      )}
+          <div className="space-y-1">
+            <button
+              onClick={() => onSelectConcurso('')}
+              className={`
+                w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium
+                transition-all duration-150 flex items-center justify-between
+                ${
+                  !concursoAtivo
+                    ? 'bg-azul-profundo text-white font-semibold shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-azul-profundo'
+                }
+              `}
+            >
+              <span>Todos os concursos</span>
+              {!concursoAtivo && <span className="text-amarelo-edital font-bold text-xs">✓</span>}
+            </button>
 
-      {/* CONCURSO — visível apenas se categoria=concurso ou nenhuma categoria */}
-      {(categoriasFiltro.length === 0 || categoriasFiltro.includes('concurso')) && (
-        <BlocoFiltro titulo="Concurso">
-          {(Object.keys(labelsConcursos) as Concurso[]).map((c) => (
-            <CheckboxFiltro 
-              key={c}
-              label={labelsConcursos[c]} 
-              ativo={concursosFiltro.includes(c)}
-              onChange={(ativo) => atualizarFiltro('concurso', c, ativo)}
-            />
-          ))}
-        </BlocoFiltro>
-      )}
+            {OPCOES_CONCURSOS.map((c) => {
+              const isSelected = concursoAtivo === c.id;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => onSelectConcurso(isSelected ? '' : c.id)}
+                  className={`
+                    w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium
+                    transition-all duration-150 flex items-center justify-between
+                    ${
+                      isSelected
+                        ? 'bg-azul-profundo text-white font-semibold shadow-xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-azul-profundo'
+                    }
+                  `}
+                >
+                  <span className="truncate">{labelsConcursos[c.id] || c.label}</span>
+                  {isSelected && <span className="text-amarelo-edital font-bold text-xs">✓</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-      {/* FAIXA DE PREÇO */}
-      <BlocoFiltro titulo="Faixa de preço" ultimo>
-        <CheckboxFiltro 
-          label="Até R$ 50" 
-          ativo={faixasPrecoFiltro.includes('ate-50')}
-          onChange={(ativo) => atualizarFiltro('preco', 'ate-50', ativo)}
-        />
-        <CheckboxFiltro 
-          label="R$ 50 a R$ 100" 
-          ativo={faixasPrecoFiltro.includes('50-100')}
-          onChange={(ativo) => atualizarFiltro('preco', '50-100', ativo)}
-        />
-        <CheckboxFiltro 
-          label="Acima de R$ 100" 
-          ativo={faixasPrecoFiltro.includes('acima-100')}
-          onChange={(ativo) => atualizarFiltro('preco', 'acima-100', ativo)}
-        />
-      </BlocoFiltro>
-    </div>
-  );
-}
+        {/* 3. POR MATÉRIA */}
+        <div className="pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between mb-2.5">
+            <h3 className="font-titulo font-bold text-xs text-slate-400 uppercase tracking-wider">
+              Matéria
+            </h3>
+            {materiaAtiva && (
+              <button
+                onClick={() => onSelectMateria('')}
+                className="text-[11px] text-azul-edital hover:underline flex items-center gap-0.5"
+              >
+                <span>Todas</span>
+                <X size={10} />
+              </button>
+            )}
+          </div>
 
-function BlocoFiltro({ 
-  titulo, 
-  children, 
-  ultimo = false 
-}: { 
-  titulo: string; 
-  children: React.ReactNode; 
-  ultimo?: boolean;
-}) {
-  return (
-    <div className={`${ultimo ? '' : 'border-b border-cinza-claro pb-5 mb-5'}`}>
-      <h3 className="font-titulo font-bold text-sm text-cinza-escuro uppercase tracking-wider mb-3">
-        {titulo}
-      </h3>
-      <div className="space-y-2">
-        {children}
+          <div className="space-y-1">
+            <button
+              onClick={() => onSelectMateria('')}
+              className={`
+                w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium
+                transition-all duration-150 flex items-center justify-between
+                ${
+                  !materiaAtiva
+                    ? 'bg-azul-profundo text-white font-semibold shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-azul-profundo'
+                }
+              `}
+            >
+              <span>Todas as matérias</span>
+              {!materiaAtiva && <span className="text-amarelo-edital font-bold text-xs">✓</span>}
+            </button>
+
+            {OPCOES_MATERIAS.map((m) => {
+              const isSelected = materiaAtiva === m.id;
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => onSelectMateria(isSelected ? '' : m.id)}
+                  className={`
+                    w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium
+                    transition-all duration-150 flex items-center justify-between
+                    ${
+                      isSelected
+                        ? 'bg-azul-profundo text-white font-semibold shadow-xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-azul-profundo'
+                    }
+                  `}
+                >
+                  <span className="truncate">{labelsMaterias[m.id] || m.label}</span>
+                  {isSelected && <span className="text-amarelo-edital font-bold text-xs">✓</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Botão de limpar no rodapé da sidebar */}
+        {totalFiltrosAtivos > 0 && (
+          <div className="pt-4 border-t border-slate-100">
+            <button
+              onClick={onLimparFiltros}
+              className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-titulo font-semibold text-xs py-2.5 px-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+              <RotateCcw size={13} />
+              <span>Limpar todos os filtros</span>
+            </button>
+          </div>
+        )}
       </div>
     </div>
-  );
-}
-
-function CheckboxFiltro({ 
-  label, 
-  ativo, 
-  onChange 
-}: { 
-  key?: string;
-  label: string; 
-  ativo: boolean; 
-  onChange: (ativo: boolean) => void;
-}) {
-  return (
-    <label className="flex items-center gap-3 cursor-pointer hover:text-azul-profundo transition group">
-      <input 
-        type="checkbox" 
-        checked={ativo}
-        onChange={(e) => onChange(e.target.checked)}
-        className="w-4 h-4 accent-dourado cursor-pointer rounded border-cinza-claro"
-      />
-      <span className={`text-sm ${ativo ? 'text-azul-profundo font-medium' : 'text-cinza-medio'} group-hover:text-azul-profundo transition`}>
-        {label}
-      </span>
-    </label>
   );
 }
