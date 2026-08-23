@@ -58,6 +58,7 @@ export interface Produto {
   // Estrutura comercial de Checkout
   checkoutStatus: CheckoutStatus;
   linkCheckout?: string;
+  emAtualizacao?: boolean;
 
   // Informações para Combos
   comboInfo?: {
@@ -140,7 +141,8 @@ Compatível com leitura em computadores, tablets e smartphones ou impressão par
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/2.png',
     destaque: true,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/39jre8r',
     descricaoCurta: 'Material teórico digital voltado para o cargo de Técnico do Seguro Social do INSS.',
     descricaoCompleta: `Material preparatório teórico voltado para o cargo de Técnico do Seguro Social do Instituto Nacional do Seguro Social (INSS).
 
@@ -172,6 +174,7 @@ Disponível em arquivo PDF para estudo em dispositivos digitais ou impressão pe
     destaque: true,
     ativo: true,
     checkoutStatus: 'pending',
+    emAtualizacao: true,
     descricaoCurta: 'Material teórico digital direcionado para a carreira de Escriturário do Banco do Brasil.',
     descricaoCompleta: `Material preparatório para a carreira de Escriturário do Banco do Brasil.
 
@@ -203,6 +206,7 @@ Disponível em arquivo PDF para leitura e estudo.`,
     destaque: true,
     ativo: true,
     checkoutStatus: 'pending',
+    emAtualizacao: true,
     descricaoCurta: 'Material teórico digital direcionado para as carreiras do Banco Central do Brasil.',
     descricaoCompleta: `Material preparatório teórico voltado para os cargos de Analista e Técnico do Banco Central do Brasil (BACEN).
 
@@ -233,7 +237,8 @@ Arquivo 100% digital em formato PDF.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/5.png',
     destaque: true,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/pm28qqj',
     descricaoCurta: 'Material teórico digital para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda.',
     descricaoCompleta: `Material teórico para a preparação ao concurso de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF).
 
@@ -268,7 +273,8 @@ Formato digital em PDF para leitura e estudo pessoal.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/6.png',
     destaque: true,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/q78yq2f',
     descricaoCurta: 'Caderno de questões para o cargo de Agente Administrativo da PRF com gabarito.',
     descricaoCompleta: `Material digital de treino e fixação contendo caderno de questões com gabarito para a preparação ao concurso de Agente Administrativo da PRF.
 
@@ -299,7 +305,8 @@ Formato digital em PDF.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/7.png',
     destaque: true,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/r5nx6k2',
     descricaoCurta: 'Caderno de questões com gabarito para o cargo de Técnico do Seguro Social do INSS.',
     descricaoCompleta: `Material focado na resolução prática de questões com gabarito para o concurso de Técnico do Seguro Social do INSS.
 
@@ -329,6 +336,7 @@ Formato digital em PDF voltado para o treinamento e autoavaliação do candidato
     destaque: true,
     ativo: true,
     checkoutStatus: 'pending',
+    emAtualizacao: true,
     descricaoCurta: 'Caderno de questões com gabarito para a carreira de Escriturário do Banco do Brasil.',
     descricaoCompleta: `Material de prática de questões com gabarito para o concurso de Escriturário do Banco do Brasil.
 
@@ -358,6 +366,7 @@ Projetado para fixação de conteúdo e simulação prática de provas em format
     destaque: false,
     ativo: true,
     checkoutStatus: 'pending',
+    emAtualizacao: true,
     descricaoCurta: 'Caderno de questões com gabarito para o concurso do Banco Central do Brasil.',
     descricaoCompleta: `Material prático de questões com gabarito voltado para as carreiras de Analista e Técnico do BACEN.
 
@@ -386,7 +395,8 @@ Arquivo digital em formato PDF para treino e fixação.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/10.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/7q9442u',
     descricaoCurta: 'Caderno de questões com gabarito para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda.',
     descricaoCompleta: `Material de exercícios com gabarito para o concurso de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF).
 
@@ -411,7 +421,7 @@ Disponibilizado em arquivo PDF para resolução e revisão prática.`,
   // =========================================================================
   {
     slug: 'portugues-teorico',
-    titulo: 'Apostila Língua Portuguesa — Teoria e Questões',
+    titulo: 'Apostila Língua Portuguesa',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'portugues',
@@ -419,7 +429,8 @@ Disponibilizado em arquivo PDF para resolução e revisão prática.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/11.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/8r3q4wd_1058829',
     descricaoCurta: 'Material digital de Língua Portuguesa com abordagem teórica e exercícios com gabarito para concursos públicos.',
     descricaoCompleta: `Apostila digital direcionada ao estudo da Língua Portuguesa para concursos públicos.
 
@@ -440,7 +451,7 @@ Reúne explanação teórica e exercícios com gabarito em formato digital para 
   },
   {
     slug: 'constitucional-teorico',
-    titulo: 'Apostila Direito Constitucional — Teoria e Questões',
+    titulo: 'Apostila Direito Constitucional',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'constitucional',
@@ -448,7 +459,8 @@ Reúne explanação teórica e exercícios com gabarito em formato digital para 
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/15.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/338agj9',
     descricaoCurta: 'Material digital de Direito Constitucional com conteúdo teórico e exercícios para concursos públicos.',
     descricaoCompleta: `Apostila digital estruturada para o estudo de Direito Constitucional em concursos públicos.
 
@@ -469,7 +481,7 @@ Contém tópicos teóricos da matéria e exercícios práticos com gabarito em f
   },
   {
     slug: 'administrativo-teorico',
-    titulo: 'Apostila Direito Administrativo — Teoria e Questões',
+    titulo: 'Apostila Direito Administrativo',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'administrativo',
@@ -477,7 +489,8 @@ Contém tópicos teóricos da matéria e exercícios práticos com gabarito em f
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/16.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/32fftrk',
     descricaoCurta: 'Material digital de Direito Administrativo com fundamentação teórica e exercícios para concursos públicos.',
     descricaoCompleta: `Material digital voltado para o estudo de Direito Administrativo em concursos públicos.
 
@@ -498,7 +511,7 @@ Formato digital em PDF para leitura e prática de exercícios.`,
   },
   {
     slug: 'adm-publica-teorico',
-    titulo: 'Apostila Administração Pública — Teoria e Questões',
+    titulo: 'Apostila Administração Pública',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'adm-publica',
@@ -506,7 +519,8 @@ Formato digital em PDF para leitura e prática de exercícios.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/17.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/k96xhqd',
     descricaoCurta: 'Material digital de Administração Pública com teoria e exercícios para concursos públicos.',
     descricaoCompleta: `Apostila digital com foco na matéria de Administração Pública para concursos.
 
@@ -527,7 +541,7 @@ Apresenta conteúdo didático e exercícios com gabarito em arquivo PDF.`,
   },
   {
     slug: 'matematica-teorico',
-    titulo: 'Apostila Matemática Básica — Teoria e Questões',
+    titulo: 'Apostila Matemática Básica',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'matematica',
@@ -535,7 +549,8 @@ Apresenta conteúdo didático e exercícios com gabarito em arquivo PDF.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/12.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/6z8oiok',
     descricaoCurta: 'Material digital de Matemática com teoria e exercícios com gabarito para concursos públicos.',
     descricaoCompleta: `Apostila digital voltada para a aprendizagem e treino de Matemática em concursos públicos.
 
@@ -556,7 +571,7 @@ Formato digital em PDF com teoria e exercícios práticos.`,
   },
   {
     slug: 'raciocinio-logico-teorico',
-    titulo: 'Apostila Raciocínio Lógico — Teoria e Questões',
+    titulo: 'Apostila Raciocínio Lógico',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'raciocinio-logico',
@@ -564,7 +579,8 @@ Formato digital em PDF com teoria e exercícios práticos.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/13.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/idwbr9d',
     descricaoCurta: 'Material digital de Raciocínio Lógico com conceitos teóricos e exercícios para concursos públicos.',
     descricaoCompleta: `Material didático digital estruturado para o estudo de Raciocínio Lógico em concursos públicos.
 
@@ -585,7 +601,7 @@ Formato digital em PDF para leitura e exercícios práticos.`,
   },
   {
     slug: 'informatica-teorico',
-    titulo: 'Apostila Informática Básica — Teoria e Questões',
+    titulo: 'Apostila Informática Básica',
     tipo: 'teorico',
     categoria: 'materia',
     materia: 'informatica',
@@ -593,7 +609,8 @@ Formato digital em PDF para leitura e exercícios práticos.`,
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/14.png',
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/kgv6a8y',
     descricaoCurta: 'Material digital de Informática Básica com conteúdo teórico e exercícios para concursos públicos.',
     descricaoCompleta: `Material digital voltado para o estudo de Informática Básica em concursos públicos.
 
@@ -632,7 +649,8 @@ Formato digital em PDF com teoria e exercícios com gabarito.`,
     },
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/g6mv766',
     descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Agente Administrativo da PRF.',
     descricaoCompleta: `Combo preparatório oficial que reúne os dois materiais digitais da Editora Edital Concursos para o cargo de Agente Administrativo da PRF:
 
@@ -670,7 +688,8 @@ Ambos os materiais são disponibilizados em arquivos digitais PDF para download.
     },
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/35m3vfz',
     descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Técnico do Seguro Social do INSS.',
     descricaoCompleta: `Combo preparatório oficial que reúne os dois materiais digitais da Editora Edital Concursos para Técnico do Seguro Social do INSS:
 
@@ -709,6 +728,7 @@ Entregue em formato digital PDF para download.`,
     destaque: false,
     ativo: true,
     checkoutStatus: 'pending',
+    emAtualizacao: true,
     descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Escriturário do Banco do Brasil.',
     descricaoCompleta: `Combo preparatório oficial para o concurso de Escriturário do Banco do Brasil:
 
@@ -747,6 +767,7 @@ Arquivos digitais em PDF para download após a confirmação do pagamento.`,
     destaque: false,
     ativo: true,
     checkoutStatus: 'pending',
+    emAtualizacao: true,
     descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para o concurso do Banco Central do Brasil.',
     descricaoCompleta: `Combo preparatório oficial para as carreiras de Analista e Técnico do Banco Central do Brasil (BACEN):
 
@@ -784,7 +805,8 @@ Formato digital em PDF para download.`,
     },
     destaque: false,
     ativo: true,
-    checkoutStatus: 'pending',
+    checkoutStatus: 'validated',
+    linkCheckout: 'https://pay.cakto.com.br/m5yjj7h_884005',
     descricaoCurta: 'Pacote digital completo reunindo a Apostila Teórica e o Caderno de Questões para Assistente Técnico Administrativo do Ministério da Fazenda.',
     descricaoCompleta: `Combo preparatório oficial para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF):
 

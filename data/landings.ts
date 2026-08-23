@@ -153,7 +153,7 @@ export const landings: Landing[] = [
       'Noções de Direito Administrativo',
       'Conhecimentos Específicos (Seguridade Social)',
     ],
-    linkCheckout: 'https://pay.cakto.com.br/PLACEHOLDER-INSS',
+    linkCheckout: 'https://pay.cakto.com.br/35m3vfz',
     seloPromocional: '💰 Promoção especial',
   },
   
