@@ -95,18 +95,21 @@ export default function LandingPage() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '4496161147335451');
+            fbq('init', '906488148459191');
             fbq('track', 'PageView');
           `;
           document.head.appendChild(script);
 
           const noscript = document.createElement('noscript');
           noscript.id = 'fb-pixel-noscript-prf';
-          noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4496161147335451&ev=PageView&noscript=1" />;`;
+          noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=906488148459191&ev=PageView&noscript=1" />`;
           document.body.appendChild(noscript);
         } else {
           // Se já existe o script, apenas rastreia o PageView
-          if ((window as any).fbq) (window as any).fbq('track', 'PageView');
+          if ((window as any).fbq) {
+            (window as any).fbq('init', '906488148459191');
+            (window as any).fbq('track', 'PageView');
+          }
         }
       }
     }

@@ -21,6 +21,40 @@ export default function DetalheProdutoPage() {
 
   const produto = produtos.find((p) => p.slug === slug);
 
+  // Meta Pixel específico para materiais PRF (Teórico, Questões e Combo)
+  useEffect(() => {
+    if (produto && produto.concurso === 'prf') {
+      const fbScriptIdPrf = 'fb-pixel-script-prf';
+      if (!document.getElementById(fbScriptIdPrf)) {
+        const script = document.createElement('script');
+        script.id = fbScriptIdPrf;
+        script.innerHTML = `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '906488148459191');
+          fbq('track', 'PageView');
+        `;
+        document.head.appendChild(script);
+
+        const noscript = document.createElement('noscript');
+        noscript.id = 'fb-pixel-noscript-prf';
+        noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=906488148459191&ev=PageView&noscript=1" />`;
+        document.body.appendChild(noscript);
+      } else {
+        if ((window as any).fbq) {
+          (window as any).fbq('init', '906488148459191');
+          (window as any).fbq('track', 'PageView');
+        }
+      }
+    }
+  }, [produto]);
+
   // Se o produto não existir ou estiver inativo (ex: prf-2026-combo), exibe 404 polido
   if (!produto || !produto.ativo) {
     return <NotFoundProduto />;
