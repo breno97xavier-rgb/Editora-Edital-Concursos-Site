@@ -17,6 +17,9 @@ import LandingPage from './pages/LandingPage';
 import TermosPage from './pages/TermosPage';
 import PrivacidadePage from './pages/PrivacidadePage';
 import NotFoundPage from './pages/NotFoundPage';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminAvaliacoesPage from './pages/admin/AdminAvaliacoesPage';
+import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
 
 export default function App() {
   return (
@@ -32,6 +35,18 @@ export default function App() {
         <Route path="/privacidade" element={<PrivacidadePage />} />
         <Route path="/teste-book3d" element={<TesteBook3DPage />} />
         <Route path="/teste-cards" element={<TesteCardsPage />} />
+
+        {/* Rotas Administrativas */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route
+          path="/admin/avaliacoes"
+          element={
+            <AdminProtectedRoute>
+              <AdminAvaliacoesPage />
+            </AdminProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </RootLayout>

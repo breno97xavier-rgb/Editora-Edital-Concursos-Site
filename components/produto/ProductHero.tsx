@@ -3,6 +3,7 @@ import { ShieldCheck, Zap, FileText, ArrowRight, MessageSquare, Sparkles } from 
 import Book3D from './Book3D';
 import ComboCover from './ComboCover';
 import ModalMaterialEmAtualizacao from './ModalMaterialEmAtualizacao';
+import ProductReviewSummary from '@/components/reviews/ProductReviewSummary';
 import { 
   Produto, 
   labelsConcursos, 
@@ -122,10 +123,15 @@ export default function ProductHero({ produto }: ProductHeroProps) {
 
             {/* Subtítulo de Contexto (Concurso ou Disciplina) */}
             {contexto && (
-              <p className="text-sm font-semibold text-slate-500 mb-4">
+              <p className="text-sm font-semibold text-slate-500 mb-2.5">
                 {contexto}
               </p>
             )}
+
+            {/* Resumo de Avaliações / Estrelas */}
+            <div className="mb-4">
+              <ProductReviewSummary productSlug={produto.slug} />
+            </div>
 
             {/* Descrição Curta Editorial */}
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">

@@ -10,6 +10,7 @@ import ProductComplement from '@/components/produto/ProductComplement';
 import ProductContent from '@/components/produto/ProductContent';
 import RelatedProducts from '@/components/produto/RelatedProducts';
 import WhatsAppSupport from '@/components/produto/WhatsAppSupport';
+import ProductReviewsSection from '@/components/reviews/ProductReviewsSection';
 
 export default function DetalheProdutoPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -118,13 +119,16 @@ export default function DetalheProdutoPage() {
           {/* 4. CONTEÚDO PROGRAMÁTICO E DESCRIÇÃO EDITORIAL */}
           <ProductContent produto={produto} />
 
-          {/* 5. OUTROS MATERIAIS PARA SEUS ESTUDOS */}
+          {/* 5. AVALIAÇÕES PÚBLICAS REAIS DOS ALUNOS */}
+          <ProductReviewsSection productSlug={produto.slug} />
+
+          {/* 6. OUTROS MATERIAIS PARA SEUS ESTUDOS */}
           <RelatedProducts produtoAtual={produto} />
 
-          {/* 6. ATENDIMENTO WHATSAPP INSTITUCIONAL */}
+          {/* 7. ATENDIMENTO WHATSAPP INSTITUCIONAL */}
           <WhatsAppSupport tituloProduto={produto.titulo} />
 
-          {/* 7. NAVEGAÇÃO DE RETORNO AO CATÁLOGO */}
+          {/* 8. NAVEGAÇÃO DE RETORNO AO CATÁLOGO */}
           <div className="mt-8 pt-6 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-4">
             <Link
               to="/apostilas"
