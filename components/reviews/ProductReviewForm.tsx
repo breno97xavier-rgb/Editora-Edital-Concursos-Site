@@ -66,9 +66,7 @@ export default function ProductReviewForm({
     }
 
     const trimmedComment = comment.trim();
-    if (!trimmedComment) {
-      errors.comment = 'Escreva seu comentário sobre o material.';
-    } else if (trimmedComment.length > 5000) {
+    if (trimmedComment.length > 5000) {
       errors.comment = 'Seu comentário ultrapassa o limite de 5.000 caracteres.';
     }
 
@@ -367,7 +365,7 @@ export default function ProductReviewForm({
         </div>
 
         {/* ========================================================================= */}
-        {/* CAMPO 4: COMENTÁRIO */}
+        {/* CAMPO 4: COMENTÁRIO (OPCIONAL) */}
         {/* ========================================================================= */}
         <div>
           <div className="flex items-center justify-between mb-1">
@@ -376,7 +374,7 @@ export default function ProductReviewForm({
               className="block text-xs sm:text-sm font-bold text-azul-profundo"
             >
               Conte como foi sua experiência com o material{' '}
-              <span className="text-rose-500">*</span>
+              <span className="text-slate-400 font-normal text-xs">(opcional)</span>
             </label>
             <span className="text-[11px] text-slate-400">
               {comment.length} / 5.000
@@ -387,7 +385,7 @@ export default function ProductReviewForm({
             rows={4}
             value={comment}
             maxLength={5000}
-            placeholder="Destaque a didática, questões resolvidas, pontos positivos e como o material ajudou na sua preparação..."
+            placeholder="Opcional: destaque a didática, questões resolvidas, pontos positivos e como o material ajudou na sua preparação..."
             onChange={(e) => {
               setComment(e.target.value);
               if (fieldErrors.comment) {
@@ -411,7 +409,7 @@ export default function ProductReviewForm({
         {/* AVISO DE PRIVACIDADE */}
         {/* ========================================================================= */}
         <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed bg-white/70 p-3 rounded-xl border border-slate-200/60">
-          🔒 <strong className="font-semibold text-slate-700">Privacidade:</strong> Seu nome escolhido, nota e comentário poderão aparecer publicamente após moderação. Seu e-mail não será publicado.
+          🔒 <strong className="font-semibold text-slate-700">Privacidade:</strong> Seu nome escolhido, nota e comentário (se preenchido) poderão aparecer publicamente após moderação. Seu e-mail não será publicado.
         </p>
 
         {/* ========================================================================= */}

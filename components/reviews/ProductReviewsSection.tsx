@@ -51,23 +51,6 @@ const ReviewStars: React.FC<ReviewStarsProps> = ({ rating, size = 16 }) => {
   );
 };
 
-/**
- * Formata data em formato amigável no padrão brasileiro (ex: 8 de setembro de 2026).
- */
-function formatarDataPtBr(dataIso: string): string {
-  try {
-    const data = new Date(dataIso);
-    if (isNaN(data.getTime())) return '';
-    return new Intl.DateTimeFormat('pt-BR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }).format(data);
-  } catch {
-    return '';
-  }
-}
-
 interface ReviewCardProps {
   review: ProductReview;
 }
@@ -76,13 +59,12 @@ interface ReviewCardProps {
  * Card individual de avaliação do aluno.
  */
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
-  const dataFormatada = formatarDataPtBr(review.created_at);
-  const dataRespostaFormatada = review.replied_at ? formatarDataPtBr(review.replied_at) : null;
+  const temComentario = Boolean(review.comment && review.comment.trim().length > 0);
 
   return (
     <article className="bg-white rounded-xl border border-slate-200/90 p-5 sm:p-6 shadow-xs transition-shadow hover:shadow-sm">
-      {/* Cabeçalho da avaliação: Nome, Nota e Data */}
-      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+      {/* Cabeçalho da avaliação: Nome e Nota */}
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
         <div>
           <div>
             <span className="font-titulo font-bold text-azul-profundo text-base">
@@ -93,19 +75,16 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           <div className="flex items-center gap-2 mt-1">
             <ReviewStars rating={review.rating} size={15} />
             <span className="sr-only">Nota {review.rating} de 5 estrelas</span>
-            {dataFormatada && (
-              <span className="text-xs text-slate-400">
-                · {dataFormatada}
-              </span>
-            )}
           </div>
         </div>
       </div>
 
-      {/* Comentário da avaliação */}
-      <p className="text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-        {review.comment}
-      </p>
+      {/* Comentário da avaliação (quando preenchido) */}
+      {temComentario && (
+        <p className="text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-line mt-2">
+          {review.comment}
+        </p>
+      )}
 
       {/* Resposta Oficial da Editora (quando existir) */}
       {review.admin_reply && (
@@ -115,11 +94,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
               <MessageSquareQuote size={15} className="text-azul-edital" />
               <span>Resposta da Editora Edital Concursos</span>
             </div>
-            {dataRespostaFormatada && (
-              <span className="text-[11px] text-slate-400">
-                {dataRespostaFormatada}
-              </span>
-            )}
           </div>
           <p className="text-slate-600 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
             {review.admin_reply}
@@ -128,7 +102,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       )}
     </article>
   );
-}
+};
 
 export default function ProductReviewsSection({ productSlug }: ProductReviewsSectionProps) {
   const [summary, setSummary] = useState<ReviewSummary | null>(null);
