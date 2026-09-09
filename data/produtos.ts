@@ -1,3 +1,8 @@
+import { ProductSampleKey, productSamples, getProductSamplePages } from './productSamples';
+
+export type { ProductSampleKey };
+export { productSamples, getProductSamplePages };
+
 export type Categoria = 'materia' | 'concurso' | 'combo';
 export type TipoProduto = 'teorico' | 'questoes' | 'combo';
 export type Materia = 
@@ -36,6 +41,20 @@ export interface DetalhesCombo {
   economiaPercentual: number;
 }
 
+export interface ProductPromotion {
+  active: boolean;
+  discountPercent: number;
+}
+
+export interface InfoPrecoProduto {
+  precoOriginal: number;
+  precoEfetivo: number;
+  temPromocao: boolean;
+  descontoPercentual: number;
+  precoOriginalFormatado: string;
+  precoEfetivoFormatado: string;
+}
+
 export interface Produto {
   slug: string;
   titulo: string;
@@ -47,9 +66,12 @@ export interface Produto {
   ativo: boolean;
   capaUrl: string;
   
-  // Preço oficial vigente
+  // Preço original base
   preco: number;
   
+  // Camada promocional temporária
+  promotion?: ProductPromotion;
+
   // Arquitetura preparada para futuras promoções
   precoBase?: number;
   descontoPercentual?: number;
@@ -67,6 +89,9 @@ export interface Produto {
     capaTeorico: string;
     capaQuestoes: string;
   };
+
+  // Amostra do material
+  sampleKey?: ProductSampleKey;
 
   descricaoCurta: string;
   descricaoCompleta: string;
@@ -106,11 +131,16 @@ export const produtos: Produto[] = [
     categoria: 'concurso',
     concurso: 'prf',
     preco: 47.90,
+    promotion: {
+      active: true,
+      discountPercent: 10,
+    },
     capaUrl: 'https://ycagvwsvccgdjzpbhrfi.supabase.co/storage/v1/object/public/Editora/Capas%203D/1.png',
     destaque: true,
     ativo: true,
     checkoutStatus: 'validated',
     linkCheckout: 'https://pay.cakto.com.br/7mxiwud',
+    sampleKey: 'teoricoGeral',
     descricaoCurta: 'Material teórico digital direcionado para a preparação do concurso de Agente Administrativo da Polícia Rodoviária Federal.',
     descricaoCompleta: `Material preparatório teórico desenvolvido para o cargo de Agente Administrativo da Polícia Rodoviária Federal (PRF).
 
@@ -143,6 +173,7 @@ Compatível com leitura em computadores, tablets e smartphones ou impressão par
     ativo: true,
     checkoutStatus: 'validated',
     linkCheckout: 'https://pay.cakto.com.br/39jre8r',
+    sampleKey: 'teoricoGeral',
     descricaoCurta: 'Material teórico digital voltado para o cargo de Técnico do Seguro Social do INSS.',
     descricaoCompleta: `Material preparatório teórico voltado para o cargo de Técnico do Seguro Social do Instituto Nacional do Seguro Social (INSS).
 
@@ -239,6 +270,7 @@ Arquivo 100% digital em formato PDF.`,
     ativo: true,
     checkoutStatus: 'validated',
     linkCheckout: 'https://pay.cakto.com.br/pm28qqj',
+    sampleKey: 'teoricoGeral',
     descricaoCurta: 'Material teórico digital para o cargo de Assistente Técnico Administrativo do Ministério da Fazenda.',
     descricaoCompleta: `Material teórico para a preparação ao concurso de Assistente Técnico Administrativo do Ministério da Fazenda (ATA-MF).
 
@@ -902,6 +934,28 @@ export function getDetalhesCombo(combo: Produto): DetalhesCombo | null {
     valorSeparado,
     economia,
     economiaPercentual,
+  };
+}
+
+/**
+ * Helper para resolver preços e camada promocional de produtos
+ */
+export function getInfoPreco(produto: Produto): InfoPrecoProduto {
+  const precoOriginal = produto.preco;
+  const temPromocao = Boolean(produto.promotion?.active && produto.promotion.discountPercent > 0);
+  const descontoPercentual = temPromocao ? produto.promotion!.discountPercent : 0;
+  
+  const precoEfetivo = temPromocao
+    ? Number((precoOriginal * (1 - descontoPercentual / 100)).toFixed(2))
+    : precoOriginal;
+
+  return {
+    precoOriginal,
+    precoEfetivo,
+    temPromocao,
+    descontoPercentual,
+    precoOriginalFormatado: precoOriginal.toFixed(2).replace('.', ','),
+    precoEfetivoFormatado: precoEfetivo.toFixed(2).replace('.', ','),
   };
 }
 

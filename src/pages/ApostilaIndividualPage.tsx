@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen } from 'lucide-react';
-import { produtos, labelsConcursos, labelsMaterias, Concurso, Materia } from '@/data/produtos';
+import { produtos, labelsConcursos, labelsMaterias, Concurso, Materia, getInfoPreco } from '@/data/produtos';
 import NotFoundProduto from './NotFoundProduto';
 import SEO from '@/components/SEO';
 import ProductBreadcrumb from '@/components/produto/ProductBreadcrumb';
 import ProductHero from '@/components/produto/ProductHero';
 import ProductComplement from '@/components/produto/ProductComplement';
 import ProductContent from '@/components/produto/ProductContent';
+import ProductSampleSection from '@/components/produto/ProductSampleSection';
 import RelatedProducts from '@/components/produto/RelatedProducts';
 import WhatsAppSupport from '@/components/produto/WhatsAppSupport';
 import ProductReviewsSection from '@/components/reviews/ProductReviewsSection';
@@ -84,7 +85,7 @@ export default function DetalheProdutoPage() {
       '@type': 'Offer',
       url: `https://editoraeditalconcursos.com.br/apostila/${produto.slug}`,
       priceCurrency: 'BRL',
-      price: produto.preco.toFixed(2),
+      price: getInfoPreco(produto).precoEfetivo.toFixed(2),
       availability: 'https://schema.org/InStock',
       seller: {
         '@type': 'Organization',
@@ -119,16 +120,19 @@ export default function DetalheProdutoPage() {
           {/* 4. CONTEÚDO PROGRAMÁTICO E DESCRIÇÃO EDITORIAL */}
           <ProductContent produto={produto} />
 
-          {/* 5. AVALIAÇÕES PÚBLICAS REAIS DOS ALUNOS */}
+          {/* 5. AMOSTRA DO MATERIAL ("Veja o material por dentro") */}
+          <ProductSampleSection produto={produto} />
+
+          {/* 6. AVALIAÇÕES PÚBLICAS REAIS DOS ALUNOS */}
           <ProductReviewsSection productSlug={produto.slug} />
 
-          {/* 6. OUTROS MATERIAIS PARA SEUS ESTUDOS */}
+          {/* 7. OUTROS MATERIAIS PARA SEUS ESTUDOS */}
           <RelatedProducts produtoAtual={produto} />
 
-          {/* 7. ATENDIMENTO WHATSAPP INSTITUCIONAL */}
+          {/* 8. ATENDIMENTO WHATSAPP INSTITUCIONAL */}
           <WhatsAppSupport tituloProduto={produto.titulo} />
 
-          {/* 8. NAVEGAÇÃO DE RETORNO AO CATÁLOGO */}
+          {/* 9. NAVEGAÇÃO DE RETORNO AO CATÁLOGO */}
           <div className="mt-8 pt-6 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-4">
             <Link
               to="/apostilas"

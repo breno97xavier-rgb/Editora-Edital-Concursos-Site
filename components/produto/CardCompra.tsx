@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Produto } from '@/data/produtos';
+import { Produto, getInfoPreco } from '@/data/produtos';
 import { siteConfig, getWhatsAppLink } from '@/data/siteConfig';
 import ModalMaterialEmAtualizacao from './ModalMaterialEmAtualizacao';
 
@@ -9,7 +9,7 @@ interface CardCompraProps {
 
 export default function CardCompra({ produto }: CardCompraProps) {
   const [modalAvisoAberto, setModalAvisoAberto] = useState(false);
-  const precoFormatado = produto.preco.toFixed(2).replace('.', ',');
+  const infoPreco = getInfoPreco(produto);
 
   const isEmAtualizacao = Boolean(
     produto.emAtualizacao || produto.concurso === 'bacen' || produto.concurso === 'bb'
@@ -38,10 +38,28 @@ export default function CardCompra({ produto }: CardCompraProps) {
 
         {/* Preço */}
         <div className="mb-6">
-          <div className="text-xs text-slate-500 mb-1">Preço oficial:</div>
-          <div className="font-titulo font-bold text-4xl text-azul-profundo">
-            R$ {precoFormatado}
-          </div>
+          {infoPreco.temPromocao ? (
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-400 line-through font-medium">
+                  R$ {infoPreco.precoOriginalFormatado}
+                </span>
+                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200/90 px-2 py-0.5 rounded-md">
+                  {infoPreco.descontoPercentual}% OFF
+                </span>
+              </div>
+              <div className="font-titulo font-bold text-4xl text-azul-profundo">
+                R$ {infoPreco.precoEfetivoFormatado}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="text-xs text-slate-500 mb-1">Preço oficial:</div>
+              <div className="font-titulo font-bold text-4xl text-azul-profundo">
+                R$ {infoPreco.precoOriginalFormatado}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Botão CTA principal */}

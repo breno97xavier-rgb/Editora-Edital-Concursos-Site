@@ -10,7 +10,8 @@ import {
   labelsMaterias, 
   Concurso, 
   Materia, 
-  getDetalhesCombo 
+  getDetalhesCombo,
+  getInfoPreco
 } from '@/data/produtos';
 import { getWhatsAppLink } from '@/data/siteConfig';
 
@@ -22,6 +23,7 @@ export default function ProductHero({ produto }: ProductHeroProps) {
   const [modalAvisoAberto, setModalAvisoAberto] = useState(false);
   const isCombo = produto.tipo === 'combo';
   const detalhesCombo = isCombo ? getDetalhesCombo(produto) : null;
+  const infoPreco = getInfoPreco(produto);
 
   // Verifica se o material está em atualização (BACEN e Banco do Brasil)
   const isEmAtualizacao = Boolean(
@@ -38,8 +40,8 @@ export default function ProductHero({ produto }: ProductHeroProps) {
   const linkDuvidaWhatsApp = getWhatsAppLink(produto, 'duvida');
 
   // Formatação de Preço
-  const temPreco = typeof produto.preco === 'number' && produto.preco > 0;
-  const precoFormatado = temPreco ? produto.preco.toFixed(2).replace('.', ',') : null;
+  const temPreco = typeof infoPreco.precoOriginal === 'number' && infoPreco.precoOriginal > 0;
+  const precoFormatado = temPreco ? infoPreco.precoOriginalFormatado : null;
 
   // Definição do Badge e Contexto
   let badgeTexto = 'Material Teórico';
@@ -178,12 +180,30 @@ export default function ProductHero({ produto }: ProductHeroProps) {
                         </span>
                       </div>
                     </div>
+                  ) : infoPreco.temPromocao ? (
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-slate-400 line-through font-medium">
+                          R$ {infoPreco.precoOriginalFormatado}
+                        </span>
+                        <span className="inline-flex items-center text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200/90 px-2 py-0.5 rounded-md">
+                          {infoPreco.descontoPercentual}% OFF
+                        </span>
+                      </div>
+
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xs text-slate-500 font-medium">Preço promocional:</span>
+                        <span className="font-titulo font-bold text-3xl text-azul-profundo">
+                          R$ {infoPreco.precoEfetivoFormatado}
+                        </span>
+                      </div>
+                    </div>
                   ) : (
                     <div>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xs text-slate-500 font-medium">Preço oficial:</span>
                         <span className="font-titulo font-bold text-3xl text-azul-profundo">
-                          R$ {precoFormatado}
+                          R$ {infoPreco.precoOriginalFormatado}
                         </span>
                       </div>
                     </div>

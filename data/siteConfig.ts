@@ -1,4 +1,4 @@
-import { Produto } from './produtos';
+import { Produto, getInfoPreco } from './produtos';
 
 export const siteConfig = {
   nome: 'Editora Edital Concursos',
@@ -28,7 +28,8 @@ export function getWhatsAppLink(mensagemOuProduto?: string | Produto, tipo?: 'co
 
   // É um objeto Produto
   const produto = mensagemOuProduto;
-  const precoStr = produto.preco.toFixed(2).replace('.', ',');
+  const infoPreco = getInfoPreco(produto);
+  const precoStr = infoPreco.precoEfetivoFormatado;
 
   if (tipo === 'compra') {
     const msgCompra = `Olá! Tenho interesse em adquirir o material "${produto.titulo}" (R$ ${precoStr}). Como posso prosseguir com a compra?`;

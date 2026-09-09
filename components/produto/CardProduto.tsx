@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Book3D from './Book3D';
 import ComboCover from './ComboCover';
-import { Produto, getDetalhesCombo } from '@/data/produtos';
+import { Produto, getDetalhesCombo, getInfoPreco } from '@/data/produtos';
 
 export type ProdutoCard = Produto;
 
@@ -12,7 +12,8 @@ interface CardProdutoProps {
 }
 
 export const CardProduto: React.FC<CardProdutoProps> = ({ produto, className = '' }) => {
-  const { slug, titulo, tipo, preco, capaUrl, comboInfo } = produto;
+  const { slug, titulo, tipo, capaUrl, comboInfo } = produto;
+  const infoPreco = getInfoPreco(produto);
 
   const isCombo = tipo === 'combo';
   const detalhesCombo = isCombo ? getDetalhesCombo(produto) : null;
@@ -33,8 +34,7 @@ export const CardProduto: React.FC<CardProdutoProps> = ({ produto, className = '
     ? 'bg-slate-100 text-azul-profundo border border-slate-200 font-semibold'
     : 'bg-azul-profundo text-white font-semibold';
 
-  const temPreco = typeof preco === 'number' && preco > 0;
-  const precoFormatado = temPreco ? preco.toFixed(2).replace('.', ',') : null;
+  const temPreco = typeof infoPreco.precoOriginal === 'number' && infoPreco.precoOriginal > 0;
 
   // Cálculo dinâmico para combos a partir da fonte única de dados
   const valorSeparadoFormatado = detalhesCombo 
@@ -126,7 +126,7 @@ export const CardProduto: React.FC<CardProdutoProps> = ({ produto, className = '
                     </span>
                     <div className="flex items-baseline gap-2 mt-0.5">
                       <span className="font-titulo font-bold text-2xl text-azul-profundo">
-                        R$ {precoFormatado}
+                        R$ {infoPreco.precoOriginalFormatado}
                       </span>
                     </div>
                     {economiaFormatada && (
@@ -135,13 +135,27 @@ export const CardProduto: React.FC<CardProdutoProps> = ({ produto, className = '
                       </span>
                     )}
                   </div>
+                ) : infoPreco.temPromocao ? (
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <span className="text-slate-400 text-xs line-through font-medium">
+                        R$ {infoPreco.precoOriginalFormatado}
+                      </span>
+                      <span className="inline-block text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200/90 px-1.5 py-0.5 rounded">
+                        {infoPreco.descontoPercentual}% OFF
+                      </span>
+                    </div>
+                    <span className="font-titulo font-bold text-2xl text-azul-profundo block">
+                      R$ {infoPreco.precoEfetivoFormatado}
+                    </span>
+                  </div>
                 ) : (
                   <div>
                     <span className="text-slate-500 text-xs block mb-0.5">
                       Preço oficial:
                     </span>
                     <span className="font-titulo font-bold text-2xl text-azul-profundo block">
-                      R$ {precoFormatado}
+                      R$ {infoPreco.precoOriginalFormatado}
                     </span>
                   </div>
                 )}
