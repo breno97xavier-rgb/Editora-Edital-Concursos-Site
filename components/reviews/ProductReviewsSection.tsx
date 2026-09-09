@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Star, MessageSquareQuote, PenLine } from 'lucide-react';
+import { Star, MessageSquareQuote, PenLine, X, ArrowRight } from 'lucide-react';
 import {
   getProductReviewSummary,
   getProductReviews,
@@ -110,6 +110,7 @@ export default function ProductReviewsSection({ productSlug }: ProductReviewsSec
   const [loading, setLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -139,6 +140,27 @@ export default function ProductReviewsSection({ productSlug }: ProductReviewsSec
       isMounted = false;
     };
   }, [productSlug]);
+
+  // Controle de tecla Escape e bloqueio do scroll do body durante a abertura do modal
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
+      }
+    };
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isModalOpen]);
 
   // Se houver erro crítico na conexão, mantém o restante da página sem quebra
   if (hasError) {
@@ -179,6 +201,18 @@ export default function ProductReviewsSection({ productSlug }: ProductReviewsSec
   const temAvaliacoes = total > 0;
   const notaFormatada = summary ? summary.average_rating.toFixed(1).replace('.', ',') : '0,0';
   const labelTotal = total === 1 ? '1 avaliação' : `${total} avaliações`;
+
+  // Ordena todas as avaliações da mais recente para a mais antiga
+  const avaliacoesOrdenadas = [...reviews].sort((a, b) => {
+    const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+    const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+    return timeB - timeA;
+  });
+
+  // Filtra as 3 avaliações aprovadas de 5 estrelas mais recentes para a prévia da página
+  const avaliacoesDestaque5Estrelas = avaliacoesOrdenadas
+    .filter((rev) => rev.rating === 5)
+    .slice(0, 3);
 
   // Distribuição de notas calculada exclusivamente com base nos contadores reais
   const distribuicao = summary
@@ -303,12 +337,30 @@ export default function ProductReviewsSection({ productSlug }: ProductReviewsSec
           </div>
 
           {/* ========================================================================= */}
-          {/* COLUNA DIREITA — Lista de Avaliações */}
+          {/* COLUNA DIREITA — Prévia das Avaliações (Até 3 de 5 estrelas mais recentes) */}
           {/* ========================================================================= */}
           <div className="lg:col-span-8 space-y-4">
-            {reviews.map((rev) => (
-              <ReviewCard key={rev.id} review={rev} />
-            ))}
+            {avaliacoesDestaque5Estrelas.length > 0 ? (
+              <div className="space-y-4">
+                {avaliacoesDestaque5Estrelas.map((rev) => (
+                  <ReviewCard key={rev.id} review={rev} />
+                ))}
+              </div>
+            ) : (
+              <div className="p-5 rounded-xl border border-slate-200/80 bg-slate-50/60 text-slate-600 text-sm text-center">
+                Nenhuma avaliação de 5 estrelas em destaque no momento.
+              </div>
+            )}
+
+            {/* Botão Ler Todas as Avaliações */}
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl border border-azul-profundo/20 bg-slate-50/80 hover:bg-azul-profundo hover:text-white text-azul-profundo font-titulo font-bold text-sm sm:text-base transition-all shadow-2xs hover:shadow-xs cursor-pointer group"
+            >
+              <span>Ler todas as avaliações ({total})</span>
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </button>
           </div>
 
         </div>
@@ -338,6 +390,75 @@ export default function ProductReviewsSection({ productSlug }: ProductReviewsSec
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODAL / LIGHTBOX DE TODAS AS AVALIAÇÕES */}
+      {/* ========================================================================= */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs"
+          onClick={() => setIsModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-todas-avaliacoes-titulo"
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden text-slate-800"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Cabeçalho do Modal */}
+            <div className="flex items-center justify-between p-5 sm:p-6 border-b border-slate-100 bg-slate-50/70">
+              <div>
+                <h3
+                  id="modal-todas-avaliacoes-titulo"
+                  className="font-titulo text-xl sm:text-2xl font-bold text-azul-profundo"
+                >
+                  Todas as avaliações
+                </h3>
+                <div className="flex items-center gap-2 mt-1.5">
+                  <span className="font-titulo font-bold text-base text-azul-profundo">
+                    {notaFormatada}
+                  </span>
+                  <ReviewStars rating={summary?.average_rating ?? 0} size={16} />
+                  <span className="text-xs text-slate-500 font-medium">
+                    · {labelTotal}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="p-2.5 rounded-xl text-slate-400 hover:text-azul-profundo hover:bg-slate-200/60 transition-colors cursor-pointer"
+                aria-label="Fechar modal de avaliações"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Lista com scroll interno de todas as avaliações */}
+            <div className="overflow-y-auto p-4 sm:p-6 space-y-4 flex-1 bg-slate-50/40 overscroll-contain">
+              {avaliacoesOrdenadas.map((rev) => (
+                <ReviewCard key={rev.id} review={rev} />
+              ))}
+            </div>
+
+            {/* Rodapé do Modal */}
+            <div className="p-4 sm:p-5 border-t border-slate-100 bg-white flex items-center justify-between gap-3">
+              <span className="text-xs text-slate-500">
+                Mostrando {avaliacoesOrdenadas.length} {avaliacoesOrdenadas.length === 1 ? 'avaliação aprovada' : 'avaliações aprovadas'}
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="px-5 py-2.5 text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </section>
